@@ -1,0 +1,601 @@
+/* ==========================================================================
+   SECTIONS LAYOUT - COSMIC PORTFOLIO PROJECT
+   Định dạng chi tiết 4 phân vùng giao diện: Preloader, Hero, Projects, Summary
+   ========================================================================== */
+
+/* ==========================================================================
+   SECTION 0: PRELOADER (HYPERDRIVE BOOT-UP)
+   ========================================================================== */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-deep-space);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.preloader-ring-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+/* Vòng tròn tiến trình tải */
+.preloader-ring {
+  transform: rotate(-90deg);
+}
+
+.preloader-ring-back {
+  fill: none;
+  stroke: rgba(0, 245, 255, 0.05);
+  stroke-width: 4;
+}
+
+.preloader-ring-progress {
+  fill: none;
+  stroke: var(--neon-cyan);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283; /* 283 là chu vi hình tròn bán kính 45 */
+  filter: drop-shadow(0 0 8px var(--glow-cyan));
+}
+
+.preloader-text-wrapper {
+  font-family: var(--font-sci-fi);
+  font-size: 16px;
+  color: var(--neon-cyan);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px var(--glow-cyan);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.preloader-pct {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   SECTION 1: HERO (THE COCKPIT)
+   ========================================================================== */
+#hero {
+  min-height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 80px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hero-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.hero-main-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.hero-main-title h1 {
+  font-size: 58px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.hero-main-title p {
+  font-family: var(--font-sci-fi);
+  font-size: 16px;
+  color: var(--plasma-orange);
+  letter-spacing: 4px;
+  text-shadow: 0 0 5px var(--glow-orange);
+}
+
+#pilot-subtitle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.info-badge {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(10, 14, 26, 0.85);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 6px;
+  color: var(--neon-cyan);
+  font-family: var(--font-sci-fi);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 8px var(--glow-cyan);
+  box-shadow: inset 0 0 12px rgba(0, 245, 255, 0.08);
+  transition: all var(--transition-normal);
+  animation: badge-float 3.5s infinite ease-in-out;
+}
+
+.info-badge:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.info-badge:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.info-badge:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.info-badge:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(0, 245, 255, 0.15);
+  box-shadow: 0 0 18px var(--glow-cyan), inset 0 0 12px rgba(0, 245, 255, 0.2);
+  transform: translateY(-5px) scale(1.05) !important;
+  animation-play-state: paused;
+}
+
+@keyframes badge-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Lưới 3 thẻ Hologram */
+.hero-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 80px;
+  perspective: 1000px; /* Tạo chiều sâu cho hiệu ứng 3D tilt */
+}
+
+.hero-card-inner {
+  padding: 36px 28px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+.hero-card-inner * {
+  transform: translateZ(20px); /* Đẩy nội dung lên khi thẻ tilt 3D */
+}
+
+.hero-card-icon {
+  color: var(--neon-cyan);
+  filter: drop-shadow(0 0 5px var(--glow-cyan));
+}
+
+.hero-card-inner h3 {
+  font-size: 21px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+  padding-bottom: 12px;
+}
+
+.hero-card-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+
+
+/* ==========================================================================
+   SECTION 2: PROJECTS (MISSION ARCHIVE)
+   ========================================================================== */
+#projects {
+  padding: 100px 0;
+  position: relative;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+/* Thẻ dự án lục giác viễn tưởng */
+.project-card {
+  padding: 24px;
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  background: rgba(10, 14, 26, 0.95);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.project-card:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px var(--glow-cyan);
+  transform: translateY(-4px);
+}
+
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.project-card-num {
+  font-family: var(--font-sci-fi);
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--plasma-orange);
+  letter-spacing: 1px;
+}
+
+.project-card-title h3 {
+  font-size: 21px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.project-card-excerpt {
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* KHU VỰC CHI TIẾT EXPANDABLE (DƯỚI DẠNG GSAP TWEEN HEIGHT AUTO) */
+.project-detail-expand {
+  height: 0;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  border-top: 0px solid transparent;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.project-card.expanded .project-detail-expand {
+  border-top: 1px solid rgba(0, 245, 255, 0.1);
+  padding-top: 20px;
+  margin-top: 16px;
+  /* GSAP sẽ tự động gán chiều cao */
+}
+
+.project-detail-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+}
+
+.project-detail-info h4 {
+  font-size: 14px;
+  color: var(--neon-cyan);
+  margin-bottom: 6px;
+}
+
+.project-detail-info p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.project-detail-product {
+  background: rgba(0, 245, 255, 0.02);
+  border: 1px dashed rgba(0, 245, 255, 0.15);
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.project-product-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.project-product-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--neon-cyan);
+  color: var(--bg-deep-space);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 0 10px var(--glow-cyan);
+  transition: all var(--transition-fast);
+}
+
+.project-product-btn:hover {
+  background: var(--plasma-orange);
+  box-shadow: 0 0 10px var(--glow-orange);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   SECTION 3: SUMMARY (END TRANSMISSION)
+   ========================================================================== */
+#summary {
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+/* Khối Cảm nhận cá nhân */
+.reflection-block {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 32px;
+}
+
+.reflection-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 100px;
+}
+
+.reflection-text {
+  transition: all var(--transition-normal);
+}
+
+.reflection-text:hover {
+  transform: scale(1.02);
+}
+
+.reflection-text p {
+  font-size: 17px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 0;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+}
+
+.reflection-text:hover p {
+  color: #ffffff !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 220px;
+  perspective: 1000px; /* Thiết lập chiều sâu cho chuyển động 3D */
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d; /* Cho phép các thành phần con nằm trên mặt phẳng 3D */
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, 
+.flip-card-back,
+.flip-card-front-orange,
+.flip-card-back-orange {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden; /* Ẩn mặt sau khi không xoay */
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--transition-normal);
+}
+
+/* Mặt trước - Tông xanh Cyan */
+.flip-card-front {
+  background: rgba(0, 245, 255, 0.03);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  color: var(--neon-cyan);
+  box-shadow: inset 0 0 15px rgba(0, 245, 255, 0.05);
+}
+
+/* Mặt trước - Tông cam Plasma */
+.flip-card-front-orange {
+  background: rgba(255, 107, 53, 0.03);
+  border: 1px solid rgba(255, 107, 53, 0.15);
+  color: var(--plasma-orange);
+  box-shadow: inset 0 0 15px rgba(255, 107, 53, 0.05);
+}
+
+/* Mặt sau - Tông xanh Cyan */
+.flip-card-back {
+  background: rgba(10, 14, 26, 0.95);
+  border: 1px solid var(--neon-cyan);
+  color: var(--text-primary);
+  transform: rotateY(180deg);
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-shadow: 0 0 25px rgba(0, 245, 255, 0.15);
+  overflow-y: hidden;
+}
+
+/* Mặt sau - Tông cam Plasma */
+.flip-card-back-orange {
+  background: rgba(10, 14, 26, 0.95);
+  border: 1px solid var(--plasma-orange);
+  color: var(--text-primary);
+  transform: rotateY(180deg);
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-shadow: 0 0 25px rgba(255, 107, 53, 0.15);
+  overflow-y: hidden;
+}
+
+.flip-card-back h4,
+.flip-card-back-orange h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.flip-card-back h4 {
+  color: var(--neon-cyan);
+}
+
+.flip-card-back-orange h4 {
+  color: var(--plasma-orange);
+}
+
+.flip-card-back p,
+.flip-card-back-orange p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Biểu tượng phát sáng */
+.flip-icon-glow {
+  font-size: 28px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 8px var(--glow-cyan));
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.flip-icon-glow.orange {
+  filter: drop-shadow(0 0 8px var(--glow-orange));
+}
+
+/* Nhãn trạng thái quét HUD */
+.flip-status-badge {
+  font-family: var(--font-sci-fi);
+  font-size: 9px;
+  letter-spacing: 2px;
+  margin-top: 8px;
+  color: rgba(0, 245, 255, 0.5);
+  animation: hud-blink 1.5s infinite steps(1);
+}
+
+.flip-status-badge.orange {
+  color: rgba(255, 107, 53, 0.5);
+}
+
+/* Đồ họa trang trí tinh cầu dưới đáy */
+.planet-parallax-container {
+  position: absolute;
+  bottom: -250px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.planet-sphere {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--nebula-purple) 0%, #050510 70%);
+  box-shadow: 
+    0 0 60px rgba(124, 58, 237, 0.3),
+    inset -20px -20px 50px rgba(0, 0, 0, 0.8);
+}
+
+/* FOOTER & TỌA ĐỘ SỐ */
+.footer-hud {
+  border-top: 1px solid rgba(0, 245, 255, 0.1);
+  padding: 40px 0;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  background: rgba(7, 9, 19, 0.95);
+}
+
+.footer-coords {
+  font-family: var(--font-sci-fi);
+  font-size: 13px;
+  color: var(--neon-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 5px var(--glow-cyan);
+}
+
+.footer-transmission {
+  font-family: var(--font-sci-fi);
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--plasma-orange);
+  letter-spacing: 4px;
+  animation: hud-blink 1.2s infinite steps(1);
+  text-shadow: 0 0 5px var(--glow-orange);
+}
+
+/* ==========================================================================
+   HỖ TRỢ THIẾT BỊ DI ĐỘNG (RESPONSIVE SECTIONS)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  #hero {
+    padding-top: 100px;
+  }
+  .hero-main-title h1 {
+    font-size: 42px;
+  }
+  .projects-grid, .reflection-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* LÀM SÁNG CHỮ CHO TẤT CẢ CÁC CARD THÔNG TIN */
+.hero-card-desc,
+.hero-card-desc li,
+.project-card-excerpt,
+.project-detail-info p,
+.flip-card-back p,
+.flip-card-back-orange p {
+  color: #ffffff !important;
+}

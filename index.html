@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COSMIC PORTFOLIO // NGUYỄN KIM LÊ LONG</title>
+  <meta name="description" content="Hồ sơ năng lực kỹ thuật số viễn tưởng dạng HUD buồng lái phi thuyền của phi công Nguyễn Kim Lê Long. Lập trình 3D bằng Three.js và hoạt cảnh mượt mà bằng GSAP.">
+  
+  <!-- CSS Stylesheets theo kiến trúc Module -->
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/hud.css">
+  <link rel="stylesheet" href="/src/styles/effects.css">
+  <link rel="stylesheet" href="/src/styles/sections.css">
+  <!-- HUD AUTOMATIC ERROR DIAGNOSTICS FOR CO-PILOT DEVELOPMENT -->
+  <script>
+    window.addEventListener('error', function(e) {
+      if (document.getElementById('hud-err-diag')) return;
+      const errBox = document.createElement('div');
+      errBox.id = 'hud-err-diag';
+      errBox.style.cssText = 'position: fixed; bottom: 20px; right: 20px; width: 350px; background: rgba(10, 0, 0, 0.95); border: 2px solid #ff6b35; color: #ff6b35; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 11px; z-index: 100000; box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); pointer-events: auto;';
+      errBox.innerHTML = `
+        <div style="font-weight: bold; border-bottom: 1px solid rgba(255, 107, 53, 0.3); padding-bottom: 6px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+          <span style="animation: pulse-dot 1s infinite;">⚠️</span> HUD SYSTEM DIAGNOSTIC ERROR
+        </div>
+        <div style="margin-bottom: 8px; color: #fff;"><strong>MESSAGE:</strong> ` + e.message + `</div>
+        <div style="margin-bottom: 8px; color: rgba(255,255,255,0.7);"><strong>FILE:</strong> ` + e.filename + `:` + e.lineno + `:` + e.colno + `</div>
+        <div style="color: #999; font-size: 9px; line-height: 1.3;">// PLEASE CONTACT CO-PILOT ANTIGRAVITY TO SECURE WARP CORE.</div>
+      `;
+      document.body.appendChild(errBox);
+    });
+  </script>
+</head>
+<body>
+
+  <!-- HIỆU ỨNG QUÉT DÒNG TV CỦA PHI THUYỀN (HUD CRITICAL SCANLINES OVERLAY) -->
+  <div class="scanlines-overlay"></div>
+
+  <!-- SECTION 0: PRELOADER (HYPERDRIVE BOOT-UP) -->
+  <div id="preloader">
+    <div class="preloader-ring-wrapper">
+      <svg class="preloader-ring" width="120" height="120">
+        <circle class="preloader-ring-back" cx="60" cy="60" r="45"></circle>
+        <circle class="preloader-ring-progress" cx="60" cy="60" r="45"></circle>
+      </svg>
+    </div>
+    <div class="preloader-text-wrapper">
+      <span>HYPERDRIVE SYSTEM BOOTING</span>
+      <div class="preloader-pct">0%</div>
+    </div>
+  </div>
+
+  <!-- HÌNH NỀN ĐỘNG CANVAS (THREE.JS 10.000 STARFIELD) - ĐÃ TẮT ĐỂ DÙNG ẢNH ĐỘNG WEBP -->
+  <!-- <canvas id="bg-canvas"></canvas> -->
+
+  <!-- DYNAMIC NEON GLOW BACKGROUND EFFECT -->
+  <div class="neon-glow-container">
+    <div class="neon-glow-blob cyan"></div>
+    <div class="neon-glow-blob purple"></div>
+    <div class="neon-glow-blob orange"></div>
+  </div>
+
+  <!-- LỚP PHỦ HÌNH HỌC HUD PHI THUYỀN (SPACESHIP HUD OVERLAY) -->
+  <div class="hud-overlay">
+    <div class="hud-corner tl"></div>
+    <div class="hud-corner tr"></div>
+    <div class="hud-corner bl"></div>
+    <div class="hud-corner br"></div>
+    
+    <!-- Bộ chỉ số góc HUD -->
+    <div class="hud-diagnostics">
+      <span><div class="hud-dot-pulse"></div> SYS_ACTIVE: ONLINE</span>
+      <span>WARP CORE: 98.4%</span>
+      <span>SECTOR: SOL-E-42</span>
+    </div>
+  </div>
+
+  <!-- BỐ CỤC CHÍNH ỨNG DỤNG (HUD SHELL NAVIGATION) -->
+  <div id="app">
+    
+    <!-- Fixed Navigation HUD -->
+    <nav class="hud-navbar">
+      <div class="hud-nav-container">
+        <a href="#hero" class="hud-logo">
+          <span class="hud-logo-arrow">&lt;</span>COSMIC_PORTFOLIO<span class="hud-logo-arrow">/&gt;</span>
+        </a>
+        <div class="hud-nav-links">
+          <a href="#hero" class="hud-btn active">Cockpit</a>
+          <a href="#projects" class="hud-btn">Archive</a>
+          <a href="#summary" class="hud-btn">Logs</a>
+        </div>
+        <!-- Nút bật tắt hiệu ứng (FX Toggle) -->
+        <button id="fx-toggle-btn" class="hud-fx-toggle" aria-label="Tắt quét dòng màn hình">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- HỆ THỐNG PHÂN VÙNG THÔNG TIN -->
+    <main>
+      
+      <!-- SECTION 1: INTRO HERO (THE COCKPIT) -->
+      <section id="hero" class="section">
+        <div class="container hero-layout">
+          
+          <div class="hero-main-title">
+            <p>// THIẾT LẬP TỌA ĐỘ PHI CÔNG</p>
+            <h1 id="pilot-name" class="glitch-title" data-text="NGUYỄN KIM LÊ LONG">Đang tải...</h1>
+            <p id="pilot-subtitle">Đang đồng bộ...</p>
+          </div>
+
+          <!-- Lưới 3 thẻ Hologram 3D Tilt -->
+          <div class="hero-cards-grid">
+            <!-- Thẻ 1: Pilot Profile -->
+            <div class="hologram-card hex-clip">
+              <div class="hero-card-inner">
+                <div class="hero-card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <h3>PILOT PROFILE</h3>
+                <p id="pilot-about" class="hero-card-desc">Đang đồng bộ tiểu sử dữ liệu...</p>
+              </div>
+            </div>
+
+            <!-- Thẻ 2: Flight Vector -->
+            <div class="hologram-card hex-clip">
+              <div class="hero-card-inner">
+                <div class="hero-card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                </div>
+                <h3>FLIGHT VECTOR</h3>
+                <ul id="pilot-goals" class="hero-card-desc" style="list-style: none;">
+                  <!-- Chèn bằng JS -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- Thẻ 3: Mission Briefing -->
+            <div class="hologram-card hex-clip">
+              <div class="hero-card-inner">
+                <div class="hero-card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 16 12 12 8"></polygon></svg>
+                </div>
+                <h3>MISSION BRIEFING</h3>
+                <p id="pilot-purpose" class="hero-card-desc">Đang tải hồ sơ sứ mệnh...</p>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+
+      <!-- SECTION 2: PROJECTS (MISSION ARCHIVE) -->
+      <section id="projects" class="section bg-dim">
+        <div class="container">
+          
+          <div class="section-title-wrapper">
+            <span class="badge-status" style="border-color: rgba(0, 245, 255, 0.3); color: var(--neon-cyan); background: rgba(0, 245, 255, 0.05);">
+              <div class="badge-status-dot" style="background: var(--neon-cyan); box-shadow: 0 0 10px var(--glow-cyan);"></div> SEC_02: ENCRYPTED FILES
+            </span>
+            <h2 style="margin-top: 16px;">KHO LƯU TRỮ BÀI TẬP // MISSION ARCHIVE</h2>
+            <p class="section-subtitle">Tập hợp các báo cáo nghiên cứu và kết quả huấn luyện. Bấm vào bài tập để mở khóa tài liệu giải trình và liên kết sản phẩm.</p>
+          </div>
+
+          <!-- Lưới 6 bài tập lớn dạng Lục giác -->
+          <div id="projects-grid" class="projects-grid">
+            <!-- Được render bằng JavaScript từ portfolioData.js -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 3: SUMMARY (END TRANSMISSION) -->
+      <section id="summary" class="section">
+        <div class="container">
+          
+          <div class="section-title-wrapper">
+            <span class="badge-status" style="border-color: rgba(124, 58, 237, 0.3); color: var(--nebula-purple); background: rgba(124, 58, 237, 0.05);">
+              <div class="badge-status-dot" style="background: var(--nebula-purple); box-shadow: 0 0 10px var(--glow-purple);"></div> SEC_03: END TRANSMISSION
+            </span>
+            <h2 style="margin-top: 16px;">TỔNG KẾT HÀNH TRÌNH // FINAL TRANSLATION</h2>
+          </div>
+          <!-- Khối phản hồi và trích dẫn cảm nhận -->
+          <div class="reflection-block glass hologram-card">
+            <!-- Cột trái: Trải nghiệm -->
+            <div class="reflection-text">
+              <h3 style="font-size: 18px; color: var(--neon-cyan); border-bottom: 1px solid rgba(0,245,255,0.1); padding-bottom: 10px; margin-bottom: 16px;">TRẢI NGHIỆM VÀ CẢM NHẬN</h3>
+              <p id="reflection-exp">Đang kết nối tín hiệu cảm xúc...</p>
+            </div>
+          </div>
+          
+          <!-- Hai thẻ Điểm tâm đắc & Thách thức nằm riêng bên ngoài -->
+          <div class="reflection-cards-grid">
+            
+            <!-- Flip Card 💡 ĐIỂM TÂM ĐẮC -->
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <!-- Mặt trước -->
+                <div class="flip-card-front">
+                  <div class="flip-icon-glow">💡</div>
+                  <h4>ĐIỂM TÂM ĐẮC NHẤT</h4>
+                  <span class="flip-status-badge">// CLICK TO REVEAL</span>
+                </div>
+                <!-- Mặt sau -->
+                <div class="flip-card-back">
+                  <h4>💡 ĐIỂM TÂM ĐẮC NHẤT</h4>
+                  <p id="reflection-high">Đang kết nối dữ liệu...</p>
+                </div>
+              </div>
+            </div>
+ 
+            <!-- Flip Card ⚠️ THÁCH THỨC -->
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <!-- Mặt trước -->
+                <div class="flip-card-front-orange">
+                  <div class="flip-icon-glow orange">⚠️</div>
+                  <h4>THÁCH THỨC LỚN NHẤT</h4>
+                  <span class="flip-status-badge orange">// CLICK TO DECODE</span>
+                </div>
+                <!-- Mặt sau -->
+                <div class="flip-card-back-orange">
+                  <h4>⚠️ THÁCH THỨC LỚN NHẤT</h4>
+                  <p id="reflection-chal">Đang kết nối dữ liệu...</p>
+                </div>
+              </div>
+            </div>
+ 
+          </div>
+
+        </div>
+
+        <!-- Đồ họa tinh vân Parallax Planet ở chân trang -->
+        <div class="planet-parallax-container">
+          <div class="planet-sphere"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER & SỐ ĐIỀU HƯỚNG TỌA ĐỘ -->
+    <footer class="footer-hud">
+      <div class="container">
+        <div id="hud-coordinates" class="footer-coords">CONNECTING...</div>
+        <div class="footer-transmission">--- END TRANSMISSION ---</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- LỐI VÀO CỦA MÃ NGUỒN CHÍNH -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

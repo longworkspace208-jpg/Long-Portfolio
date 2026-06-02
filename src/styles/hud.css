@@ -1,0 +1,209 @@
+/* ==========================================================================
+   HUD SYSTEM - COSMIC PORTFOLIO PROJECT
+   Giao diện HUD buồng lái phi thuyền, thanh điều hướng và tâm ngắm la bàn
+   ========================================================================== */
+
+/* Lớp phủ HUD toàn khung hình (Spaceship Overlay) */
+.hud-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Tránh cản trở chuột bấm vào trang */
+  z-index: 90;
+  border: 1px solid rgba(0, 245, 255, 0.05);
+}
+
+/* Các viền góc HUD */
+.hud-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--neon-cyan);
+  pointer-events: none;
+  filter: drop-shadow(0 0 5px var(--glow-cyan));
+}
+
+.hud-corner.tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.hud-corner.tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+.hud-corner.bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+.hud-corner.br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+/* Kính ngắm HUD ở góc bên trái */
+.hud-diagnostics {
+  position: absolute;
+  top: 100px;
+  left: 24px;
+  font-family: var(--font-sci-fi);
+  font-size: 12px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--glow-cyan);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0.7;
+}
+
+.hud-diagnostics span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Biểu tượng chấm tròn nhấp nháy đỏ */
+.hud-dot-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--plasma-orange);
+  box-shadow: 0 0 8px var(--glow-orange);
+  animation: hud-blink 1.5s infinite steps(1);
+}
+
+@keyframes hud-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* THANH NAVBAR HUD CỐ ĐỊNH */
+.hud-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(10, 14, 26, 0.9) 0%, rgba(10, 14, 26, 0) 100%);
+  border-bottom: 1px solid rgba(0, 245, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+}
+
+.hud-nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hud-logo {
+  font-family: var(--font-sci-fi);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-primary);
+  text-shadow: 0 0 8px var(--glow-cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1px;
+}
+
+.hud-logo-arrow {
+  color: var(--neon-cyan);
+  font-weight: 400;
+}
+
+.hud-nav-links {
+  display: flex;
+  gap: 24px;
+  pointer-events: auto; /* Cho phép tương tác nút bấm */
+}
+
+/* Nút bấm HUD mang phong cách game khoa học viễn tưởng */
+.hud-btn {
+  font-family: var(--font-sci-fi);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  background: rgba(0, 245, 255, 0.02);
+  border-radius: 4px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.hud-btn:hover {
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  background: rgba(0, 245, 255, 0.05);
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.hud-btn:hover::before {
+  left: 100%;
+}
+
+.hud-btn.active {
+  color: var(--bg-deep-space);
+  background: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  font-weight: 700;
+  box-shadow: 0 0 20px var(--glow-cyan);
+}
+
+/* Nút tắt/mở hiệu ứng (FX Toggle) */
+.hud-fx-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  background: rgba(255, 107, 53, 0.03);
+  color: var(--plasma-orange);
+  pointer-events: auto;
+  transition: all var(--transition-normal);
+}
+
+.hud-fx-toggle:hover {
+  color: #fff;
+  background: var(--plasma-orange);
+  border-color: var(--plasma-orange);
+  box-shadow: 0 0 15px var(--glow-orange);
+  transform: scale(1.05);
+}
+
+.hud-fx-toggle svg {
+  transition: transform 0.6s ease;
+}
+
+.hud-fx-toggle:hover svg {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .hud-diagnostics {
+    display: none;
+  }
+  .hud-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .hud-nav-links {
+    gap: 12px;
+  }
+}
