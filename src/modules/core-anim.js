@@ -20,11 +20,21 @@ gsap.registerPlugin(ScrollTrigger);
  * 1. HOẠT CẢNH BOOT-UP CỦA BỘ TẢI TRANG PRELOADER
  */
 export function initPreloader(onCompleteCallback) {
+  // Bật chế độ phục hồi cuộn trang thủ công để tránh giật lag nhảy vị trí khi reload
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  // Khóa cuộn trang và đưa về đầu trang ngay từ lúc tải
+  document.body.classList.add('loading-lock');
+  window.scrollTo(0, 0);
+
   const preloader = document.getElementById('preloader');
   const ringProgress = document.querySelector('.preloader-ring-progress');
   const pctText = document.querySelector('.preloader-pct');
   
   if (!preloader || !ringProgress || !pctText) {
+    document.body.classList.remove('loading-lock');
     if (onCompleteCallback) onCompleteCallback();
     return;
   }
@@ -54,6 +64,15 @@ export function initPreloader(onCompleteCallback) {
           ease: 'power2.inOut',
           onComplete: () => {
             preloader.classList.add('hidden');
+            // Mở khóa cuộn trang và định vị bắt buộc ở trang chính
+            document.body.classList.remove('loading-lock');
+            window.scrollTo(0, 0);
+
+            // Làm mới ScrollTrigger để cập nhật lại toàn bộ tọa độ cuộn chính xác sau khi mở khóa
+            setTimeout(() => {
+              ScrollTrigger.refresh();
+            }, 100);
+
             if (onCompleteCallback) onCompleteCallback();
           }
         });
@@ -66,16 +85,20 @@ export function initPreloader(onCompleteCallback) {
  */
 export function initScrollAnimations() {
 
-  // B. PARALLAX PLANET (TINH CẦU ĐÁY TRANG)
-  // Tạo sự dịch chuyển đa chiều của tinh cầu trang trí khi cuộn
+  // A. HERO CARDS EXIT — ĐÃ BỎ HIỆU ỨNG THOÁT RA THEO YÊU CẦU CỦA NGƯỜI DÙNG
+
+  // B. UNIFIED SCROLL ANIMATIONS FOR BOTH DESKTOP & MOBILE
+  // Đã chuyển sang Intersection Observer và CSS Transitions cho project-card-wrapper và Section 3 blocks để đạt độ ổn định 100%
+
+  // C. PARALLAX PLANET (TINH CẦU ĐÁY TRANG)
   gsap.to('.planet-parallax-container', {
-    y: -220,
+    y: -250,
     scale: 1.2,
     rotation: 45,
     scrollTrigger: {
       trigger: '#summary',
       start: 'top bottom',
-      end: 'bottom top',
+      end: 'bottom bottom',
       scrub: 0.8
     }
   });
@@ -83,7 +106,7 @@ export function initScrollAnimations() {
   // Tự động tính toán lại vị trí ScrollTrigger sau khi dữ liệu DOM động đã được vẽ xong và ổn định chiều cao
   setTimeout(() => {
     ScrollTrigger.refresh();
-  }, 350);
+  }, 450);
 }
 
 /**
@@ -107,7 +130,7 @@ export function triggerHeroEntranceAnimation(onCardsReveal) {
     duration: 1.0,
     ease: 'back.out(1.5)'
   }, '-=0.6')
-  .from('.hologram-card', {
+  .from('#hero .hologram-card', {
     y: 40,
     opacity: 0,
     stagger: 0, // Synchronous fade-in for all cards
@@ -118,10 +141,52 @@ export function triggerHeroEntranceAnimation(onCardsReveal) {
     }
   }, '-=0.4');
 
-  // Đảm bảo tuyệt đối Section 2 & 3 luôn hiển thị rõ ràng, không bao giờ bị ẩn
-  gsap.set('.project-card, #projects .section-title-wrapper, #summary .section-title-wrapper, .skills-hexagon-area, .reflection-block', {
+  // Đảm bảo tuyệt đối tiêu đề và các phần khác luôn hiển thị rõ ràng
+  gsap.set('#projects .section-title-wrapper, #summary .section-title-wrapper, .skills-hexagon-area', {
     opacity: 1,
     y: 0,
     clearProps: 'transform'
   });
+}
+
+/**
+ * 4. HOẠT CẢNH CUỘN TRANG BẰNG NATIVE INTERSECTION OBSERVER
+ * Tự động kích hoạt hiển thị cho các phần tử có lớp .scroll-reveal khi đi vào khung nhìn.
+ * Đạt độ tin cậy tuyệt đối 100%, không bị ảnh hưởng bởi lỗi kẹt tọa độ của ScrollTrigger.
+ */
+export function initScrollReveal() {
+  const revealElements = document.querySelectorAll('.scroll-reveal');
+  if (revealElements.length === 0) return;
+
+  // Hỗ trợ dự phòng (fallback) nếu trình duyệt cũ không có Intersection Observer
+  if (!window.IntersectionObserver) {
+    revealElements.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Chỉ kích hoạt hoạt cảnh 1 lần duy nhất (tương đương once: true)
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -8% 0px', // Kích hoạt khi cách đáy màn hình 8%
+    threshold: 0.01
+  });
+
+  revealElements.forEach(el => {
+    observer.observe(el);
+  });
+
+  // DỰ PHÒNG TUYỆT ĐỐI: Sau 2 giây, ép hiển thị tất cả phần tử scroll-reveal còn ẩn
+  setTimeout(() => {
+    revealElements.forEach(el => {
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+      }
+    });
+  }, 2000);
 }

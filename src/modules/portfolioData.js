@@ -18,7 +18,7 @@ export const portfolioData = {
   // PHẦN 1: THÔNG TIN PHI CÔNG & MỤC TIÊU DỰ ÁN
   // ==========================================
   pilotInfo: {
-    fullName: "Nguyễn Kim Lê Long",
+    fullName: "NGUYEN KIM LE LONG",
     class: "Class K70I-CS2",
     major: "Computer Science",
     school: "UET - VNU",
@@ -37,28 +37,6 @@ export const portfolioData = {
     // Ý nghĩa Portfolio (Mission Briefing)
     portfolioPurpose: "Dự án Portfolio này được thiết lập như một kho lưu trữ số học thuật bền vững, nhằm chứng minh sự trưởng thành về năng lực tư duy kỹ thuật, kỹ năng phát triển nội dung số và cam kết tuân thủ liêm chính học thuật trong suốt hành trình học tập."
   },
-
-  // ==========================================
-  // LỘ TRÌNH PHÁT TRIỂN (MISSION LOG TIMELINE)
-  // ==========================================
-  missionLogs: [
-    {
-      time: "LOG-01 // KHỞI ĐỘNG DỰ ÁN",
-      title: "Xác lập tọa độ Portfolio",
-      desc: "Lên ý tưởng, phác thảo giao diện buồng lái không gian HUD và định nghĩa cấu trúc dữ liệu cốt lõi cho trang Portfolio cá nhân."
-    },
-    {
-      time: "LOG-02 // LẬP TRÌNH NỀN TẢNG",
-      title: "Thiết lập Động cơ 3D & Chuyển động",
-      desc: "Tích hợp thư viện Three.js vẽ 10.000 điểm tinh tú, liên kết GSAP ScrollTrigger để kiểm soát hoạt cảnh cuộn trang một cách nhịp nhàng."
-    },
-    {
-      time: "LOG-03 // SỐ HÓA BÀI TẬP",
-      title: "Thiết kế Lưới lưu trữ bài tập",
-      desc: "Trình bày 6 bài tập lớn dưới dạng lưới lục giác hiện đại, hỗ trợ cơ chế nhấn nút bung mở chi tiết mượt mà và trực quan."
-    }
-  ],
-
   // ==========================================
   // PHẦN 2: KHO LƯU TRỮ BÀI TẬP (MISSION ARCHIVE)
   // ==========================================
@@ -72,7 +50,7 @@ export const portfolioData = {
       product: {
         type: "pdf", // 'pdf', 'image', 'video', 'link'
         url: pdf1,
-        label: "Báo cáo phần cứng trạm lập trình.pdf"
+        label: "Bài tập tuần 1"
       }
     },
     {
@@ -84,7 +62,7 @@ export const portfolioData = {
       product: {
         type: "pdf",
         url: pdf2,
-        label: "Biểu đồ thống kê xu hướng số.pdf"
+        label: "Bài tập tuần 2"
       }
     },
     {
@@ -96,7 +74,7 @@ export const portfolioData = {
       product: {
         type: "pdf",
         url: pdf3,
-        label: "Cẩm nang Prompt Engineering.pdf"
+        label: "Bài tập tuần 3"
       }
     },
     {
@@ -108,7 +86,7 @@ export const portfolioData = {
       product: {
         type: "pdf",
         url: pdf4,
-        label: "Slide báo cáo liên minh cộng tác số.pdf"
+        label: "Bài tập tuần 4"
       }
     },
     {
@@ -120,7 +98,7 @@ export const portfolioData = {
       product: {
         type: "pdf",
         url: pdf5,
-        label: "Infographic Bảo mật không gian mạng.pdf"
+        label: "Bài tập tuần 5"
       }
     },
     {
@@ -132,7 +110,7 @@ export const portfolioData = {
       product: {
         type: "pdf",
         url: pdf6,
-        label: "Tài liệu cam kết liêm chính học thuật.pdf"
+        label: "Bài tập tuần 6"
       }
     }
   ],
@@ -141,21 +119,41 @@ export const portfolioData = {
   // PHẦN 3: TỔNG KẾT & CẢM NHẬN (TRANSMISSION COMPLETE)
   // ==========================================
   reflection: {
-    // Cảm nhận chung (Transmission Log)
-    experience: "Quá trình xây dựng Cosmic Portfolio là một cuộc hành trình vô cùng ý nghĩa đối với tôi. Việc tự tay thiết kế giao diện buồng lái không gian cockpit không chỉ giúp tôi củng cố và ứng dụng các kỹ năng lập trình Web nền tảng, mà còn rèn luyện tính kiên nhẫn khi cấu hình các tương tác 3D WebGL và GSAP ScrollTrigger phức tạp. Nhìn lại chặng đường hoàn thành 6 bài tập lớn cùng sự lột xác của trang Portfolio, tôi cảm nhận rõ sự tiến bộ vượt bậc của bản thân về tư duy thiết kế hệ thống lẫn kỹ năng giải quyết vấn đề số.",
-    
-    // 6 Kỹ năng hiển thị trên lưới lục giác nạp (tỉ lệ từ 0 đến 100)
-    skills: [
-      { name: "PHẦN CỨNG", value: 85 },
-      { name: "DỮ LIỆU", value: 90 },
-      { name: "TRÍ TUỆ NHÂN TẠO", value: 80 },
-      { name: "LÀM VIỆC NHÓM", value: 95 },
-      { name: "NỘI DUNG SỐ", value: 88 },
-      { name: "AN TOÀN MẠNG", value: 92 }
+    // 1. Tổng quan hành trình 6 bài học
+    overview: "Điểm lại các kiến thức đã qua, mọi thứ được xây dựng theo một lộ trình logic: từ việc nắm vững cách tổ chức dữ liệu cơ bản, sử dụng các công cụ làm việc nhóm trực tuyến hiệu quả, cho đến việc ứng dụng đa dạng các công cụ AI tạo sinh để nghiên cứu học thuật và thiết kế ấn phẩm đồ họa chuyên nghiệp. Đỉnh cao của quá trình này là việc thấu hiểu cách giao tiếp với AI qua các kỹ thuật Prompt chuyên sâu và áp dụng nó vào việc giải quyết những bài toán kỹ thuật phức tạp, định hình các nguyên tắc đạo đức khi sử dụng công nghệ. Tất cả không còn là những mảnh ghép rời rạc mà đã được xâu chuỗi lại, trở thành nền tảng vững chắc để tôi kiến tạo nên dự án portfolio của riêng mình.",
+
+    // 2. Trải nghiệm và cảm nhận
+    experience: "Quá trình thực hiện dự án portfolio mang lại cho tôi những cảm xúc rất đặc biệt. Nó giống như việc tự tay \"refactoring\" lại chính khối lượng kiến thức khổng lồ mà mình đã tiếp thu. Thay vì chỉ gom nhặt các mảnh ghép một cách máy móc, tôi phải ngồi lại, đánh giá xem đâu là những giá trị cốt lõi nhất để trình bày. Cảm giác nhìn thấy những kỹ năng mình rèn luyện mỗi ngày — từ tư duy tổ chức mã nguồn rõ ràng, tránh tạo ra các đoạn \"spaghetti code\", đến khả năng tối ưu hóa thuật toán thi đấu, tinh chỉnh độ phức tạp từ O(N³) xuống O(N log N) — được sắp xếp gọn gàng và có tính kể chuyện trong một bản portfolio thực sự là một trải nghiệm trọn vẹn và đáng tự hào.",
+
+    // 3. Điểm tâm đắc nhất (danh sách)
+    highlights: [
+      {
+        title: "Làm chủ công cụ, không phụ thuộc",
+        desc: "Tôi không dùng AI để viết thay mình một cách lười biếng. Thay vào đó, tôi đóng vai trò là \"tổng đạo diễn\", sử dụng AI để mở rộng góc nhìn và rà soát lỗi, trong khi bản thân vẫn giữ quyền quyết định cuối cùng đối với mọi phân tích chuyên sâu và cấu trúc logic."
+      },
+      {
+        title: "Giải quyết vấn đề thực tiễn",
+        desc: "Việc tự tay đưa các ví dụ về cấu trúc phần mềm, phân tích nguyên nhân và cách khắc phục nợ kỹ thuật (technical debt) vào portfolio giúp tôi khẳng định được chất riêng và tư duy của một người coi trọng chất lượng hệ thống thay vì chạy theo số lượng."
+      }
     ],
-    
-    // Tâm đắc và Thách thức
-    highlights: "Điểm tôi tâm đắc nhất là việc số hóa thành công lộ trình rèn luyện cá nhân thành một giao diện phi thuyền không gian mang đậm tính tương tác và tương phản sắc nét. Việc gộp 6 bài tập thành lưới lục giác Click-to-Open giúp tối giản hóa bố cục, tạo sự thân thiện lớn cho người chấm bài.",
-    challenges: "Thách thức lớn nhất là việc tối ưu hóa hiệu năng render 10.000 điểm tinh tú của Three.js kết hợp với các hiệu ứng cuộn trang GSAP, đảm bảo ứng dụng vận hành mượt mà ở tần số quét cao mà không gây giật lag phần cứng."
+
+    // 4. Thách thức đã gặp phải (danh sách)
+    challenges: [
+      {
+        title: "Sắp xếp luồng thông tin và tính đồng bộ",
+        desc: "Thách thức lớn là làm sao để cô đọng một lượng lớn kiến thức thành một luồng câu chuyện mạch lạc mà không bị lan man hay lộn xộn. Việc phối hợp dữ liệu từ nhiều nguồn, nhiều công cụ đôi khi khiến cấu trúc tổng thể dễ bị phân mảnh."
+      },
+      {
+        title: "Kiểm soát tính chân thực của AI (Ảo giác AI)",
+        desc: "Khi tận dụng AI để hỗ trợ tổng hợp thông tin, tôi nhiều lần phải đối mặt với tình trạng AI đưa ra các thông tin chung chung hoặc mã nguồn thiếu tính thực tế. Điều này buộc tôi phải mất nhiều thời gian hơn dự kiến để kiểm chứng độc lập (fact-checking) và tinh chỉnh lại bằng kiến thức của mình."
+      },
+      {
+        title: "Đóng gói và hoàn thiện nội dung",
+        desc: "Có những lúc việc hệ thống hóa tất cả các dự án thành một định dạng chuẩn chỉnh giống như việc nỗ lực chuyển nguyên văn các bài toán phức tạp sang định dạng markdown. Nó đòi hỏi sự tỉ mỉ, kiên nhẫn sửa từng lỗi nhỏ nhất để đảm bảo kết quả đầu ra thực sự trơn tru và chuyên nghiệp."
+      }
+    ],
+
+    // 5. Lời kết
+    closing: "Dự án portfolio không chỉ là một bảng tóm tắt thành tích, mà là minh chứng rõ nét cho sự trưởng thành về năng lực thực thi và đạo đức nghề nghiệp. Những bài học về quản lý công việc, tư duy giải quyết vấn đề và cách ứng xử trách nhiệm với AI sẽ là hành trang vô giá, giúp tôi bước đi vững chắc hơn trên con đường phát triển chuyên môn sắp tới."
   }
 };

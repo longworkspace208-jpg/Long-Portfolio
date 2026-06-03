@@ -45,9 +45,13 @@ html, body {
   min-height: 100vh;
   color: var(--text-primary);
   font-family: var(--font-body);
+  font-weight: 500; /* Legible medium weight by default for Exo 2 on dark theme */
   overflow-x: hidden;
   font-size: 18px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -55,6 +59,11 @@ body {
   /* Tắt thanh cuộn mặc định của trình duyệt để sử dụng cuộn HUD mượt mà */
   scrollbar-width: thin;
   scrollbar-color: var(--neon-cyan) var(--bg-deep-space);
+}
+
+body.loading-lock {
+  overflow: hidden !important;
+  height: 100vh !important;
 }
 
 /* DYNAMIC NEON GLOW BACKGROUND EFFECT */
@@ -155,6 +164,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 245, 255, 0.15); /* High contrast shadow with cosmic aura */
 }
 
 a {

@@ -6,11 +6,12 @@
  * và toàn bộ kịch bản tương tác đặc biệt.
  */
 
+import { gsap } from 'gsap';
 import { portfolioData } from './modules/portfolioData.js';
 import { initThreeBackground } from './modules/background.js';
-import { initPreloader, initScrollAnimations, triggerHeroEntranceAnimation } from './modules/core-anim.js';
+import { initPreloader, initScrollAnimations, triggerHeroEntranceAnimation, initScrollReveal } from './modules/core-anim.js';
 import { init3dTilt, initPlasmaCursor, initCardExpandCollapse, initClickFlipCards } from './modules/interactions.js';
-import { initCoordinateGenerator, TextScrambler, initTypewriter } from './modules/text-fx.js';
+import { TextScrambler, initTypewriter } from './modules/text-fx.js';
 
 // Khởi chạy hệ thống sau khi DOM đã được nạp đầy đủ
 document.addEventListener('DOMContentLoaded', () => {
@@ -53,11 +54,13 @@ function initializeCosmicCockpit() {
   // H. KÍCH HOẠT SỰ KIỆN CLICK LẬT THẺ PHẢN HỒI (FLIP CARDS)
   initClickFlipCards('.flip-card');
 
-  // H. CHẠY BỘ SỐ TỌA ĐỘ GIẢ ĐỊNH Ở CHÂN TRANG FOOTER
-  const destroyCoords = initCoordinateGenerator('hud-coordinates');
+
 
   // I. KÍCH HOẠT HOẠC CẢNH CUỘN TRANG GSAP SCROLLTRIGGER
   initScrollAnimations();
+
+  // I2. KÍCH HOẠT HOẠC CẢNH CUỘN TRANG BẰNG NATIVE INTERSECTION OBSERVER (FAIL-SAFE)
+  initScrollReveal();
 
   // KÍCH HOẠT HOẠT CẢNH MỞ MÀN HERO COCKPIT CỦA GSAP VỚI CALLBACK KHỞI CHẠY TYPEWRITER
   triggerHeroEntranceAnimation(startHeroTypewriter);
@@ -67,6 +70,15 @@ function initializeCosmicCockpit() {
 
   // L. THIẾT LẬP LIÊN KẾT THANH ĐIỀU HƯỚNG TỚI CÁC PHÂN VÙNG
   setupNavigation();
+
+  // M. HỆ THỐNG DỰ PHÒNG AN TOÀN (FAIL-SAFE FALLBACK)
+  // Sau 1.8 giây, ép hiển thị tất cả các phần tử scroll-reveal còn ẩn bằng cách thêm class .visible
+  // (GSAP inline style KHÔNG thể ghi đè CSS !important, chỉ có thêm class mới hiệu quả)
+  setTimeout(() => {
+    document.querySelectorAll('.scroll-reveal:not(.visible)').forEach(el => {
+      el.classList.add('visible');
+    });
+  }, 1800);
 }
 
 /**
@@ -134,7 +146,7 @@ export function startHeroTypewriter() {
   const aboutEl = document.getElementById('pilot-about');
   if (aboutEl) {
     const aboutMe = pilotInfo.aboutMe || "";
-    initTypewriter(aboutEl, aboutMe, 25);
+    initTypewriter(aboutEl, aboutMe, 8);
   }
 
   // 3. Chạy typewriter đồng thời cho từng dòng định hướng Flight Vector
@@ -142,7 +154,7 @@ export function startHeroTypewriter() {
     pilotInfo.learningGoals.forEach((goal, index) => {
       const goalItem = document.getElementById(`pilot-goal-${index}`);
       if (goalItem) {
-        initTypewriter(goalItem, `✦ ${goal}`, 25);
+        initTypewriter(goalItem, `✦ ${goal}`, 8);
       }
     });
   }
@@ -151,7 +163,7 @@ export function startHeroTypewriter() {
   const purposeEl = document.getElementById('pilot-purpose');
   if (purposeEl) {
     const purposeText = pilotInfo.portfolioPurpose || "";
-    initTypewriter(purposeEl, purposeText, 25);
+    initTypewriter(purposeEl, purposeText, 8);
   }
 }
 
@@ -159,61 +171,95 @@ export function startHeroTypewriter() {
  * Nạp danh sách 6 bài tập lớn dạng Lưới lục giác viễn tưởng (Mission Archive)
  */
 function renderExercisesGrid() {
-  const { exercises } = portfolioData;
   const gridContainer = document.getElementById('projects-grid');
-  if (!gridContainer || !exercises) return;
+  if (!gridContainer) {
+    console.error("HUD Error: Element #projects-grid not found in DOM.");
+    return;
+  }
 
-  gridContainer.innerHTML = '';
+  try {
+    const { exercises } = portfolioData;
+    if (!exercises) {
+      gridContainer.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 24px; border: 1px dashed var(--plasma-orange); background: rgba(255,107,53,0.05); color: var(--plasma-orange); border-radius: 8px; font-family: monospace; font-size: 13px; text-align: center;">
+          ⚠️ DIAGNOSTIC: portfolioData.exercises is undefined.<br>
+          Available keys in portfolioData: ${Object.keys(portfolioData || {}).join(', ') || 'None'}
+        </div>
+      `;
+      return;
+    }
 
-  exercises.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'project-card hex-clip hologram-card';
+    gridContainer.innerHTML = '';
 
-    // Cấu hình hiển thị preview mục tiêu ngắn gọn
-    const goalText = item.goal || "";
-    const shortGoal = goalText ? goalText.substring(0, 85) + '...' : 'Đang giải mã dữ liệu mục tiêu...';
+    exercises.forEach((item, index) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'project-card-wrapper scroll-reveal';
+      wrapper.style.perspective = '1000px';
 
-    // Đảm bảo an toàn cho cấu trúc product
-    const product = item.product || {};
-    const productType = product.type || 'link';
-    const productUrl = product.url || '#';
-    const productLabel = product.label || 'Mở khóa tài liệu';
-    const productIcon = getProductIconSvg(productType);
+      const floatWrapper = document.createElement('div');
+      floatWrapper.className = 'project-card-float';
+      floatWrapper.style.animationDelay = `${index * 0.4}s`;
 
-    card.innerHTML = `
-      <div class="project-card-header">
-        <span class="project-card-num">${item.code || '[BT]'}</span>
-        <span class="badge-status" style="padding: 2px 10px; font-size: 9px; border-color: rgba(0,245,255,0.25);">ENCRYPTED</span>
-      </div>
-      <div class="project-card-title">
-        <h3>${item.title || 'Bài tập chưa định danh'}</h3>
-      </div>
-      <p class="project-card-excerpt">${shortGoal}</p>
-      
-      <!-- KHU VỰC CHI TIẾT BỊ ẨN (GSAP SẼ BUNG MỞ CHIỀU CAO KHI CLICK THẺ) -->
-      <div class="project-detail-expand">
-        <div class="project-detail-grid">
-          <!-- Cột trái: Mục tiêu và tiến trình -->
-          <div class="project-detail-info">
-            <h4>🎯 MỤC TIÊU BÀI HỌC</h4>
-            <p>${goalText || 'Đang cập nhật mục tiêu...'}</p>
-            <h4>🛠️ QUÁ TRÌNH THỰC HIỆN</h4>
-            <p>${item.process || 'Đang cập nhật tiến trình...'}</p>
-          </div>
-          <!-- Cột phải: Sản phẩm -->
-          <div class="project-detail-product">
-            <div class="product-icon-area" style="color: var(--neon-cyan);">${productIcon}</div>
-            <div class="project-product-label">${productLabel}</div>
-            <a href="${productUrl}" target="_blank" class="project-product-btn">
-              MỞ KHÓA TÀI LIỆU
-            </a>
+      const card = document.createElement('div');
+      card.className = 'project-card hex-clip hologram-card';
+
+      // Cấu hình hiển thị preview mục tiêu ngắn gọn
+      const goalText = item.goal || "";
+      const shortGoal = goalText ? goalText.substring(0, 85) + '...' : 'Đang giải mã dữ liệu mục tiêu...';
+
+      // Đảm bảo an toàn cho cấu trúc product
+      const product = item.product || {};
+      const productType = product.type || 'link';
+      const productUrl = product.url || '#';
+      const productLabel = product.label || 'Mở khóa tài liệu';
+      const productIcon = getProductIconSvg(productType);
+
+      card.innerHTML = `
+        <div class="project-card-header">
+          <span class="project-card-num">${item.code || '[BT]'}</span>
+          <span class="badge-status" style="padding: 2px 10px; font-size: 9px; border-color: rgba(0,245,255,0.25);">ENCRYPTED</span>
+        </div>
+        <div class="project-card-title">
+          <h3>${item.title || 'Bài tập chưa định danh'}</h3>
+        </div>
+        <p class="project-card-excerpt">${shortGoal}</p>
+        
+        <!-- KHU VỰC CHI TIẾT BỊ ẨN (GSAP SẼ BUNG MỞ CHIỀU CAO KHI CLICK THẺ) -->
+        <div class="project-detail-expand">
+          <div class="project-detail-grid">
+            <!-- Cột trái: Mục tiêu và tiến trình -->
+            <div class="project-detail-info">
+              <h4>🎯 MỤC TIÊU BÀI HỌC</h4>
+              <p>${goalText || 'Đang cập nhật mục tiêu...'}</p>
+              <h4>🛠️ QUÁ TRÌNH THỰC HIỆN</h4>
+              <p>${item.process || 'Đang cập nhật tiến trình...'}</p>
+            </div>
+            <!-- Cột phải: Sản phẩm -->
+            <div class="project-detail-product">
+              <div class="product-icon-area" style="color: var(--neon-cyan);">${productIcon}</div>
+              <div class="project-product-label">${productLabel}</div>
+              <a href="${productUrl}" target="_blank" class="project-product-btn">
+                MỞ KHÓA TÀI LIỆU
+              </a>
+            </div>
           </div>
         </div>
+      `;
+
+      floatWrapper.appendChild(card);
+      wrapper.appendChild(floatWrapper);
+      gridContainer.appendChild(wrapper);
+    });
+  } catch (error) {
+    console.error("HUD Error in renderExercisesGrid:", error);
+    gridContainer.innerHTML = `
+      <div style="grid-column: 1 / -1; padding: 24px; border: 1px dashed var(--plasma-orange); background: rgba(255,107,53,0.05); color: var(--plasma-orange); border-radius: 8px; font-family: monospace; font-size: 13px; text-align: center;">
+        ⚠️ SYSTEM ERROR: Failed to render exercises grid.<br>
+        Message: ${error.message}<br>
+        Stack: ${error.stack ? error.stack.split('\n')[0] : ''}
       </div>
     `;
-
-    gridContainer.appendChild(card);
-  });
+  }
 }
 
 /**
@@ -233,19 +279,45 @@ function getProductIconSvg(type) {
 }
 
 /**
- * Nạp thông tin phần tổng kết cảm nhận
+ * Nạp thông tin phần tổng kết cảm nhận — 5 khu vực
  */
 function renderReflectionLogs() {
   const { reflection } = portfolioData;
   if (!reflection) return;
 
-  const expEl = document.getElementById('reflection-exp');
-  const highEl = document.getElementById('reflection-high');
-  const chalEl = document.getElementById('reflection-chal');
+  // 1. Tổng quan hành trình
+  const overviewEl = document.getElementById('reflection-overview');
+  if (overviewEl) overviewEl.textContent = reflection.overview;
 
+  // 2. Trải nghiệm và cảm nhận
+  const expEl = document.getElementById('reflection-exp');
   if (expEl) expEl.textContent = reflection.experience;
-  if (highEl) highEl.textContent = reflection.highlights;
-  if (chalEl) chalEl.textContent = reflection.challenges;
+
+  // 3. Điểm tâm đắc nhất (danh sách)
+  const highListEl = document.getElementById('reflection-high-list');
+  if (highListEl && Array.isArray(reflection.highlights)) {
+    highListEl.innerHTML = reflection.highlights.map(item => `
+      <li>
+        <strong>${item.title}</strong>
+        <span>${item.desc}</span>
+      </li>
+    `).join('');
+  }
+
+  // 4. Thách thức đã gặp phải (danh sách)
+  const chalListEl = document.getElementById('reflection-chal-list');
+  if (chalListEl && Array.isArray(reflection.challenges)) {
+    chalListEl.innerHTML = reflection.challenges.map(item => `
+      <li>
+        <strong>${item.title}</strong>
+        <span>${item.desc}</span>
+      </li>
+    `).join('');
+  }
+
+  // 5. Lời kết
+  const closingEl = document.getElementById('reflection-closing');
+  if (closingEl) closingEl.textContent = reflection.closing;
 }
 
 /**

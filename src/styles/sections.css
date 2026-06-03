@@ -214,6 +214,32 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.project-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+.project-card-float {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  animation: card-float 4.5s infinite ease-in-out;
+}
+
+@keyframes card-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 /* Thẻ dự án lục giác viễn tưởng */
@@ -337,7 +363,7 @@
 }
 
 /* ==========================================================================
-   SECTION 3: SUMMARY (END TRANSMISSION)
+   SECTION 3: SUMMARY — TỔNG KẾT HÀNH TRÌNH (REDESIGNED)
    ========================================================================== */
 #summary {
   padding: 120px 0;
@@ -345,50 +371,122 @@
   overflow: hidden;
 }
 
-
-
-/* Khối Cảm nhận cá nhân */
-.reflection-block {
-  max-width: 900px;
-  margin: 0 auto 40px;
-  padding: 32px;
+/* Subtitle dưới tiêu đề section */
+.section-subtitle {
+  font-size: 16px;
+  color: rgba(220, 225, 240, 0.95);
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
 }
 
+/* ====================
+   KHU VỰC 1 & 2: KHỐI GLASSMORPHISM — TỔNG QUAN & CẢM NHẬN
+   ==================== */
+.reflection-journey-block {
+  max-width: 900px;
+  margin: 0 auto 32px;
+  padding: 32px 36px;
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  border-radius: 12px;
+  background: rgba(0, 245, 255, 0.02);
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.reflection-journey-block:hover {
+  border-color: rgba(0, 245, 255, 0.35);
+  background: rgba(0, 245, 255, 0.04);
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.08), inset 0 0 20px rgba(0, 245, 255, 0.03);
+  transform: translateY(-2px);
+}
+
+/* Biến thể tím cho khu vực 2 */
+.reflection-journey-purple {
+  border-color: rgba(124, 58, 237, 0.15);
+  background: rgba(124, 58, 237, 0.02);
+}
+
+.reflection-journey-purple:hover {
+  border-color: rgba(124, 58, 237, 0.35);
+  background: rgba(124, 58, 237, 0.04);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.08), inset 0 0 20px rgba(124, 58, 237, 0.03);
+}
+
+/* Header của khối */
+.ref-block-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+}
+
+.reflection-journey-purple .ref-block-header {
+  border-bottom-color: rgba(124, 58, 237, 0.1);
+}
+
+.ref-block-icon {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px var(--glow-cyan));
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.reflection-journey-purple .ref-block-icon {
+  filter: drop-shadow(0 0 8px var(--glow-purple));
+}
+
+.ref-block-header h3 {
+  font-family: var(--font-sci-fi);
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--neon-cyan);
+  margin: 0;
+}
+
+.reflection-journey-purple .ref-block-header h3 {
+  color: var(--nebula-purple);
+}
+
+/* Nội dung paragraphs trong khối */
+.reflection-journey-block > p {
+  font-size: 17px;
+  color: rgba(220, 225, 240, 0.95);
+  line-height: 1.9;
+  margin: 0;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.reflection-journey-block:hover > p {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* ====================
+   KHU VỰC 3 & 4: FLIP CARDS — GRID + BULLET LISTS
+   ==================== */
 .reflection-cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto 100px;
+  margin: 16px auto 40px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
 }
 
-.reflection-text {
-  transition: all var(--transition-normal);
-}
-
-.reflection-text:hover {
-  transform: scale(1.02);
-}
-
-.reflection-text p {
-  font-size: 17px;
-  color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 0;
-  transition: color var(--transition-fast), text-shadow var(--transition-fast);
-}
-
-.reflection-text:hover p {
-  color: #ffffff !important;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+/* Flip card cao hơn cho nội dung nhiều */
+.reflection-flip-tall {
+  height: 340px;
 }
 
 .flip-card {
   background-color: transparent;
   width: 100%;
   height: 220px;
-  perspective: 1000px; /* Thiết lập chiều sâu cho chuyển động 3D */
+  perspective: 1000px;
   cursor: pointer;
 }
 
@@ -398,7 +496,7 @@
   height: 100%;
   text-align: center;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d; /* Cho phép các thành phần con nằm trên mặt phẳng 3D */
+  transform-style: preserve-3d;
 }
 
 .flip-card.flipped .flip-card-inner {
@@ -413,8 +511,8 @@
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
-  backface-visibility: hidden; /* Ẩn mặt sau khi không xoay */
-  border-radius: 8px;
+  backface-visibility: hidden;
+  border-radius: 12px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -449,7 +547,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   box-shadow: 0 0 25px rgba(0, 245, 255, 0.15);
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 /* Mặt sau - Tông cam Plasma */
@@ -462,13 +560,13 @@
   align-items: flex-start;
   justify-content: flex-start;
   box-shadow: 0 0 25px rgba(255, 107, 53, 0.15);
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .flip-card-back h4,
 .flip-card-back-orange h4 {
-  font-size: 16px;
-  margin-bottom: 8px;
+  font-size: 15px;
+  margin-bottom: 12px;
   letter-spacing: 1px;
 }
 
@@ -485,6 +583,54 @@
   font-size: 15px;
   color: var(--text-muted);
   line-height: 1.6;
+}
+
+/* Bullet List bên trong flip card */
+.ref-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.ref-bullet-list li {
+  position: relative;
+  padding: 10px 0 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(220, 225, 240, 0.95);
+}
+
+.ref-bullet-list li:last-child {
+  border-bottom: none;
+}
+
+.ref-bullet-list li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: var(--neon-cyan);
+  font-size: 14px;
+}
+
+.flip-card-back-orange .ref-bullet-list li::before {
+  color: var(--plasma-orange);
+}
+
+.ref-bullet-list li strong {
+  display: block;
+  font-size: 15.5px;
+  color: #ffffff;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.ref-bullet-list li span {
+  color: rgba(220, 225, 240, 0.95);
+  font-size: 14.5px;
+  line-height: 1.65;
 }
 
 /* Biểu tượng phát sáng */
@@ -513,17 +659,60 @@
   color: rgba(255, 107, 53, 0.5);
 }
 
+/* ====================
+   KHU VỰC 5: LỜI KẾT
+   ==================== */
+.reflection-closing {
+  max-width: 900px;
+  margin: 20px auto 100px;
+  padding: 32px 36px;
+  text-align: center;
+  position: relative;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.02) 0%, rgba(124, 58, 237, 0.02) 100%);
+  border: 1px solid rgba(0, 245, 255, 0.08);
+  transition: all 0.4s ease;
+}
+
+.reflection-closing:hover {
+  border-color: rgba(0, 245, 255, 0.2);
+  box-shadow: 0 0 40px rgba(0, 245, 255, 0.05), 0 0 40px rgba(124, 58, 237, 0.05);
+}
+
+.ref-closing-accent {
+  width: 60px;
+  height: 2px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--nebula-purple));
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.reflection-closing p {
+  font-size: 17px;
+  color: rgba(220, 225, 240, 0.95);
+  line-height: 1.9;
+  font-style: italic;
+  margin: 16px 0;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.reflection-closing:hover p {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
 /* Đồ họa trang trí tinh cầu dưới đáy */
 .planet-parallax-container {
   position: absolute;
-  bottom: -250px;
+  bottom: -200px;
   left: 50%;
   transform: translateX(-50%);
   width: 500px;
   height: 500px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .planet-sphere {
@@ -590,12 +779,62 @@
   }
 }
 
-/* LÀM SÁNG CHỮ CHO TẤT CẢ CÁC CARD THÔNG TIN */
+/* LÀM SÁNG CHỮ CHO TẤT CẢ CÁC CARD THÔNG TIN VỚI HIỆU ỨNG HOVER MƯỢT MÀ */
 .hero-card-desc,
 .hero-card-desc li,
 .project-card-excerpt,
 .project-detail-info p,
 .flip-card-back p,
-.flip-card-back-orange p {
+.flip-card-back-orange p,
+#reflection-exp {
+  color: #ffffff !important; /* Giữ màu trắng tinh khiết để đạt độ rõ và độ tương phản cao nhất */
+  font-weight: 600;          /* Nền chữ Semi-bold mặc định cực kỳ sắc nét */
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.95); /* Bóng đổ đen đậm đặc để ngăn ánh sáng nền làm mờ nét chữ */
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              text-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-origin: left center;
+  
+  /* Các thuộc tính ép trình duyệt kết xuất phông chữ cứng cáp, sắc nét khi thực hiện transform */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* HIỆU ỨNG HOVER CHO CHỮ SÁNG HƠN VÀ TO HƠN TẠI CÁC PHẦN THÔNG TIN (SẮC NÉT & NỔI BẬT HẲN LÊN) */
+.hologram-card:hover .hero-card-desc,
+.hologram-card:hover .hero-card-desc li,
+.project-card:hover .project-card-excerpt,
+.project-card:hover .project-detail-info p,
+.reflection-block:hover #reflection-exp,
+.flip-card.flipped:hover .flip-card-back p {
   color: #ffffff !important;
+  font-weight: 700; /* Tăng độ dày chữ lên Bold khi hover để chữ nổi bật và to rõ hẳn lên */
+  /* Loại bỏ hoàn toàn hào quang màu neon trên thân chữ để giữ các nét sắc sảo, chỉ dùng bóng đổ đen tuyền đậm đặc */
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.98);
+  transform: scale(1.03) translateZ(0); /* Phóng to chữ lên 3% vẫn sắc nét nhờ render 3D */
+}
+
+.flip-card.flipped:hover .flip-card-back-orange p {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.98);
+  transform: scale(1.03) translateZ(0);
+}
+
+/* ==========================================================================
+   6. HIỆU ỨNG CUỘN TRANG BẰNG INTERSECTION OBSERVER & CSS TRANSITIONS
+   ========================================================================== */
+.scroll-reveal {
+  opacity: 0 !important;
+  transform: translateY(40px) scale(0.96) !important;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, opacity;
+}
+
+.scroll-reveal.visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
 }

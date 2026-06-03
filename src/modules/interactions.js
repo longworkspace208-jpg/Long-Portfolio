@@ -8,6 +8,9 @@
  */
 
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * 1. HIỆU ỨNG NGHIÊNG THẺ 3D TILT MATHEMATICAL MOUSE-TRACKING
@@ -80,7 +83,13 @@ export function initCardExpandCollapse(cardSelector) {
           otherCard.classList.remove('expanded');
           const otherDetail = otherCard.querySelector('.project-detail-expand');
           if (otherDetail) {
-            gsap.to(otherDetail, { height: 0, duration: 0.4, ease: 'power2.inOut' });
+            gsap.to(otherDetail, { 
+              height: 0, 
+              duration: 0.4, 
+              ease: 'power2.inOut',
+              onUpdate: () => ScrollTrigger.refresh(),
+              onComplete: () => ScrollTrigger.refresh()
+            });
           }
         }
       });
@@ -88,7 +97,13 @@ export function initCardExpandCollapse(cardSelector) {
       // Bật/tắt trạng thái thẻ hiện tại
       if (isExpanded) {
         card.classList.remove('expanded');
-        gsap.to(detailContainer, { height: 0, duration: 0.4, ease: 'power2.inOut' });
+        gsap.to(detailContainer, { 
+          height: 0, 
+          duration: 0.4, 
+          ease: 'power2.inOut',
+          onUpdate: () => ScrollTrigger.refresh(),
+          onComplete: () => ScrollTrigger.refresh()
+        });
       } else {
         card.classList.add('expanded');
         // Bung mở mượt mà chiều cao về tự động (Vite / GSAP hỗ trợ trực tiếp)
@@ -96,7 +111,9 @@ export function initCardExpandCollapse(cardSelector) {
           height: 'auto',
           duration: 0.5,
           ease: 'power2.out',
+          onUpdate: () => ScrollTrigger.refresh(),
           onComplete: () => {
+            ScrollTrigger.refresh();
             // Đảm bảo cuộn nhẹ trang web đến đúng vị trí thẻ vừa bung mở để dễ quan sát
             card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }

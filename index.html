@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COSMIC PORTFOLIO // NGUYỄN KIM LÊ LONG</title>
+  <title>PORTFOLIO // KIM LONG</title>
   <meta name="description" content="Hồ sơ năng lực kỹ thuật số viễn tưởng dạng HUD buồng lái phi thuyền của phi công Nguyễn Kim Lê Long. Lập trình 3D bằng Three.js và hoạt cảnh mượt mà bằng GSAP.">
   
   <!-- CSS Stylesheets theo kiến trúc Module -->
@@ -30,7 +30,7 @@
     });
   </script>
 </head>
-<body>
+<body class="loading-lock">
 
   <!-- HIỆU ỨNG QUÉT DÒNG TV CỦA PHI THUYỀN (HUD CRITICAL SCANLINES OVERLAY) -->
   <div class="scanlines-overlay"></div>
@@ -49,8 +49,8 @@
     </div>
   </div>
 
-  <!-- HÌNH NỀN ĐỘNG CANVAS (THREE.JS 10.000 STARFIELD) - ĐÃ TẮT ĐỂ DÙNG ẢNH ĐỘNG WEBP -->
-  <!-- <canvas id="bg-canvas"></canvas> -->
+  <!-- HÌNH NỀN ĐỘNG CANVAS (THREE.JS 10.000 STARFIELD) -->
+  <canvas id="bg-canvas"></canvas>
 
   <!-- DYNAMIC NEON GLOW BACKGROUND EFFECT -->
   <div class="neon-glow-container">
@@ -66,12 +66,7 @@
     <div class="hud-corner bl"></div>
     <div class="hud-corner br"></div>
     
-    <!-- Bộ chỉ số góc HUD -->
-    <div class="hud-diagnostics">
-      <span><div class="hud-dot-pulse"></div> SYS_ACTIVE: ONLINE</span>
-      <span>WARP CORE: 98.4%</span>
-      <span>SECTOR: SOL-E-42</span>
-    </div>
+
   </div>
 
   <!-- BỐ CỤC CHÍNH ỨNG DỤNG (HUD SHELL NAVIGATION) -->
@@ -81,12 +76,12 @@
     <nav class="hud-navbar">
       <div class="hud-nav-container">
         <a href="#hero" class="hud-logo">
-          <span class="hud-logo-arrow">&lt;</span>COSMIC_PORTFOLIO<span class="hud-logo-arrow">/&gt;</span>
+          <span class="hud-logo-arrow">&lt;</span>LONG's PORTFOLIO<span class="hud-logo-arrow">/&gt;</span>
         </a>
         <div class="hud-nav-links">
-          <a href="#hero" class="hud-btn active">Cockpit</a>
-          <a href="#projects" class="hud-btn">Archive</a>
-          <a href="#summary" class="hud-btn">Logs</a>
+          <a href="#hero" class="hud-btn active">Profile</a>
+          <a href="#projects" class="hud-btn">Projects</a>
+          <a href="#summary" class="hud-btn">Summary</a>
         </div>
         <!-- Nút bật tắt hiệu ứng (FX Toggle) -->
         <button id="fx-toggle-btn" class="hud-fx-toggle" aria-label="Tắt quét dòng màn hình">
@@ -103,7 +98,7 @@
         <div class="container hero-layout">
           
           <div class="hero-main-title">
-            <p>// THIẾT LẬP TỌA ĐỘ PHI CÔNG</p>
+            <p>// WELCOME TO MY PORTFOLIO</p>
             <h1 id="pilot-name" class="glitch-title" data-text="NGUYỄN KIM LÊ LONG">Đang tải...</h1>
             <p id="pilot-subtitle">Đang đồng bộ...</p>
           </div>
@@ -170,62 +165,87 @@
         </div>
       </section>
 
-      <!-- SECTION 3: SUMMARY (END TRANSMISSION) -->
+      <!-- SECTION 3: SUMMARY — TỔNG KẾT HÀNH TRÌNH (REDESIGNED) -->
       <section id="summary" class="section">
         <div class="container">
           
+          <!-- Tiêu đề Section -->
           <div class="section-title-wrapper">
             <span class="badge-status" style="border-color: rgba(124, 58, 237, 0.3); color: var(--nebula-purple); background: rgba(124, 58, 237, 0.05);">
-              <div class="badge-status-dot" style="background: var(--nebula-purple); box-shadow: 0 0 10px var(--glow-purple);"></div> SEC_03: END TRANSMISSION
+              <div class="badge-status-dot" style="background: var(--nebula-purple); box-shadow: 0 0 10px var(--glow-purple);"></div> SEC_03: FINAL REFLECTION
             </span>
-            <h2 style="margin-top: 16px;">TỔNG KẾT HÀNH TRÌNH // FINAL TRANSLATION</h2>
+            <h2 style="margin-top: 16px;">TỔNG KẾT HÀNH TRÌNH</h2>
+            <p class="section-subtitle">Nhìn lại toàn bộ hành trình qua 6 bài học và quá trình tự tay xây dựng dự án portfolio.</p>
           </div>
-          <!-- Khối phản hồi và trích dẫn cảm nhận -->
-          <div class="reflection-block glass hologram-card">
-            <!-- Cột trái: Trải nghiệm -->
-            <div class="reflection-text">
-              <h3 style="font-size: 18px; color: var(--neon-cyan); border-bottom: 1px solid rgba(0,245,255,0.1); padding-bottom: 10px; margin-bottom: 16px;">TRẢI NGHIỆM VÀ CẢM NHẬN</h3>
-              <p id="reflection-exp">Đang kết nối tín hiệu cảm xúc...</p>
+
+          <!-- KHU VỰC 1: TỔNG QUAN HÀNH TRÌNH 6 BÀI HỌC -->
+          <div class="reflection-journey-block project-card-float scroll-reveal" id="ref-block-overview" style="animation-delay: 0s;">
+            <div class="ref-block-header">
+              <span class="ref-block-icon">🚀</span>
+              <h3>TỔNG QUAN HÀNH TRÌNH 6 BÀI HỌC</h3>
             </div>
+            <p id="reflection-overview">Đang tải dữ liệu...</p>
           </div>
-          
-          <!-- Hai thẻ Điểm tâm đắc & Thách thức nằm riêng bên ngoài -->
+
+          <!-- KHU VỰC 2: TRẢI NGHIỆM & CẢM NHẬN -->
+          <div class="reflection-journey-block reflection-journey-purple project-card-float scroll-reveal" id="ref-block-experience" style="animation-delay: 0.4s;">
+            <div class="ref-block-header">
+              <span class="ref-block-icon">💭</span>
+              <h3>TRẢI NGHIỆM VÀ CẢM NHẬN</h3>
+            </div>
+            <p id="reflection-exp">Đang tải dữ liệu...</p>
+          </div>
+
+          <!-- KHU VỰC 3 & 4: FLIP CARDS — ĐIỂM TÂM ĐẮC & THÁCH THỨC -->
           <div class="reflection-cards-grid">
             
-            <!-- Flip Card 💡 ĐIỂM TÂM ĐẮC -->
-            <div class="flip-card">
+            <!-- Flip Card 💡 ĐIỂM TÂM ĐẮC NHẤT -->
+            <div class="flip-card reflection-flip-tall project-card-float scroll-reveal" style="animation-delay: 0.8s;">
               <div class="flip-card-inner">
                 <!-- Mặt trước -->
                 <div class="flip-card-front">
                   <div class="flip-icon-glow">💡</div>
                   <h4>ĐIỂM TÂM ĐẮC NHẤT</h4>
+                  <p style="font-size: 13px; color: rgba(0,245,255,0.5); margin-top: 8px;">Chủ quyền tư duy — Human-in-the-loop</p>
                   <span class="flip-status-badge">// CLICK TO REVEAL</span>
                 </div>
                 <!-- Mặt sau -->
                 <div class="flip-card-back">
                   <h4>💡 ĐIỂM TÂM ĐẮC NHẤT</h4>
-                  <p id="reflection-high">Đang kết nối dữ liệu...</p>
+                  <ul id="reflection-high-list" class="ref-bullet-list">
+                    <!-- JS sẽ render danh sách -->
+                  </ul>
                 </div>
               </div>
             </div>
- 
+
             <!-- Flip Card ⚠️ THÁCH THỨC -->
-            <div class="flip-card">
+            <div class="flip-card reflection-flip-tall project-card-float scroll-reveal" style="animation-delay: 1.2s;">
               <div class="flip-card-inner">
                 <!-- Mặt trước -->
                 <div class="flip-card-front-orange">
                   <div class="flip-icon-glow orange">⚠️</div>
-                  <h4>THÁCH THỨC LỚN NHẤT</h4>
+                  <h4>THÁCH THỨC ĐÃ GẶP PHẢI</h4>
+                  <p style="font-size: 13px; color: rgba(255,107,53,0.5); margin-top: 8px;">3 rào cản lớn trong quá trình xây dựng</p>
                   <span class="flip-status-badge orange">// CLICK TO DECODE</span>
                 </div>
                 <!-- Mặt sau -->
                 <div class="flip-card-back-orange">
-                  <h4>⚠️ THÁCH THỨC LỚN NHẤT</h4>
-                  <p id="reflection-chal">Đang kết nối dữ liệu...</p>
+                  <h4>⚠️ THÁCH THỨC ĐÃ GẶP PHẢI</h4>
+                  <ul id="reflection-chal-list" class="ref-bullet-list">
+                    <!-- JS sẽ render danh sách -->
+                  </ul>
                 </div>
               </div>
             </div>
- 
+
+          </div>
+
+          <!-- KHU VỰC 5: LỜI KẾT -->
+          <div class="reflection-closing scroll-reveal" id="ref-block-closing">
+            <div class="ref-closing-accent"></div>
+            <p id="reflection-closing">Đang tải dữ liệu...</p>
+            <div class="ref-closing-accent"></div>
           </div>
 
         </div>
@@ -238,10 +258,12 @@
 
     </main>
 
-    <!-- FOOTER & SỐ ĐIỀU HƯỚNG TỌA ĐỘ -->
+    <!-- FOOTER & THÔNG TIN LIÊN HỆ -->
     <footer class="footer-hud">
       <div class="container">
-        <div id="hud-coordinates" class="footer-coords">CONNECTING...</div>
+        <div class="footer-coords" style="font-size: 14px; text-transform: none; letter-spacing: 1px;">
+          CONTACT &mdash; Email: <a href="mailto:longworkspace208@gmail.com" style="color: var(--neon-cyan); font-weight: 700; text-decoration: underline;">longworkspace208@gmail.com</a> &mdash; Ha Noi
+        </div>
         <div class="footer-transmission">--- END TRANSMISSION ---</div>
       </div>
     </footer>
