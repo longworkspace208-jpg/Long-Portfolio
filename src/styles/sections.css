@@ -643,7 +643,7 @@
 }
 
 /* ====================
-   KHU VỰC 3 & 4: FLIP CARDS — GRID + BULLET LISTS
+   KHU VỰC 3 & 4: STATIC INFO CARDS — GRID + BULLET LISTS
    ==================== */
 .reflection-cards-grid {
   display: grid;
@@ -652,76 +652,170 @@
   width: 100%;
   max-width: 900px;
   margin: 16px auto 40px;
-  perspective: 1200px;
-  transform-style: preserve-3d;
 }
 
-.flip-card {
-  background-color: transparent;
-  width: 100%;
-  height: 220px;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  /* perspective được GSAP quản lý qua transformPerspective khi tilt */
-}
-
-/* Flip card cao hơn cho nội dung nhiều (Sử dụng specificity cao hơn) */
-.flip-card.reflection-flip-tall {
-  height: 340px;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
-}
-
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front, 
-.flip-card-back,
-.flip-card-front-orange,
-.flip-card-back-orange {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+/* --- Static Info Card --- */
+.ref-static-card {
   border-radius: 12px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), background var(--transition-normal), opacity var(--transition-normal);
+  padding: 28px 24px;
+  position: relative;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
 }
 
-/* Mặt trước - Tông xanh Cyan */
-.flip-card-front {
+/* Tông xanh Cyan */
+.ref-static-card--cyan {
   background: rgba(0, 245, 255, 0.02);
   border: 1px solid rgba(0, 245, 255, 0.15);
-  color: var(--neon-cyan);
-  box-shadow: inset 0 0 15px rgba(0, 245, 255, 0.05);
-  position: relative;
+  box-shadow: inset 0 0 15px rgba(0, 245, 255, 0.03);
+}
+.ref-static-card--cyan:hover {
+  border-color: rgba(0, 245, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.1), inset 0 0 20px rgba(0, 245, 255, 0.05);
 }
 
-/* Mặt trước - Tông cam Plasma */
-.flip-card-front-orange {
+/* Tông cam Plasma */
+.ref-static-card--orange {
   background: rgba(255, 107, 53, 0.02);
   border: 1px solid rgba(255, 107, 53, 0.15);
-  color: var(--plasma-orange);
-  box-shadow: inset 0 0 15px rgba(255, 107, 53, 0.05);
-  position: relative;
+  box-shadow: inset 0 0 15px rgba(255, 107, 53, 0.03);
+}
+.ref-static-card--orange:hover {
+  border-color: rgba(255, 107, 53, 0.4);
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.1), inset 0 0 20px rgba(255, 107, 53, 0.05);
 }
 
-/* Góc cơ khí cho mặt trước của flip card */
+/* Góc cơ khí cho static card */
+.ref-static-card::before,
+.ref-static-card::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.ref-static-card::before { top: -1px; left: -1px; }
+.ref-static-card::after { bottom: -1px; right: -1px; }
+
+.ref-static-card--cyan::before {
+  border-top-color: rgba(0, 245, 255, 0.25);
+  border-left-color: rgba(0, 245, 255, 0.25);
+}
+.ref-static-card--cyan::after {
+  border-bottom-color: rgba(0, 245, 255, 0.25);
+  border-right-color: rgba(0, 245, 255, 0.25);
+}
+.ref-static-card--cyan:hover::before {
+  border-top-color: var(--neon-cyan);
+  border-left-color: var(--neon-cyan);
+  box-shadow: -3px -3px 8px rgba(0, 245, 255, 0.35);
+}
+.ref-static-card--cyan:hover::after {
+  border-bottom-color: var(--neon-cyan);
+  border-right-color: var(--neon-cyan);
+  box-shadow: 3px 3px 8px rgba(0, 245, 255, 0.35);
+}
+
+.ref-static-card--orange::before {
+  border-top-color: rgba(255, 107, 53, 0.25);
+  border-left-color: rgba(255, 107, 53, 0.25);
+}
+.ref-static-card--orange::after {
+  border-bottom-color: rgba(255, 107, 53, 0.25);
+  border-right-color: rgba(255, 107, 53, 0.25);
+}
+.ref-static-card--orange:hover::before {
+  border-top-color: var(--plasma-orange);
+  border-left-color: var(--plasma-orange);
+  box-shadow: -3px -3px 8px rgba(255, 107, 53, 0.35);
+}
+.ref-static-card--orange:hover::after {
+  border-bottom-color: var(--plasma-orange);
+  border-right-color: var(--plasma-orange);
+  box-shadow: 3px 3px 8px rgba(255, 107, 53, 0.35);
+}
+
+/* Header của static card */
+.ref-static-card-header {
+  text-align: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.ref-static-card-header h4 {
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  margin: 0;
+}
+.ref-static-card--cyan .ref-static-card-header h4 { color: var(--neon-cyan); }
+.ref-static-card--orange .ref-static-card-header h4 { color: var(--plasma-orange); }
+
+.ref-static-subtitle {
+  font-size: 12px;
+  margin-top: 6px;
+  margin-bottom: 0;
+  letter-spacing: 0.5px;
+}
+.ref-static-card--cyan .ref-static-subtitle { color: rgba(0, 245, 255, 0.45); }
+.ref-static-card--orange .ref-static-subtitle { color: rgba(255, 107, 53, 0.45); }
+
+/* Bullet List */
+.ref-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.ref-bullet-list li {
+  position: relative;
+  padding: 10px 0 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(220, 225, 240, 0.95);
+}
+.ref-bullet-list li:last-child { border-bottom: none; }
+.ref-bullet-list li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-size: 14px;
+}
+.ref-static-card--cyan .ref-bullet-list li::before { color: var(--neon-cyan); }
+.ref-static-card--orange .ref-bullet-list li::before { color: var(--plasma-orange); }
+
+.ref-bullet-list li strong {
+  display: block;
+  font-size: 15.5px;
+  color: #ffffff;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+.ref-bullet-list li span {
+  color: rgba(220, 225, 240, 0.95);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+/* Biểu tượng phát sáng */
+.flip-icon-glow {
+  font-size: 28px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 8px var(--glow-cyan));
+  animation: pulse-dot 2s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+.flip-icon-glow.orange {
+  filter: drop-shadow(0 0 8px var(--glow-orange));
+}
+.ref-static-card:hover .flip-icon-glow {
+  transform: scale(1.15);
+}
+
+
+
 .flip-card-front::before,
 .flip-card-front::after,
 .flip-card-front-orange::before,

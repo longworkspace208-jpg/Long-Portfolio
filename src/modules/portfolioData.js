@@ -23,10 +23,10 @@ export const portfolioData = {
     major: "Computer Science",
     school: "UET - VNU",
     avatar: "", // Bạn có thể đặt link ảnh phi công của bạn hoặc để trống dùng mặc định
-    
+
     // Giới thiệu bản thân (Pilot Profile)
     aboutMe: "Tôi là Nguyễn Kim Lê Long, sinh viên chuyên ngành Khoa học Máy tính tại Trường Đại học Công nghệ - ĐHQGHN. Với ngọn lửa đam mê công nghệ cháy bỏng và khát khao chinh phục các đỉnh cao tri thức mới, tôi luôn nỗ lực nghiên cứu các giải pháp lập trình và hệ thống thông tin thông minh để giải quyết các vấn đề thực tiễn.",
-    
+
     // Sở thích cá nhân (Hobbies)
     hobbies: [
       { name: "Game", icon: "🎮" },
@@ -34,14 +34,14 @@ export const portfolioData = {
       { name: "Ăn", icon: "🍕" },
       { name: "Ngủ", icon: "💤" }
     ],
-    
+
     // Định hướng học tập (Flight Vector)
     learningGoals: [
       "Chinh phục các kiến thức chuyên sâu về Khoa học Máy tính bao gồm cấu trúc dữ liệu nâng cao, tối ưu giải thuật và kiến trúc hệ thống phần mềm.",
       "Nghiên cứu ứng dụng thực tiễn của Trí tuệ nhân tạo (AI) và Học máy (Machine Learning) để xây dựng các công cụ phân tích tự động thông minh.",
       "Rèn luyện kỹ năng tư duy phản biện, giải quyết vấn đề và giao tiếp cộng tác đa nền tảng trong môi trường công nghệ số toàn cầu."
     ],
-    
+
     // Ý nghĩa Portfolio (Mission Briefing)
     portfolioPurpose: "Không chỉ đơn thuần là một trang web lưu trữ học thuật, bản portfolio vũ trụ này là cuốn nhật ký hành trình ghi lại từng cột mốc tăng tốc của tôi. Đây là nơi hội tụ các mảnh ghép tri thức từ tư duy cấu trúc logic, kỹ năng lập trình tối ưu, cho đến nghệ thuật tương tác và hợp tác công nghệ số. Mỗi bài tập tại đây là một tọa độ bay đã được chinh phục, phản ánh sự trưởng thành trong tư duy kỹ thuật, sự chỉn chu trong phát triển sản phẩm và cam kết tuyệt đối với đạo đức, liêm chính học thuật trong suốt chặng đường khám phá tri thức rộng lớn."
   },
@@ -148,14 +148,10 @@ export const portfolioData = {
       {
         title: "Kiểm soát tính chân thực của AI (Ảo giác AI)",
         desc: "Khi tận dụng AI để hỗ trợ tổng hợp thông tin, tôi nhiều lần phải đối mặt với tình trạng AI đưa ra các thông tin chung chung hoặc mã nguồn thiếu tính thực tế. Điều này buộc tôi phải mất nhiều thời gian hơn dự kiến để kiểm chứng độc lập (fact-checking) và tinh chỉnh lại bằng kiến thức của mình."
-      },
-      {
-        title: "Đóng gói và hoàn thiện nội dung",
-        desc: "Có những lúc việc hệ thống hóa tất cả các dự án thành một định dạng chuẩn chỉnh giống như việc nỗ lực chuyển nguyên văn các bài toán phức tạp sang định dạng markdown. Nó đòi hỏi sự tỉ mỉ, kiên nhẫn sửa từng lỗi nhỏ nhất để đảm bảo kết quả đầu ra thực sự trơn tru và chuyên nghiệp."
       }
     ],
 
     // 5. Lời kết — Final Transmission
-    closing: "Portfolio này không phải là điểm đến — mà là bản ghi hành trình của một phi công đang học cách bay. Mỗi dòng code, mỗi lần debug, mỗi quyết định giữ lại hay viết lại đều khắc sâu vào tôi một bài học: rằng sự trưởng thành không nằm ở việc hoàn hảo ngay từ đầu, mà ở việc dám đối mặt với những thứ chưa hoàn hảo và kiên trì cải tiến. Hành trình vẫn đang tiếp diễn — và đây chỉ mới là chương mở đầu."
+    closing: "Portfolio này không phải là điểm đến — mà là bản ghi hành trình của một phi công đang học cách bay. Mỗi bài tập, mỗi quyết định đều khắc sâu vào tôi một bài học: rằng sự trưởng thành không nằm ở việc hoàn hảo ngay từ đầu, mà ở việc dám đối mặt với những thứ chưa hoàn hảo và kiên trì cải tiến. Hành trình vẫn đang tiếp diễn — và đây chỉ mới là chương mở đầu."
   }
 };
