@@ -27,6 +27,14 @@ export const portfolioData = {
     // Giới thiệu bản thân (Pilot Profile)
     aboutMe: "Tôi là Nguyễn Kim Lê Long, sinh viên chuyên ngành Khoa học Máy tính tại Trường Đại học Công nghệ - ĐHQGHN. Với ngọn lửa đam mê công nghệ cháy bỏng và khát khao chinh phục các đỉnh cao tri thức mới, tôi luôn nỗ lực nghiên cứu các giải pháp lập trình và hệ thống thông tin thông minh để giải quyết các vấn đề thực tiễn.",
     
+    // Sở thích cá nhân (Hobbies)
+    hobbies: [
+      { name: "Game", icon: "🎮" },
+      { name: "Code", icon: "💻" },
+      { name: "Ăn", icon: "🍕" },
+      { name: "Ngủ", icon: "💤" }
+    ],
+    
     // Định hướng học tập (Flight Vector)
     learningGoals: [
       "Chinh phục các kiến thức chuyên sâu về Khoa học Máy tính bao gồm cấu trúc dữ liệu nâng cao, tối ưu giải thuật và kiến trúc hệ thống phần mềm.",
@@ -35,7 +43,7 @@ export const portfolioData = {
     ],
     
     // Ý nghĩa Portfolio (Mission Briefing)
-    portfolioPurpose: "Dự án Portfolio này được thiết lập như một kho lưu trữ số học thuật bền vững, nhằm chứng minh sự trưởng thành về năng lực tư duy kỹ thuật, kỹ năng phát triển nội dung số và cam kết tuân thủ liêm chính học thuật trong suốt hành trình học tập."
+    portfolioPurpose: "Không chỉ đơn thuần là một trang web lưu trữ học thuật, bản portfolio vũ trụ này là cuốn nhật ký hành trình ghi lại từng cột mốc tăng tốc của tôi. Đây là nơi hội tụ các mảnh ghép tri thức từ tư duy cấu trúc logic, kỹ năng lập trình tối ưu, cho đến nghệ thuật tương tác và hợp tác công nghệ số. Mỗi bài tập tại đây là một tọa độ bay đã được chinh phục, phản ánh sự trưởng thành trong tư duy kỹ thuật, sự chỉn chu trong phát triển sản phẩm và cam kết tuyệt đối với đạo đức, liêm chính học thuật trong suốt chặng đường khám phá tri thức rộng lớn."
   },
   // ==========================================
   // PHẦN 2: KHO LƯU TRỮ BÀI TẬP (MISSION ARCHIVE)
@@ -44,9 +52,8 @@ export const portfolioData = {
     {
       id: 1,
       code: "[BT-01]",
-      title: "Máy tính và thiết bị ngoại vi",
-      goal: "Tìm hiểu chi tiết về cấu trúc phần cứng máy tính, nguyên lý hoạt động của các khối xử lý trung tâm (CPU, RAM, ROM) và cách thức các thiết bị ngoại vi giao tiếp để xây dựng hệ thống phần cứng tối ưu cho việc học tập Khoa học máy tính.",
-      process: "Nghiên cứu tài liệu về kiến trúc máy tính hiện đại, tiến hành khảo sát thực tế giá thành và hiệu năng của các linh kiện phần cứng trên thị trường, xây dựng báo cáo phân tích chi tiết và đề xuất một cấu hình máy tính trạm chuyên dụng phục vụ lập trình ứng dụng và nghiên cứu mô hình AI.",
+      title: "Thao tác cơ bản với tệp tin và thư mục",
+      goal: "Mục tiêu cốt lõi của bài học là giúp sinh viên rèn luyện và sử dụng thành thạo các kỹ năng quản lý tệp tin và thư mục cơ bản trên hệ điều hành Windows (có thể điều chỉnh cho macOS/Linux). Các thao tác này bao gồm: tạo mới, đổi tên, sao chép, di chuyển và xóa tệp/thư mục.",
       product: {
         type: "pdf", // 'pdf', 'image', 'video', 'link'
         url: pdf1,
@@ -56,9 +63,8 @@ export const portfolioData = {
     {
       id: 2,
       code: "[BT-02]",
-      title: "Khai thác dữ liệu và thông tin",
-      goal: "Phát triển kỹ năng tìm kiếm thông tin nâng cao, sử dụng các toán tử lọc dữ liệu phức tạp và khai thác tài nguyên số từ internet một cách khoa học, phục vụ tối đa cho hoạt động học tập và nghiên cứu học thuật.",
-      process: "Thực hành thu thập dữ liệu thô từ các nguồn thống kê số uy tín trên internet, sử dụng công cụ bảng tính để lọc, phân loại, làm sạch dữ liệu và tạo lập biểu đồ trực quan thể hiện rõ nét các xu hướng công nghệ nổi bật trong thập kỷ qua.",
+      title: "Tìm kiếm và đánh giá thông tin học thuật",
+      goal: "Mục tiêu cốt lõi là phát triển kỹ năng tìm kiếm, đánh giá và chắt lọc thông tin học thuật từ các nguồn đáng tin cậy. Qua đó, sinh viên được rèn luyện tư duy phản biện, xây dựng nền tảng lý thuyết vững chắc để tự tin ứng dụng vào các nghiên cứu chuyên sâu hoặc giải quyết những bài toán thực tế trong chuyên ngành.",
       product: {
         type: "pdf",
         url: pdf2,
@@ -68,9 +74,8 @@ export const portfolioData = {
     {
       id: 3,
       code: "[BT-03]",
-      title: "Tổng quan về trí tuệ nhân tạo",
-      goal: "Nghiên cứu các khái niệm nền tảng về AI, Học máy (Machine Learning), Học sâu (Deep Learning), và thực hành phương pháp thiết kế câu lệnh (Prompt Engineering) để tương tác hiệu quả, an toàn và có đạo đức với các mô hình ngôn ngữ lớn (LLM).",
-      process: "Thực hành thiết kế và kiểm thử hàng loạt câu lệnh điều phối trợ lý ảo ChatGPT/Claude phục vụ giải bài tập lập trình, so sánh hiệu năng giải quyết vấn đề giữa các mô hình khác nhau và soạn thảo cẩm nang ứng dụng AI hỗ trợ học tập.",
+      title: "Viết Prompt hiệu quả cho các tác vụ học tập",
+      goal: "Mục tiêu cốt lõi là phát triển kỹ năng viết prompt (câu lệnh) hiệu quả để tận dụng tối đa khả năng của các mô hình ngôn ngữ lớn. Qua đó, giúp sinh viên làm chủ công nghệ AI, biến nó thành công cụ đắc lực để tối ưu hóa quá trình tổng hợp kiến thức, tự học và giải quyết các tác vụ phức tạp một cách chủ động.",
       product: {
         type: "pdf",
         url: pdf3,
@@ -80,9 +85,8 @@ export const portfolioData = {
     {
       id: 4,
       code: "[BT-04]",
-      title: "Giao tiếp hợp tác trong môi trường số",
-      goal: "Tối ưu hóa kỹ năng làm việc nhóm trực tuyến thông qua việc kết hợp các công cụ số hiện đại như Trello, Slack, và Google Workspace để nâng cao hiệu suất cộng tác đồng bộ từ xa.",
-      process: "Phân chia vai trò cụ thể trong nhóm, cùng xây dựng kế hoạch dự án số hóa tài liệu học tập trên bảng Kanban Trello, tổ chức họp trực tuyến ghi lại tiến trình, và xuất bản slide báo cáo đồng bộ hóa hoàn toàn trên đám mây đám mây.",
+      title: "Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm",
+      goal: "Mục tiêu cốt lõi là rèn luyện và làm chủ các công cụ hợp tác trực tuyến (quản lý dự án, soạn thảo, lưu trữ và giao tiếp) để tối ưu hóa hiệu suất làm việc cá nhân trong môi trường làm việc nhóm. Qua đó, sinh viên hình thành kỹ năng tự quản lý tiến độ nhiệm vụ, tổ chức tài nguyên khoa học và duy trì tương tác chủ động, hiệu quả với các thành viên khác.",
       product: {
         type: "pdf",
         url: pdf4,
@@ -92,9 +96,8 @@ export const portfolioData = {
     {
       id: 5,
       code: "[BT-05]",
-      title: "Sáng tạo nội dung số",
-      goal: "Nâng cao năng lực truyền thông thị giác và tư duy thiết kế, biên tập và xuất bản các ấn phẩm đồ họa số truyền tải thông điệp kiến thức một cách khoa học, cuốn hút và có tính thẩm mỹ cao.",
-      process: "Lên ý tưởng kịch bản nội dung về an toàn thông tin mạng, sử dụng công cụ thiết kế chuyên nghiệp Canva/Photoshop để phối trộn màu sắc neon, sắp xếp bố cục đồ họa khoa học và trực quan hóa các số liệu phòng vệ mã độc phức tạp.",
+      title: "Sử dụng AI tạo sinh để hỗ trợ tạo nội dung",
+      goal: "Mục tiêu cốt lõi là thành thạo việc sử dụng các công cụ AI tạo sinh để hỗ trợ quá trình sáng tạo nội dung số. Qua đó, sinh viên biết cách kết hợp linh hoạt và hiệu quả nhiều loại công cụ AI khác nhau (tạo văn bản, hình ảnh, thiết kế), hòa quyện giữa đầu ra của AI với dấu ấn sáng tạo cá nhân, đồng thời phát triển tư duy phản biện để phân tích sâu sắc vai trò cũng như các vấn đề đạo đức khi ứng dụng công nghệ này vào thực tiễn.",
       product: {
         type: "pdf",
         url: pdf5,
@@ -104,9 +107,8 @@ export const portfolioData = {
     {
       id: 6,
       code: "[BT-06]",
-      title: "An toàn và liêm chính học thuật",
-      goal: "Thấu hiểu các nguyên tắc bảo mật thông tin cá nhân trên mạng, hiểu rõ luật sở hữu trí tuệ, quyền tác giả số và nắm vững chuẩn mực trích dẫn khoa học (APA/IEEE) nhằm loại bỏ nguy cơ đạo văn.",
-      process: "Phân tích các tình huống thực tế về vi phạm bản quyền và đạo văn trong môi trường số, thực hành sử dụng phần mềm kiểm tra trùng lặp và soạn thảo báo cáo phân tích có trích dẫn nguồn đầy đủ, chính xác theo tiêu chuẩn quốc tế.",
+      title: "Sử dụng AI có trách nhiệm trong học tập và nghiên cứu",
+      goal: "Mục tiêu cốt lõi là trang bị cho sinh viên kiến thức và kỹ năng để ứng dụng AI vào các tác vụ học tập một cách hiệu quả, minh bạch và chuyên nghiệp. Qua đó, sinh viên rèn luyện tư duy phản biện để phân tích các vấn đề đạo đức, nhận diện rõ ranh giới giữa hỗ trợ hợp lý và gian lận học thuật, từ đó thiết lập và tuân thủ các nguyên tắc cốt lõi nhằm sử dụng AI có trách nhiệm trong học thuật.",
       product: {
         type: "pdf",
         url: pdf6,
@@ -123,7 +125,7 @@ export const portfolioData = {
     overview: "Điểm lại các kiến thức đã qua, mọi thứ được xây dựng theo một lộ trình logic: từ việc nắm vững cách tổ chức dữ liệu cơ bản, sử dụng các công cụ làm việc nhóm trực tuyến hiệu quả, cho đến việc ứng dụng đa dạng các công cụ AI tạo sinh để nghiên cứu học thuật và thiết kế ấn phẩm đồ họa chuyên nghiệp. Đỉnh cao của quá trình này là việc thấu hiểu cách giao tiếp với AI qua các kỹ thuật Prompt chuyên sâu và áp dụng nó vào việc giải quyết những bài toán kỹ thuật phức tạp, định hình các nguyên tắc đạo đức khi sử dụng công nghệ. Tất cả không còn là những mảnh ghép rời rạc mà đã được xâu chuỗi lại, trở thành nền tảng vững chắc để tôi kiến tạo nên dự án portfolio của riêng mình.",
 
     // 2. Trải nghiệm và cảm nhận
-    experience: "Quá trình thực hiện dự án portfolio mang lại cho tôi những cảm xúc rất đặc biệt. Nó giống như việc tự tay \"refactoring\" lại chính khối lượng kiến thức khổng lồ mà mình đã tiếp thu. Thay vì chỉ gom nhặt các mảnh ghép một cách máy móc, tôi phải ngồi lại, đánh giá xem đâu là những giá trị cốt lõi nhất để trình bày. Cảm giác nhìn thấy những kỹ năng mình rèn luyện mỗi ngày — từ tư duy tổ chức mã nguồn rõ ràng, tránh tạo ra các đoạn \"spaghetti code\", đến khả năng tối ưu hóa thuật toán thi đấu, tinh chỉnh độ phức tạp từ O(N³) xuống O(N log N) — được sắp xếp gọn gàng và có tính kể chuyện trong một bản portfolio thực sự là một trải nghiệm trọn vẹn và đáng tự hào.",
+    experience: "Quá trình thực hiện dự án portfolio mang lại cho tôi những cảm xúc rất đặc biệt. Nó giống như việc tự tay \"refactoring\" lại chính khối lượng kiến thức khổng lồ mà mình đã tiếp thu. Thay vì chỉ gom nhặt các mảnh ghép một cách máy móc, tôi phải ngồi lại, đánh giá xem đâu là những giá trị cốt lõi nhất để trình bày. Cảm giác nhìn thấy những kỹ năng mình rèn luyện mỗi ngày. Từ tư duy tổ chức mã nguồn rõ ràng, tránh tạo ra các đoạn \"spaghetti code\", đến khả năng tối ưu hóa thuật toán thi đấu, được sắp xếp gọn gàng và có tính kể chuyện trong một bản portfolio thực sự là một trải nghiệm trọn vẹn và đáng tự hào.",
 
     // 3. Điểm tâm đắc nhất (danh sách)
     highlights: [
@@ -153,7 +155,7 @@ export const portfolioData = {
       }
     ],
 
-    // 5. Lời kết
-    closing: "Dự án portfolio không chỉ là một bảng tóm tắt thành tích, mà là minh chứng rõ nét cho sự trưởng thành về năng lực thực thi và đạo đức nghề nghiệp. Những bài học về quản lý công việc, tư duy giải quyết vấn đề và cách ứng xử trách nhiệm với AI sẽ là hành trang vô giá, giúp tôi bước đi vững chắc hơn trên con đường phát triển chuyên môn sắp tới."
+    // 5. Lời kết — Final Transmission
+    closing: "Portfolio này không phải là điểm đến — mà là bản ghi hành trình của một phi công đang học cách bay. Mỗi dòng code, mỗi lần debug, mỗi quyết định giữ lại hay viết lại đều khắc sâu vào tôi một bài học: rằng sự trưởng thành không nằm ở việc hoàn hảo ngay từ đầu, mà ở việc dám đối mặt với những thứ chưa hoàn hảo và kiên trì cải tiến. Hành trình vẫn đang tiếp diễn — và đây chỉ mới là chương mở đầu."
   }
 };

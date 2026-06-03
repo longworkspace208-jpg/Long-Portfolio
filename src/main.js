@@ -45,8 +45,8 @@ function initializeCosmicCockpit() {
   // E. NẠP TỔNG KẾT HÀNH TRÌNH (REFLECTION & DISCUSSIONS)
   renderReflectionLogs();
 
-  // F. KÍCH HOẠT HIỆU ỨNG 3D TILT
-  init3dTilt('.hologram-card');
+  // F. KÍCH HOẠT HIỆU ỨNG 3D TILT CHO HÀNG LOẠT THẺ HOLOGRAM
+  init3dTilt('.hologram-card, .reflection-journey-block, .flip-card, .closing-cinematic');
 
   // G. KÍCH HOẠT HIỆU ỨNG MỞ THẺ BÀI TẬP BẰNG GSAP
   initCardExpandCollapse('.project-card');
@@ -71,14 +71,16 @@ function initializeCosmicCockpit() {
   // L. THIẾT LẬP LIÊN KẾT THANH ĐIỀU HƯỚNG TỚI CÁC PHÂN VÙNG
   setupNavigation();
 
+  // N. KÍCH HOẠT ẢNH TRANG TRÍ LƠ LỬNG THEO CUỘN TRANG
+  initFloatingDecorations();
+
   // M. HỆ THỐNG DỰ PHÒNG AN TOÀN (FAIL-SAFE FALLBACK)
-  // Sau 1.8 giây, ép hiển thị tất cả các phần tử scroll-reveal còn ẩn bằng cách thêm class .visible
-  // (GSAP inline style KHÔNG thể ghi đè CSS !important, chỉ có thêm class mới hiệu quả)
+  // Sau 8 giây, ép hiển thị tất cả các phần tử scroll-reveal còn ẩn (chỉ dành cho edge case cực hiếm)
   setTimeout(() => {
     document.querySelectorAll('.scroll-reveal:not(.visible)').forEach(el => {
       el.classList.add('visible');
     });
-  }, 1800);
+  }, 8000);
 }
 
 /**
@@ -114,6 +116,23 @@ function renderPilotInfo() {
     aboutEl.innerHTML = '';
   }
 
+  const hobbiesContainer = document.getElementById('pilot-hobbies-container');
+  const hobbiesGrid = document.getElementById('pilot-hobbies-grid');
+  if (hobbiesContainer && hobbiesGrid && pilotInfo.hobbies) {
+    hobbiesGrid.innerHTML = '';
+    pilotInfo.hobbies.forEach(hobby => {
+      hobbiesGrid.innerHTML += `
+        <span class="hobby-item">
+          <span class="hobby-icon">${hobby.icon}</span>
+          <span class="hobby-name">${hobby.name}</span>
+        </span>
+      `;
+    });
+    hobbiesContainer.style.display = 'none';
+    hobbiesContainer.style.opacity = '0';
+    gsap.set(hobbiesContainer, { y: 12 });
+  }
+
   const goalsEl = document.getElementById('pilot-goals');
   if (goalsEl && pilotInfo.learningGoals) {
     goalsEl.innerHTML = '';
@@ -144,9 +163,21 @@ export function startHeroTypewriter() {
 
   // 2. Chạy typewriter nhẹ nhàng cho Pilot Profile
   const aboutEl = document.getElementById('pilot-about');
+  const hobbiesContainer = document.getElementById('pilot-hobbies-container');
   if (aboutEl) {
     const aboutMe = pilotInfo.aboutMe || "";
-    initTypewriter(aboutEl, aboutMe, 8);
+    initTypewriter(aboutEl, aboutMe, 8, () => {
+      // Khi gõ chữ giới thiệu xong, hiện phần sở thích mượt mà bằng GSAP
+      if (hobbiesContainer && pilotInfo.hobbies) {
+        hobbiesContainer.style.display = 'block';
+        gsap.to(hobbiesContainer, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out'
+        });
+      }
+    });
   }
 
   // 3. Chạy typewriter đồng thời cho từng dòng định hướng Flight Vector
@@ -195,6 +226,7 @@ function renderExercisesGrid() {
       const wrapper = document.createElement('div');
       wrapper.className = 'project-card-wrapper scroll-reveal';
       wrapper.style.perspective = '1000px';
+      wrapper.style.setProperty('--reveal-delay', `${index * 0.15}s`);
 
       const floatWrapper = document.createElement('div');
       floatWrapper.className = 'project-card-float';
@@ -231,8 +263,6 @@ function renderExercisesGrid() {
             <div class="project-detail-info">
               <h4>🎯 MỤC TIÊU BÀI HỌC</h4>
               <p>${goalText || 'Đang cập nhật mục tiêu...'}</p>
-              <h4>🛠️ QUÁ TRÌNH THỰC HIỆN</h4>
-              <p>${item.process || 'Đang cập nhật tiến trình...'}</p>
             </div>
             <!-- Cột phải: Sản phẩm -->
             <div class="project-detail-product">
@@ -315,9 +345,28 @@ function renderReflectionLogs() {
     `).join('');
   }
 
-  // 5. Lời kết
+  // 5. Lời kết — Cinematic Final Transmission
   const closingEl = document.getElementById('reflection-closing');
-  if (closingEl) closingEl.textContent = reflection.closing;
+  if (closingEl && reflection.closing) {
+    closingEl.textContent = '';
+    // Sử dụng typewriter để lời kết hiện ra từng chữ, tạo cảm giác "truyền tải"
+    initTypewriter(closingEl, reflection.closing, 12);
+  }
+
+  // Chữ ký — Tự động điền ngày tháng hiện tại dạng tọa độ thời gian
+  const dateEl = document.getElementById('closing-date');
+  if (dateEl) {
+    const now = new Date();
+    const monthNames = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    dateEl.textContent = `STARDATE ${now.getFullYear()}.${monthNames[now.getMonth()]}.${String(now.getDate()).padStart(2, '0')}`;
+  }
+
+  // Tên tác giả từ dữ liệu
+  const authorEl = document.getElementById('closing-author');
+  const pilotInfo = portfolioData.pilotInfo || portfolioData.personalInfo || {};
+  if (authorEl && pilotInfo.fullName) {
+    authorEl.textContent = `— ${pilotInfo.fullName}`;
+  }
 }
 
 /**
@@ -378,6 +427,124 @@ function setupNavigation() {
           btn.classList.remove('active');
         }
       });
+    }
+  });
+}
+
+/**
+ * Loại bỏ nền đen của ảnh bằng canvas để tạo ảnh trong suốt (PNG alpha) thực sự
+ * Giúp giải quyết triệt để vấn đề bóng đổ (drop-shadow) bị bao khung hình chữ nhật đen
+ */
+function removeBlackBackground(imgEl, threshold = 35) {
+  if (!imgEl) return;
+
+  const processImage = () => {
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = imgEl.naturalWidth;
+      canvas.height = imgEl.naturalHeight;
+      
+      // Vẽ ảnh gốc lên canvas
+      ctx.drawImage(imgEl, 0, 0);
+      
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imgData.data;
+      
+      // Quét qua các điểm ảnh (mỗi điểm gồm 4 phần tử: R, G, B, A)
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        
+        // Độ sáng tối đa của pixel
+        const maxVal = Math.max(r, g, b);
+        
+        if (maxVal < threshold) {
+          data[i + 3] = 0; // Chuyển thành trong suốt hoàn toàn
+        } else if (maxVal < threshold * 2.5) {
+          // Làm mềm cạnh (feathering) để tránh răng cưa ở các vùng tối chuyển tiếp
+          const ratio = (maxVal - threshold) / (threshold * 1.5);
+          data[i + 3] = Math.round(data[i + 3] * ratio);
+        }
+      }
+      
+      ctx.putImageData(imgData, 0, 0);
+      
+      // Hủy lắng nghe trước khi gán src mới để tránh vòng lặp vô hạn
+      imgEl.removeEventListener('load', processImage);
+      imgEl.src = canvas.toDataURL('image/png');
+    } catch (e) {
+      console.warn("Không thể xóa nền ảnh do hạn chế CORS hoặc Canvas:", e);
+    }
+  };
+
+  if (imgEl.complete && imgEl.naturalWidth > 0) {
+    processImage();
+  } else {
+    imgEl.addEventListener('load', processImage);
+  }
+}
+
+/**
+ * Khởi tạo hệ thống vật thể vũ trụ lơ lửng xung quanh màn hình (Floating Cosmic Decorations)
+ * Hiển thị đồng thời: Phi thuyền, Phi hành gia (tiền cảnh) và Lõi năng lượng vũ trụ (hậu cảnh làm mờ)
+ * Mỗi vật thể có tốc độ Parallax khác nhau để tạo chiều sâu không gian (depth effect)
+ * và được tự động lọc nền đen bằng Canvas.
+ */
+function initFloatingDecorations() {
+  const ship = document.getElementById('floating-ship');
+  const astro = document.getElementById('floating-astronaut');
+  const bgCrystal = document.getElementById('bg-crystal');
+  
+  if (!ship || !astro) return;
+
+  // Lọc nền đen cho cả 3 ảnh (gồm cả ảnh nền)
+  const shipImg = ship.querySelector('img');
+  const astroImg = astro.querySelector('img');
+
+  if (shipImg) removeBlackBackground(shipImg, 35);
+  if (astroImg) removeBlackBackground(astroImg, 35);
+
+  if (bgCrystal) {
+    const crystalImg = bgCrystal.querySelector('img');
+    if (crystalImg) removeBlackBackground(crystalImg, 35);
+  }
+
+  // Kích hoạt hiện các vật thể lơ lửng so le nhau sau khi preloader kết thúc
+  setTimeout(() => {
+    ship.classList.add('active');
+  }, 500);
+  
+  setTimeout(() => {
+    astro.classList.add('active');
+  }, 750);
+
+  // Parallax scroll — mỗi vật thể di chuyển với vận tốc khác nhau (multi-depth parallax)
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        
+        // Phi thuyền (Phải - nhanh vừa)
+        const shipY = scrollY * -0.12;
+        ship.style.transform = `translateY(${shipY}px)`;
+        
+        // Phi hành gia (Trái - chậm hơn)
+        const astroY = scrollY * -0.08;
+        astro.style.transform = `translateY(${astroY}px)`;
+        
+        // Cổ vật lõi pha lê làm mờ ở nền (di chuyển siêu chậm để tạo chiều sâu tối đa)
+        if (bgCrystal) {
+          const crystalY = scrollY * -0.04;
+          bgCrystal.style.transform = `translateY(${crystalY}px)`;
+        }
+        
+        ticking = false;
+      });
+      ticking = true;
     }
   });
 }

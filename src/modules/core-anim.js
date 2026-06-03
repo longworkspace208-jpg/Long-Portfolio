@@ -19,6 +19,52 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * 1. HOẠT CẢNH BOOT-UP CỦA BỘ TẢI TRANG PRELOADER
  */
+/**
+ * Loại bỏ nền đen của ảnh bằng canvas để tạo ảnh trong suốt (PNG alpha) thực sự
+ * Tránh lỗi viền hộp đen phát sáng do bộ lọc drop-shadow
+ */
+function removeBlackBackground(imgEl, threshold = 35) {
+  if (!imgEl) return;
+
+  const processImage = () => {
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = imgEl.naturalWidth;
+      canvas.height = imgEl.naturalHeight;
+      ctx.drawImage(imgEl, 0, 0);
+      
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imgData.data;
+      
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const maxVal = Math.max(r, g, b);
+        
+        if (maxVal < threshold) {
+          data[i + 3] = 0;
+        } else if (maxVal < threshold * 2.5) {
+          const ratio = (maxVal - threshold) / (threshold * 1.5);
+          data[i + 3] = Math.round(data[i + 3] * ratio);
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+      imgEl.removeEventListener('load', processImage);
+      imgEl.src = canvas.toDataURL('image/png');
+    } catch (e) {
+      console.warn("Không thể xóa nền ảnh trong preloader:", e);
+    }
+  };
+
+  if (imgEl.complete && imgEl.naturalWidth > 0) {
+    processImage();
+  } else {
+    imgEl.addEventListener('load', processImage);
+  }
+}
+
 export function initPreloader(onCompleteCallback) {
   // Bật chế độ phục hồi cuộn trang thủ công để tránh giật lag nhảy vị trí khi reload
   if ('scrollRestoration' in history) {
@@ -30,30 +76,52 @@ export function initPreloader(onCompleteCallback) {
   window.scrollTo(0, 0);
 
   const preloader = document.getElementById('preloader');
-  const ringProgress = document.querySelector('.preloader-ring-progress');
-  const pctText = document.querySelector('.preloader-pct');
+  const fill = document.getElementById('preloader-fill');
+  const ship = document.getElementById('preloader-ship-indicator');
+  const pctText = document.getElementById('preloader-pct');
+  const statusText = document.querySelector('.preloader-status');
   
-  if (!preloader || !ringProgress || !pctText) {
+  if (!preloader || !fill || !ship || !pctText) {
     document.body.classList.remove('loading-lock');
     if (onCompleteCallback) onCompleteCallback();
     return;
   }
 
-  // Khởi tạo vòng tiến trình ảo
+  // Lọc bỏ nền đen của ảnh phi thuyền trong bộ tải để đảm bảo đổ bóng đúng hình dáng phi thuyền
+  const shipImg = ship.querySelector('img');
+  if (shipImg) {
+    removeBlackBackground(shipImg, 35);
+  }
+
+  // Khởi tạo tiến trình ảo
   const progressObj = { value: 0 };
-  const circumference = 283; // 2 * Math.PI * 45 (chu vi vòng)
+
+  // Dịch trạng thái nạp năng lượng tương ứng theo tiến trình %
+  const getStatusText = (pct) => {
+    if (pct < 15) return '// INITIALIZING HYPERDRIVE ENGINES...';
+    if (pct < 35) return '// ROUTING INTERSTELLAR NAV-VECTORS...';
+    if (pct < 60) return '// CHARGING DEEP-SPACE PLASMA CORES...';
+    if (pct < 85) return '// SYNCING COCKPIT HOLOGRAPHIC HUD...';
+    if (pct < 98) return '// SECURING QUANTUM SHIELDS...';
+    return '// WARP SPEED CHRONOMETER READY. ENGAGE!';
+  };
 
   gsap.to(progressObj, {
     value: 100,
-    duration: 2.2, // Thời gian chạy tải mô phỏng đẹp mắt
+    duration: 2.6, // Thời gian chạy mô phỏng tải trang mượt mà
     ease: 'power2.out',
     onUpdate: () => {
       const pct = Math.floor(progressObj.value);
       pctText.textContent = `${pct}%`;
 
-      // Cập nhật vị trí viền vòng tròn
-      const offset = circumference - (circumference * pct) / 100;
-      ringProgress.style.strokeDashoffset = offset;
+      // Cập nhật thanh trượt tiến trình và vị trí phi thuyền bay qua
+      fill.style.width = `${pct}%`;
+      ship.style.left = `${pct}%`;
+
+      // Cập nhật dòng chữ trạng thái nạp hệ thống
+      if (statusText) {
+        statusText.textContent = getStatusText(pct);
+      }
     },
     onComplete: () => {
       // Nháy nhẹ màn hình khi Hyperdrive khởi chạy xong
@@ -173,20 +241,11 @@ export function initScrollReveal() {
     });
   }, {
     root: null,
-    rootMargin: '0px 0px -8% 0px', // Kích hoạt khi cách đáy màn hình 8%
-    threshold: 0.01
+    rootMargin: '0px 0px -5% 0px', // Kích hoạt khi cách đáy màn hình 5%
+    threshold: 0.05
   });
 
   revealElements.forEach(el => {
     observer.observe(el);
   });
-
-  // DỰ PHÒNG TUYỆT ĐỐI: Sau 2 giây, ép hiển thị tất cả phần tử scroll-reveal còn ẩn
-  setTimeout(() => {
-    revealElements.forEach(el => {
-      if (!el.classList.contains('visible')) {
-        el.classList.add('visible');
-      }
-    });
-  }, 2000);
 }

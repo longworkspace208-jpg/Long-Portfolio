@@ -32,20 +32,40 @@
 </head>
 <body class="loading-lock">
 
+  <!-- FLOATING COSMIC DECORATIONS — CÁC VẬT THỂ VŨ TRỤ LƠ LỬNG TRÊN MÀN HÌNH -->
+  <div class="floating-deco floating-deco--ship" id="floating-ship">
+    <img src="/src/assets/cosmic_spaceship.png" alt="Spaceship" draggable="false">
+  </div>
+  <div class="floating-deco floating-deco--astronaut" id="floating-astronaut">
+    <img src="/src/assets/cosmic_astronaut.png" alt="Astronaut" draggable="false">
+  </div>
+
   <!-- HIỆU ỨNG QUÉT DÒNG TV CỦA PHI THUYỀN (HUD CRITICAL SCANLINES OVERLAY) -->
   <div class="scanlines-overlay"></div>
 
   <!-- SECTION 0: PRELOADER (HYPERDRIVE BOOT-UP) -->
   <div id="preloader">
-    <div class="preloader-ring-wrapper">
-      <svg class="preloader-ring" width="120" height="120">
-        <circle class="preloader-ring-back" cx="60" cy="60" r="45"></circle>
-        <circle class="preloader-ring-progress" cx="60" cy="60" r="45"></circle>
-      </svg>
-    </div>
     <div class="preloader-text-wrapper">
-      <span>HYPERDRIVE SYSTEM BOOTING</span>
-      <div class="preloader-pct">0%</div>
+      <span class="preloader-title">WELCOME TO MY PORTFOLIO</span>
+    </div>
+    
+    <div class="preloader-track-container">
+      <!-- Đường hầm tăng tốc (Warp Tunnel Track) -->
+      <div class="preloader-track">
+        <!-- Tiến trình nạp năng lượng (Warp Energy Fill) -->
+        <div class="preloader-fill" id="preloader-fill"></div>
+        <!-- Phi thuyền tăng tốc (Spaceship indicator) -->
+        <div class="preloader-ship-indicator" id="preloader-ship-indicator">
+          <img src="/src/assets/cosmic_spaceship.png" alt="Spaceship Indicator" draggable="false">
+          <!-- Hiệu ứng lửa đẩy phản lực (Thruster Particle Trail) -->
+          <div class="preloader-thruster-trail"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="preloader-text-wrapper">
+      <div class="preloader-pct" id="preloader-pct">0%</div>
+      <span class="preloader-status">// CALCULATING COCKPIT VECTOR...</span>
     </div>
   </div>
 
@@ -57,6 +77,11 @@
     <div class="neon-glow-blob cyan"></div>
     <div class="neon-glow-blob purple"></div>
     <div class="neon-glow-blob orange"></div>
+  </div>
+
+  <!-- BG DECORATION — LÕI NĂNG LƯỢNG VŨ TRỤ LÀM MỜ NỀN -->
+  <div class="bg-deco bg-deco--crystal" id="bg-crystal">
+    <img src="/src/assets/cosmic_crystal.png" alt="Cosmic Core" draggable="false">
   </div>
 
   <!-- LỚP PHỦ HÌNH HỌC HUD PHI THUYỀN (SPACESHIP HUD OVERLAY) -->
@@ -79,9 +104,9 @@
           <span class="hud-logo-arrow">&lt;</span>LONG's PORTFOLIO<span class="hud-logo-arrow">/&gt;</span>
         </a>
         <div class="hud-nav-links">
-          <a href="#hero" class="hud-btn active">Profile</a>
-          <a href="#projects" class="hud-btn">Projects</a>
-          <a href="#summary" class="hud-btn">Summary</a>
+          <a href="#hero" class="hud-btn active">Hồ sơ</a>
+          <a href="#projects" class="hud-btn">Dự án</a>
+          <a href="#summary" class="hud-btn">Tổng kết</a>
         </div>
         <!-- Nút bật tắt hiệu ứng (FX Toggle) -->
         <button id="fx-toggle-btn" class="hud-fx-toggle" aria-label="Tắt quét dòng màn hình">
@@ -111,8 +136,16 @@
                 <div class="hero-card-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
-                <h3>PILOT PROFILE</h3>
+                <h3>HỒ SƠ PHI CÔNG</h3>
                 <p id="pilot-about" class="hero-card-desc">Đang đồng bộ tiểu sử dữ liệu...</p>
+                
+                <!-- Hobbies Section (Sở thích cá nhân) -->
+                <div class="pilot-hobbies-section" id="pilot-hobbies-container" style="display: none; opacity: 0;">
+                  <h4 class="hobbies-title">// SỞ THÍCH CÁ NHÂN</h4>
+                  <div class="hobbies-grid" id="pilot-hobbies-grid">
+                    <!-- Sẽ nạp động qua Javascript -->
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -122,7 +155,7 @@
                 <div class="hero-card-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
                 </div>
-                <h3>FLIGHT VECTOR</h3>
+                <h3>ĐỊNH HƯỚNG PHÁT TRIỂN</h3>
                 <ul id="pilot-goals" class="hero-card-desc" style="list-style: none;">
                   <!-- Chèn bằng JS -->
                 </ul>
@@ -135,7 +168,7 @@
                 <div class="hero-card-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 16 12 12 8"></polygon></svg>
                 </div>
-                <h3>MISSION BRIEFING</h3>
+                <h3>VỀ PORTFOLIO</h3>
                 <p id="pilot-purpose" class="hero-card-desc">Đang tải hồ sơ sứ mệnh...</p>
               </div>
             </div>
@@ -241,11 +274,52 @@
 
           </div>
 
-          <!-- KHU VỰC 5: LỜI KẾT -->
-          <div class="reflection-closing scroll-reveal" id="ref-block-closing">
-            <div class="ref-closing-accent"></div>
-            <p id="reflection-closing">Đang tải dữ liệu...</p>
-            <div class="ref-closing-accent"></div>
+          <!-- KHU VỰC 5: LỜI KẾT — FINAL TRANSMISSION -->
+          <div class="closing-cinematic scroll-reveal" id="ref-block-closing">
+
+            <!-- Vòng quỹ đạo trang trí xoay chậm -->
+            <div class="closing-orbital closing-orbital--outer"></div>
+            <div class="closing-orbital closing-orbital--inner"></div>
+
+            <!-- Góc cơ khí phát sáng -->
+            <span class="closing-corner closing-corner--tl"></span>
+            <span class="closing-corner closing-corner--tr"></span>
+            <span class="closing-corner closing-corner--bl"></span>
+            <span class="closing-corner closing-corner--br"></span>
+
+            <!-- Nhãn phân vùng kiểu HUD -->
+            <div class="closing-hud-label">
+              <span class="closing-hud-dot"></span>
+              FINAL_TRANSMISSION // LỜI KẾT
+            </div>
+
+            <!-- Đường accent phía trên -->
+            <div class="closing-accent-line closing-accent-line--top"></div>
+
+            <!-- Icon trích dẫn phát sáng -->
+            <div class="closing-quote-icon">❝</div>
+
+            <!-- Nội dung chính — sẽ được render bằng typewriter effect -->
+            <blockquote class="closing-quote-text" id="reflection-closing">
+              Đang tải dữ liệu...
+            </blockquote>
+
+            <!-- Đường accent phía dưới -->
+            <div class="closing-accent-line closing-accent-line--bottom"></div>
+
+            <!-- Chữ ký phi công -->
+            <div class="closing-signature">
+              <div class="closing-signature-line"></div>
+              <span class="closing-signature-name" id="closing-author">— Nguyễn Kim Lê Long</span>
+              <span class="closing-signature-date" id="closing-date"></span>
+            </div>
+
+            <!-- Nhịp tim kỹ thuật số -->
+            <div class="closing-heartbeat">
+              <span class="heartbeat-pulse"></span>
+              <span class="heartbeat-label">SIGNAL ACTIVE</span>
+            </div>
+
           </div>
 
         </div>

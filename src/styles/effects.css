@@ -207,3 +207,108 @@
     0 0 25px rgba(0, 245, 255, 0.25),
     inset 0 0 20px rgba(0, 245, 255, 0.1);
 }
+
+/* 7. FLOATING COSMIC DECORATIONS — CÁC VẬT THỂ VŨ TRỤ LƠ LỬNG TRÊN MÀN HÌNH */
+.floating-deco {
+  position: fixed;
+  z-index: 90; /* Đảm bảo nổi lên trên các khối nội dung cơ bản */
+  pointer-events: none; /* Tránh cản trở click chuột vào liên kết phía sau */
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.floating-deco.active {
+  opacity: 1;
+}
+
+.floating-deco img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  mix-blend-mode: screen; /* Giúp lọc nền đen thành trong suốt và hòa trộn đẹp mắt */
+}
+
+/* --- 1. Phi thuyền (Spaceship) — Phía trên bên phải --- */
+.floating-deco--ship {
+  right: 2%;
+  top: 15%;
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.35))
+         drop-shadow(0 0 35px rgba(124, 58, 237, 0.15));
+}
+
+.floating-deco--ship img {
+  animation: float-bob-ship 6.5s ease-in-out infinite;
+}
+
+@keyframes float-bob-ship {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(3deg);
+  }
+}
+
+/* --- 2. Phi hành gia (Astronaut) — Phía giữa bên trái --- */
+.floating-deco--astronaut {
+  left: 2%;
+  top: 48%;
+  width: 140px;
+  height: 140px;
+  filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.25))
+         drop-shadow(0 0 35px rgba(255, 107, 53, 0.15));
+}
+
+.floating-deco--astronaut img {
+  animation: float-bob-astro 8s ease-in-out infinite;
+}
+
+@keyframes float-bob-astro {
+  0%, 100% {
+    transform: translateY(0) rotate(5deg) scale(0.97);
+  }
+  50% {
+    transform: translateY(-20px) rotate(-5deg) scale(1.03);
+  }
+}
+
+/* --- 3. Cổ vật vũ trụ làm mờ nền (Background Cosmic Crystal) --- */
+.bg-deco--crystal {
+  position: fixed;
+  right: -8vw;
+  top: 35vh;
+  width: 50vw;
+  height: 50vw;
+  max-width: 550px;
+  max-height: 550px;
+  z-index: -2; /* Nằm dưới nội dung chính, trên canvas starfield */
+  pointer-events: none;
+  opacity: 0.18; /* Độ mờ vừa phải để làm nền cực kỳ sang trọng */
+  filter: blur(12px); /* Làm mờ ảnh tạo hiệu ứng tinh vân phát sáng */
+  mix-blend-mode: screen; /* Lọc nền đen hoàn toàn */
+  will-change: transform;
+}
+
+.bg-deco--crystal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: bg-spin-crystal 75s linear infinite; /* Xoay tròn chậm rãi */
+}
+
+@keyframes bg-spin-crystal {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ẩn trên thiết bị di động để tránh che khuất nội dung và tối ưu hiệu năng */
+@media (max-width: 1200px) {
+  .floating-deco, .bg-deco {
+    display: none !important;
+  }
+}

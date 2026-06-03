@@ -14,20 +14,31 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * 1. HIỆU ỨNG NGHIÊNG THẺ 3D TILT MATHEMATICAL MOUSE-TRACKING
+ * 
+ * Lưu ý đặc biệt cho Flip Cards:
+ * Với các thẻ .flip-card, hiệu ứng tilt KHÔNG được áp dụng trực tiếp lên 
+ * các mặt trước/sau (vì sẽ ghi đè rotateY(180deg) của mặt sau).
+ * Thay vào đó, tilt được áp dụng lên chính .flip-card wrapper (perspective container),
+ * giữ nguyên transform chain bên trong .flip-card-inner.
  */
 export function init3dTilt(cardSelector) {
   const cards = document.querySelectorAll(cardSelector);
   if (!cards || cards.length === 0) return;
 
   cards.forEach(card => {
+    const isFlipCard = card.classList.contains('flip-card');
+
     card.addEventListener('mousemove', (e) => {
+      // Không áp dụng tilt khi flip card đang lật (tránh xung đột transform)
+      if (isFlipCard && card.classList.contains('flipped')) return;
+
       const rect = card.getBoundingClientRect();
       
       // Tính toán vị trí chuột so với tâm của thẻ (từ -0.5 đến 0.5)
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
       
-      // Quy đổi góc xoay (giới hạn tối đa nhỏ hơn để tạo cảm giác nhẹ nhàng, dễ chịu)
+      // Quy đổi góc xoay (giới hạn tối đa nhỏ để tạo cảm giác nhẹ nhàng, dễ chịu)
       const rotateX = -(y / rect.height) * 8;
       const rotateY = (x / rect.width) * 8;
 
@@ -35,10 +46,12 @@ export function init3dTilt(cardSelector) {
       gsap.to(card, {
         rotateX: rotateX,
         rotateY: rotateY,
-        scale: 1.01,
+        scale: 1.02,
         duration: 0.2,
         ease: 'power1.out',
-        transformPerspective: 1000
+        transformPerspective: 1000,
+        // Bắt buộc preserve-3d để flip card bên trong hoạt động đúng
+        transformStyle: 'preserve-3d'
       });
     });
 
@@ -49,7 +62,8 @@ export function init3dTilt(cardSelector) {
         rotateY: 0,
         scale: 1,
         duration: 0.5,
-        ease: 'power2.out'
+        ease: 'power2.out',
+        transformStyle: 'preserve-3d'
       });
     });
   });
@@ -125,6 +139,9 @@ export function initCardExpandCollapse(cardSelector) {
 
 /**
  * 4. ĐIỀU KHIỂN LẬT THẺ TỔNG KẾT BẰNG CLICK SỰ KIỆN (CLICK-TO-FLIP CARDS)
+ * 
+ * Khi lật thẻ, reset tilt 3D về vị trí trung tâm để tránh tilt cũ 
+ * gây xung đột với rotateY(180deg) của .flip-card-inner.
  */
 export function initClickFlipCards(selector) {
   const cards = document.querySelectorAll(selector);
@@ -132,6 +149,16 @@ export function initClickFlipCards(selector) {
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
+      // Reset mọi 3D tilt về vị trí trung tâm trước khi lật
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1,
+        duration: 0.3,
+        ease: 'power2.out',
+        transformStyle: 'preserve-3d'
+      });
+
       card.classList.toggle('flipped');
     });
   });
