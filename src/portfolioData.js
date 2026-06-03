@@ -8,6 +8,13 @@
  *   hoặc sử dụng các đường link online rồi điền đường dẫn vào phần `url`.
  */
 
+import pdf1 from './assets/BaiTapTuan1.pdf';
+import pdf2 from './assets/BaiTapTuan2.pdf';
+import pdf3 from './assets/baitaptuan3.pdf';
+import pdf4 from './assets/baitaptuan4.pdf';
+import pdf5 from './assets/BaiTapTuan5.pdf';
+import pdf6 from './assets/BaiTapTuan6.pdf';
+
 export const portfolioData = {
   // ==========================================
   // PHẦN 1: GIỚI THIỆU BẢN THÂN & ĐỊNH HƯỚNG
@@ -43,7 +50,7 @@ export const portfolioData = {
       process: "[Tóm tắt quá trình thực hiện bài tập này. Ví dụ: Nghiên cứu tài liệu phần cứng máy tính, thực hành tháo lắp hoặc lập danh sách cấu hình máy tính tối ưu phù hợp với ngân sách và viết báo cáo chi tiết...]",
       product: {
         type: "pdf", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
-        url: "#",    // Đường dẫn tới file (ví dụ: '/assets/bai1.pdf' hoặc link Drive)
+        url: pdf1,    // Đường dẫn tới file (ví dụ: '/assets/bai1.pdf' hoặc link Drive)
         label: "Xem báo cáo PDF bài tập 1"
       }
     },
@@ -54,9 +61,9 @@ export const portfolioData = {
       goal: "[Hãy điền mục tiêu của bài tập này vào đây. Ví dụ: Học cách sử dụng các công cụ tìm kiếm nâng cao, bộ lọc thông tin và phân tích dữ liệu cơ bản phục vụ học tập...]",
       process: "[Tóm tắt quá trình thực hiện bài tập này. Ví dụ: Thu thập bộ dữ liệu từ internet, làm sạch dữ liệu thô bằng các công cụ bảng tính, và phân tích các xu hướng nổi bật dựa trên biểu đồ trực quan...]",
       product: {
-        type: "image", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
-        url: "#",      // Đường dẫn tới hình ảnh sản phẩm (ví dụ: '/assets/bai2.png')
-        label: "Xem hình ảnh phân tích dữ liệu"
+        type: "pdf", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
+        url: pdf2,      // Đường dẫn tới hình ảnh sản phẩm (ví dụ: '/assets/bai2.png')
+        label: "Xem báo cáo PDF bài tập 2"
       }
     },
     {
@@ -66,9 +73,9 @@ export const portfolioData = {
       goal: "[Hãy điền mục tiêu của bài tập này vào đây. Ví dụ: Tìm hiểu lịch sử phát triển, các ứng dụng thực tế của AI (ChatGPT, Midjourney...) và cách viết prompt tối ưu...]",
       process: "[Tóm tắt quá trình thực hiện bài tập này. Ví dụ: Thực hành viết câu lệnh (prompt engineering) để làm việc với AI, so sánh kết quả giữa các mô hình ngôn ngữ lớn khác nhau và đánh giá tiềm năng...]",
       product: {
-        type: "link", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
-        url: "#",     // Đường dẫn liên kết bên ngoài
-        label: "Truy cập trang ứng dụng AI"
+        type: "pdf", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
+        url: pdf3,     // Đường dẫn liên kết bên ngoài
+        label: "Xem báo cáo PDF bài tập 3"
       }
     },
     {
@@ -78,9 +85,9 @@ export const portfolioData = {
       goal: "[Hãy điền mục tiêu của bài tập này vào đây. Ví dụ: Nâng cao kỹ năng làm việc nhóm từ xa bằng các công cụ số như Slack, Trello, Google Workspace...]",
       process: "[Tóm tắt quá trình thực hiện bài tập này. Ví dụ: Cùng nhóm lên kế hoạch dự án trên Trello, phân công công việc, tổ chức họp trực tuyến và hoàn thành slide thuyết trình chung...]",
       product: {
-        type: "video", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
-        url: "#",      // Đường dẫn video sản phẩm (ví dụ link YouTube hoặc file MP4)
-        label: "Xem video thuyết trình nhóm"
+        type: "pdf", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
+        url: pdf4,      // Đường dẫn video sản phẩm (ví dụ link YouTube hoặc file MP4)
+        label: "Xem báo cáo PDF bài tập 4"
       }
     },
     {
@@ -90,9 +97,9 @@ export const portfolioData = {
       goal: "[Hãy điền mục tiêu của bài tập này vào đây. Ví dụ: Thiết kế ấn phẩm truyền thông, biên tập video ngắn hoặc làm infographic thu hút người xem...]",
       process: "[Tóm tắt quá trình thực hiện bài tập này. Ví dụ: Sử dụng công cụ thiết kế chuyên nghiệp Canva/Photoshop để lên layout màu sắc, sắp xếp bố cục nội dung khoa học và xuất bản sản phẩm...]",
       product: {
-        type: "image", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
-        url: "#",      // Đường dẫn hình ảnh thiết kế
-        label: "Xem Infographic Sáng tạo nội dung"
+        type: "pdf", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
+        url: pdf5,      // Đường dẫn hình ảnh thiết kế
+        label: "Xem báo cáo PDF bài tập 5"
       }
     },
     {
@@ -103,8 +110,8 @@ export const portfolioData = {
       process: "[Tóm tắt quá trình thực hiện bài tập này. Ví dụ: Nghiên cứu các quy chuẩn trích dẫn APA/IEEE, viết bài phân tích tình huống đạo văn giả định và thực hiện trích dẫn nguồn chính xác...]",
       product: {
         type: "pdf", // Định dạng file: 'pdf', 'image', 'video' hoặc 'link'
-        url: "#",    // Đường dẫn file PDF
-        label: "Xem tiểu luận Liêm chính học thuật"
+        url: pdf6,    // Đường dẫn file PDF
+        label: "Xem tiểu luận Liêm chính học thuật.pdf"
       }
     }
   ],

@@ -6,6 +6,13 @@
  * - Giao diện HUD và Cockpit của trang web sẽ tự động nạp dữ liệu từ tệp này.
  */
 
+import pdf1 from '../assets/BaiTapTuan1.pdf';
+import pdf2 from '../assets/BaiTapTuan2.pdf';
+import pdf3 from '../assets/baitaptuan3.pdf';
+import pdf4 from '../assets/baitaptuan4.pdf';
+import pdf5 from '../assets/BaiTapTuan5.pdf';
+import pdf6 from '../assets/BaiTapTuan6.pdf';
+
 export const portfolioData = {
   // ==========================================
   // PHẦN 1: THÔNG TIN PHI CÔNG & MỤC TIÊU DỰ ÁN
@@ -64,7 +71,7 @@ export const portfolioData = {
       process: "Nghiên cứu tài liệu về kiến trúc máy tính hiện đại, tiến hành khảo sát thực tế giá thành và hiệu năng của các linh kiện phần cứng trên thị trường, xây dựng báo cáo phân tích chi tiết và đề xuất một cấu hình máy tính trạm chuyên dụng phục vụ lập trình ứng dụng và nghiên cứu mô hình AI.",
       product: {
         type: "pdf", // 'pdf', 'image', 'video', 'link'
-        url: "#",
+        url: pdf1,
         label: "Báo cáo phần cứng trạm lập trình.pdf"
       }
     },
@@ -75,9 +82,9 @@ export const portfolioData = {
       goal: "Phát triển kỹ năng tìm kiếm thông tin nâng cao, sử dụng các toán tử lọc dữ liệu phức tạp và khai thác tài nguyên số từ internet một cách khoa học, phục vụ tối đa cho hoạt động học tập và nghiên cứu học thuật.",
       process: "Thực hành thu thập dữ liệu thô từ các nguồn thống kê số uy tín trên internet, sử dụng công cụ bảng tính để lọc, phân loại, làm sạch dữ liệu và tạo lập biểu đồ trực quan thể hiện rõ nét các xu hướng công nghệ nổi bật trong thập kỷ qua.",
       product: {
-        type: "image",
-        url: "#",
-        label: "Biểu đồ thống kê xu hướng số.png"
+        type: "pdf",
+        url: pdf2,
+        label: "Biểu đồ thống kê xu hướng số.pdf"
       }
     },
     {
@@ -87,9 +94,9 @@ export const portfolioData = {
       goal: "Nghiên cứu các khái niệm nền tảng về AI, Học máy (Machine Learning), Học sâu (Deep Learning), và thực hành phương pháp thiết kế câu lệnh (Prompt Engineering) để tương tác hiệu quả, an toàn và có đạo đức với các mô hình ngôn ngữ lớn (LLM).",
       process: "Thực hành thiết kế và kiểm thử hàng loạt câu lệnh điều phối trợ lý ảo ChatGPT/Claude phục vụ giải bài tập lập trình, so sánh hiệu năng giải quyết vấn đề giữa các mô hình khác nhau và soạn thảo cẩm nang ứng dụng AI hỗ trợ học tập.",
       product: {
-        type: "link",
-        url: "#",
-        label: "Cẩm nang Prompt Engineering.html"
+        type: "pdf",
+        url: pdf3,
+        label: "Cẩm nang Prompt Engineering.pdf"
       }
     },
     {
@@ -99,9 +106,9 @@ export const portfolioData = {
       goal: "Tối ưu hóa kỹ năng làm việc nhóm trực tuyến thông qua việc kết hợp các công cụ số hiện đại như Trello, Slack, và Google Workspace để nâng cao hiệu suất cộng tác đồng bộ từ xa.",
       process: "Phân chia vai trò cụ thể trong nhóm, cùng xây dựng kế hoạch dự án số hóa tài liệu học tập trên bảng Kanban Trello, tổ chức họp trực tuyến ghi lại tiến trình, và xuất bản slide báo cáo đồng bộ hóa hoàn toàn trên đám mây đám mây.",
       product: {
-        type: "video",
-        url: "#",
-        label: "Video liên minh cộng tác số.mp4"
+        type: "pdf",
+        url: pdf4,
+        label: "Slide báo cáo liên minh cộng tác số.pdf"
       }
     },
     {
@@ -111,9 +118,9 @@ export const portfolioData = {
       goal: "Nâng cao năng lực truyền thông thị giác và tư duy thiết kế, biên tập và xuất bản các ấn phẩm đồ họa số truyền tải thông điệp kiến thức một cách khoa học, cuốn hút và có tính thẩm mỹ cao.",
       process: "Lên ý tưởng kịch bản nội dung về an toàn thông tin mạng, sử dụng công cụ thiết kế chuyên nghiệp Canva/Photoshop để phối trộn màu sắc neon, sắp xếp bố cục đồ họa khoa học và trực quan hóa các số liệu phòng vệ mã độc phức tạp.",
       product: {
-        type: "image",
-        url: "#",
-        label: "Infographic Bảo mật không gian mạng.png"
+        type: "pdf",
+        url: pdf5,
+        label: "Infographic Bảo mật không gian mạng.pdf"
       }
     },
     {
@@ -124,7 +131,7 @@ export const portfolioData = {
       process: "Phân tích các tình huống thực tế về vi phạm bản quyền và đạo văn trong môi trường số, thực hành sử dụng phần mềm kiểm tra trùng lặp và soạn thảo báo cáo phân tích có trích dẫn nguồn đầy đủ, chính xác theo tiêu chuẩn quốc tế.",
       product: {
         type: "pdf",
-        url: "#",
+        url: pdf6,
         label: "Tài liệu cam kết liêm chính học thuật.pdf"
       }
     }
