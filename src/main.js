@@ -7,17 +7,11 @@
  */
 
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
 import { portfolioData } from './modules/portfolioData.js';
 import { initThreeBackground } from './modules/background.js';
 import { initPreloader, initScrollAnimations, triggerHeroEntranceAnimation, initScrollReveal } from './modules/core-anim.js';
 import { init3dTilt, initPlasmaCursor, initCardExpandCollapse, initClickFlipCards } from './modules/interactions.js';
 import { TextScrambler, initTypewriter } from './modules/text-fx.js';
-
-gsap.registerPlugin(ScrollTrigger);
-
-let lenis; // Đối tượng cuộn mượt Lenis toàn cục
 
 // Khởi chạy hệ thống sau khi DOM đã được nạp đầy đủ
 document.addEventListener('DOMContentLoaded', () => {
