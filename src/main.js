@@ -16,11 +16,16 @@ import { TextScrambler, initTypewriter } from './modules/text-fx.js';
 // Khởi chạy hệ thống sau khi DOM đã được nạp đầy đủ
 document.addEventListener('DOMContentLoaded', () => {
   
-  // 1. CHẠY BỘ TẢI TRANG BOOT-UP HỆ WARP DRIVE
-  initPreloader(() => {
-    // Gọi hàm khởi tạo toàn bộ buồng lái phi thuyền sau khi Preloader kết thúc
-    initializeCosmicCockpit();
-  });
+  // Ẩn preloader ngay lập tức (đã gỡ bỏ hiệu ứng loading)
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.classList.add('hidden');
+    preloader.style.display = 'none';
+  }
+  document.body.classList.remove('loading-lock');
+
+  // Khởi tạo trực tiếp không cần chờ preloader
+  initializeCosmicCockpit();
 
 });
 
@@ -48,8 +53,7 @@ function initializeCosmicCockpit() {
   // F. KÍCH HOẠT HIỆU ỨNG 3D TILT CHO HÀNG LOẠT THẺ HOLOGRAM
   init3dTilt('.hologram-card, .reflection-journey-block, .flip-card, .closing-cinematic');
 
-  // G. KÍCH HOẠT HIỆU ỨNG MỞ THẺ BÀI TẬP BẰNG GSAP
-  initCardExpandCollapse('.project-card');
+  // G. HIỆU ỨNG MỞ THẺ BÀI TẬP ĐÃ ĐƯỢC GỠ BỎ — TẤT CẢ 6 THẺ LUÔN MỞ RỘNG SẴN
 
   // H. KÍCH HOẠT SỰ KIỆN CLICK LẬT THẺ PHẢN HỒI (FLIP CARDS)
   initClickFlipCards('.flip-card');
@@ -233,11 +237,9 @@ function renderExercisesGrid() {
       floatWrapper.style.animationDelay = `${index * 0.4}s`;
 
       const card = document.createElement('div');
-      card.className = 'project-card hex-clip hologram-card';
+      card.className = 'project-card hex-clip hologram-card expanded';
 
-      // Cấu hình hiển thị preview mục tiêu ngắn gọn
       const goalText = item.goal || "";
-      const shortGoal = goalText ? goalText.substring(0, 85) + '...' : 'Đang giải mã dữ liệu mục tiêu...';
 
       // Đảm bảo an toàn cho cấu trúc product
       const product = item.product || {};
@@ -254,7 +256,7 @@ function renderExercisesGrid() {
         <div class="project-card-title">
           <h3>${item.title || 'Bài tập chưa định danh'}</h3>
         </div>
-        <p class="project-card-excerpt">${shortGoal}</p>
+
         
         <!-- KHU VỰC CHI TIẾT BỊ ẨN (GSAP SẼ BUNG MỞ CHIỀU CAO KHI CLICK THẺ) -->
         <div class="project-detail-expand">

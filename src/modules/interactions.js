@@ -39,14 +39,14 @@ export function init3dTilt(cardSelector) {
       const y = e.clientY - rect.top - rect.height / 2;
       
       // Quy đổi góc xoay (giới hạn tối đa nhỏ để tạo cảm giác nhẹ nhàng, dễ chịu)
-      const rotateX = -(y / rect.height) * 8;
-      const rotateY = (x / rect.width) * 8;
+      const rotateX = -(y / rect.height) * 4;
+      const rotateY = (x / rect.width) * 4;
 
       // Áp dụng góc xoay bằng CSS Perspective kết hợp tỷ lệ phóng to nhẹ
       gsap.to(card, {
         rotateX: rotateX,
         rotateY: rotateY,
-        scale: 1.02,
+        scale: 1.01,
         duration: 0.2,
         ease: 'power1.out',
         transformPerspective: 1000,

@@ -1,7 +1,7 @@
 /**
  * THREE.JS STARFIELD BACKGROUND - COSMIC PORTFOLIO PROJECT
  * 
- * Vẽ 10.000 điểm tinh tú 3D chuyển động chậm trên nền không gian sâu thẳm,
+ * Vẽ bầu trời sao đa tầng 3D với 3 lớp chiều sâu khác nhau,
  * tự động thích ứng với chuyển động chuột và co giãn màn hình.
  */
 
@@ -30,9 +30,8 @@ export function initThreeBackground(canvasId) {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // 2. SINH TEXTURE HẠT SÁNG ĐỘNG (DYNAMICAL CANVAS GLOW TEXTURE)
-  // Tạo texture phát sáng hình tròn trực tiếp từ mã nguồn để tránh lỗi đường dẫn ảnh
-  function createParticleGlowTexture() {
+  // 2. SINH TEXTURE HẠT SÁNG ĐỘNG — 3 loại texture cho sự đa dạng
+  function createGlowTexture(coreColor, midColor) {
     const pCanvas = document.createElement('canvas');
     pCanvas.width = 32;
     pCanvas.height = 32;
@@ -40,8 +39,8 @@ export function initThreeBackground(canvasId) {
 
     const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
     gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(0.2, 'rgba(0, 245, 255, 0.8)');   // Xanh Neon ở giữa
-    gradient.addColorStop(0.5, 'rgba(124, 58, 237, 0.25)'); // Viền tím Nebula
+    gradient.addColorStop(0.25, coreColor);
+    gradient.addColorStop(0.55, midColor);
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     
     ctx.fillStyle = gradient;
@@ -50,55 +49,98 @@ export function initThreeBackground(canvasId) {
     return new THREE.CanvasTexture(pCanvas);
   }
 
-  const starTexture = createParticleGlowTexture();
+  // Texture xanh cyan cho sao lạnh (tiền cảnh)
+  const textureCool = createGlowTexture(
+    'rgba(0, 245, 255, 0.8)',
+    'rgba(124, 58, 237, 0.2)'
+  );
+  // Texture cam ấm cho sao nóng (trung cảnh)
+  const textureWarm = createGlowTexture(
+    'rgba(255, 180, 100, 0.7)',
+    'rgba(255, 107, 53, 0.15)'
+  );
+  // Texture trắng tinh cho sao nhỏ xa (hậu cảnh)
+  const textureDim = createGlowTexture(
+    'rgba(200, 210, 255, 0.5)',
+    'rgba(100, 120, 180, 0.1)'
+  );
 
-  // 3. TẠO HÌNH HỌC CHO 10.000 ĐIỂM TINH TÚ (10,000 STAR POINTS)
-  const starCount = 5000;
-  const positions = new Float32Array(starCount * 3);
-  const colors = new Float32Array(starCount * 3);
-
-  const colorOptions = [
-    new THREE.Color('#00f5ff'), // Cyan
-    new THREE.Color('#ff6b35'), // Cam
-    new THREE.Color('#7c3aed'), // Tím
-    new THREE.Color('#ffffff')  // Trắng
+  // 3. BẢNG MÀU ĐA DẠNG CHO CÁC LỚP SAO
+  const coolColors = [
+    new THREE.Color('#00f5ff'), // Cyan sáng
+    new THREE.Color('#7c3aed'), // Tím nebula
+    new THREE.Color('#4fc3f7'), // Xanh dương nhạt
+    new THREE.Color('#b388ff'), // Tím lavender
+    new THREE.Color('#ffffff'), // Trắng tinh
+    new THREE.Color('#e0f7fa'), // Xanh băng
   ];
 
-  for (let i = 0; i < starCount; i++) {
-    // Phân bố các hạt sao ngẫu nhiên trong khối cầu bán kính 1000
-    const r = 1000 * Math.pow(Math.random(), 0.5);
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(Math.random() * 2 - 1);
+  const warmColors = [
+    new THREE.Color('#ff6b35'), // Cam plasma
+    new THREE.Color('#ffab40'), // Cam vàng
+    new THREE.Color('#ffd54f'), // Vàng sao
+    new THREE.Color('#ff8a65'), // Cam san hô
+    new THREE.Color('#ffffff'), // Trắng
+    new THREE.Color('#ffe0b2'), // Kem ấm
+  ];
 
-    positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);     // X
-    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta); // Y
-    positions[i * 3 + 2] = r * Math.cos(phi);                   // Z
+  const dimColors = [
+    new THREE.Color('#b0bec5'), // Xám bạc
+    new THREE.Color('#cfd8dc'), // Xám sáng
+    new THREE.Color('#e1f5fe'), // Xanh rất nhạt
+    new THREE.Color('#f3e5f5'), // Tím rất nhạt
+    new THREE.Color('#ffffff'), // Trắng
+    new THREE.Color('#e8eaf6'), // Xanh tím nhạt
+  ];
 
-    // Chọn màu ngẫu nhiên cho từng sao để tạo chiều sâu tinh vân
-    const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-    colors[i * 3] = randomColor.r;
-    colors[i * 3 + 1] = randomColor.g;
-    colors[i * 3 + 2] = randomColor.b;
+  // Hàm tạo 1 lớp sao với các tham số riêng biệt
+  function createStarLayer(count, radius, colorPalette, texture, size, opacity) {
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+
+    for (let i = 0; i < count; i++) {
+      const r = radius * Math.pow(Math.random(), 0.5);
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+
+      positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = r * Math.cos(phi);
+
+      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      colors[i * 3]     = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: size,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity: opacity,
+      vertexColors: true,
+      map: texture,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    return { points, geometry, material };
   }
 
-  const starGeometry = new THREE.BufferGeometry();
-  starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-  // 4. CHẤT LIỆU CHO HẠT SAO
-  const starMaterial = new THREE.PointsMaterial({
-    size: 4,
-    sizeAttenuation: true, // Hạt sao to nhỏ theo khoảng cách camera
-    transparent: true,
-    opacity: 0.85,
-    vertexColors: true,     // Sử dụng mảng màu đã định nghĩa
-    map: starTexture,
-    blending: THREE.AdditiveBlending, // Cộng sáng cho hiệu ứng lung linh
-    depthWrite: false
-  });
-
-  const starfield = new THREE.Points(starGeometry, starMaterial);
-  scene.add(starfield);
+  // 4. TẠO 3 LỚP SAO ĐA TẦNG (MULTI-LAYER STARFIELD)
+  //    Lớp 1: Sao sáng gần — ít, to, rõ (tiền cảnh)
+  const layer1 = createStarLayer(600, 800, coolColors, textureCool, 5, 1.0);
+  //    Lớp 2: Sao trung bình — tông ấm, kích thước vừa
+  const layer2 = createStarLayer(1200, 1000, warmColors, textureWarm, 3.2, 0.85);
+  //    Lớp 3: Sao xa mờ — rất nhiều, rất nhỏ, tạo chiều sâu vũ trụ (hậu cảnh)
+  const layer3 = createStarLayer(2000, 1200, dimColors, textureDim, 1.8, 0.55);
 
   // 5. TƯƠNG TÁC CHUỘT (MOUSE PARALLAX)
   let targetMouseX = 0;
@@ -107,7 +149,6 @@ export function initThreeBackground(canvasId) {
   let currentMouseY = 0;
 
   window.addEventListener('mousemove', (event) => {
-    // Chuẩn hóa tọa độ chuột từ -1 đến 1
     targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
     targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
   });
@@ -129,16 +170,24 @@ export function initThreeBackground(canvasId) {
 
     const elapsedTime = clock.getElapsedTime();
 
-    // Xoay sao chậm chạp vô hạn trên trục Y
-    starfield.rotation.y = elapsedTime * 0.02;
+    // Mỗi lớp sao xoay với tốc độ khác nhau tạo hiệu ứng parallax chiều sâu
+    layer1.points.rotation.y = elapsedTime * 0.015;
+    layer2.points.rotation.y = elapsedTime * 0.008;
+    layer3.points.rotation.y = elapsedTime * 0.004;
 
     // Hiệu ứng Parallax di chuyển chuột mềm mại (LERP)
     currentMouseX += (targetMouseX - currentMouseX) * 0.05;
     currentMouseY += (targetMouseY - currentMouseY) * 0.05;
 
-    // Nghiêng nhẹ cụm tinh tú theo chuột
-    starfield.rotation.x = currentMouseY * 0.15;
-    starfield.rotation.z = currentMouseX * 0.08;
+    // Nghiêng mỗi lớp với cường độ khác nhau (lớp gần nghiêng nhiều hơn)
+    layer1.points.rotation.x = currentMouseY * 0.15;
+    layer1.points.rotation.z = currentMouseX * 0.08;
+
+    layer2.points.rotation.x = currentMouseY * 0.08;
+    layer2.points.rotation.z = currentMouseX * 0.04;
+
+    layer3.points.rotation.x = currentMouseY * 0.03;
+    layer3.points.rotation.z = currentMouseX * 0.02;
 
     renderer.render(scene, camera);
   }
@@ -148,9 +197,13 @@ export function initThreeBackground(canvasId) {
   // Trả về hàm hủy để dọn dẹp WebGL khi chuyển trang hoặc hủy chạy
   return () => {
     cancelAnimationFrame(animationFrameId);
-    starGeometry.dispose();
-    starMaterial.dispose();
-    starTexture.dispose();
+    [layer1, layer2, layer3].forEach(layer => {
+      layer.geometry.dispose();
+      layer.material.dispose();
+    });
+    textureCool.dispose();
+    textureWarm.dispose();
+    textureDim.dispose();
     renderer.dispose();
   };
 }
