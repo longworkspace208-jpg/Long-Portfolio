@@ -7,26 +7,18 @@
  */
 
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from './modules/portfolioData.js';
 import { initThreeBackground } from './modules/background.js';
 import { initPreloader, initScrollAnimations, triggerHeroEntranceAnimation, initScrollReveal } from './modules/core-anim.js';
 import { init3dTilt, initPlasmaCursor, initCardExpandCollapse, initClickFlipCards } from './modules/interactions.js';
 import { TextScrambler, initTypewriter } from './modules/text-fx.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
 // Khởi chạy hệ thống sau khi DOM đã được nạp đầy đủ
 document.addEventListener('DOMContentLoaded', () => {
-  
-  // Ẩn preloader ngay lập tức (đã gỡ bỏ hiệu ứng loading)
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    preloader.classList.add('hidden');
-    preloader.style.display = 'none';
-  }
-  document.body.classList.remove('loading-lock');
-
-  // Khởi tạo trực tiếp không cần chờ preloader
   initializeCosmicCockpit();
-
 });
 
 /**
@@ -92,6 +84,16 @@ function initializeCosmicCockpit() {
  */
 function renderPilotInfo() {
   const pilotInfo = portfolioData.pilotInfo || portfolioData.personalInfo || {};
+
+  // 0. Nạp ảnh đại diện phi công HUD
+  const avatarImgEl = document.getElementById('pilot-avatar-img');
+  if (avatarImgEl) {
+    if (pilotInfo.avatar) {
+      avatarImgEl.src = pilotInfo.avatar;
+    } else {
+      avatarImgEl.src = '/src/assets/hero.png';
+    }
+  }
 
   // 1. Nạp thẻ thông tin trường lớp dưới dạng các HUD Info Badges
   const subtitleEl = document.getElementById('pilot-subtitle');
@@ -522,31 +524,17 @@ function initFloatingDecorations() {
     astro.classList.add('active');
   }, 750);
 
-  // Parallax scroll — mỗi vật thể di chuyển với vận tốc khác nhau (multi-depth parallax)
-  let ticking = false;
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        
-        // Phi thuyền (Phải - nhanh vừa)
-        const shipY = scrollY * -0.12;
-        ship.style.transform = `translateY(${shipY}px)`;
-        
-        // Phi hành gia (Trái - chậm hơn)
-        const astroY = scrollY * -0.08;
-        astro.style.transform = `translateY(${astroY}px)`;
-        
-        // Cổ vật lõi pha lê làm mờ ở nền (di chuyển siêu chậm để tạo chiều sâu tối đa)
-        if (bgCrystal) {
-          const crystalY = scrollY * -0.04;
-          bgCrystal.style.transform = `translateY(${crystalY}px)`;
-        }
-        
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
+  // Parallax scroll sử dụng GSAP ScrollTrigger tạo hiệu ứng trượt êm ái, trễ nhịp (scrub) siêu mượt
+  if (bgCrystal) {
+    gsap.to(bgCrystal, {
+      y: () => -window.innerHeight * 0.15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 2.2
+      }
+    });
+  }
 }

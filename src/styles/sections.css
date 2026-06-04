@@ -308,7 +308,107 @@
   letter-spacing: 0.5px;
 }
 
+/* Pilot Identity block header layout */
+.pilot-header-identity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+}
 
+.pilot-name-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.pilot-name-block h1 {
+  margin-bottom: 8px !important;
+}
+
+.pilot-name-block #pilot-subtitle {
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .pilot-header-identity {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pilot-name-block {
+    align-items: center;
+    text-align: center;
+  }
+  .pilot-name-block #pilot-subtitle {
+    justify-content: center;
+  }
+}
+
+/* Pilot Avatar HUD Frame */
+.pilot-avatar-hud {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-cyan);
+  padding: 6px;
+  background: #0a0e1a; /* Bỏ làm mờ nền bằng cách để nền tối đậm đặc */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.pilot-avatar-hud:hover {
+  transform: scale(1.05);
+}
+
+/* Ảnh phi công (giữ nguyên màu sắc gốc của người dùng) */
+#pilot-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: all var(--transition-normal);
+}
+
+/* Tia quét laser chạy dọc ảnh (không có mờ bóng đổ) */
+.hud-avatar-scanner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--neon-cyan);
+  z-index: 2;
+  pointer-events: none;
+  animation: avatar-laser-scan 3.5s infinite linear;
+}
+
+@keyframes avatar-laser-scan {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+/* Viền cơ khí trang trí bao quanh */
+.avatar-bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--neon-cyan);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.avatar-bracket.tl { top: 3px; left: 3px; border-right: none; border-bottom: none; }
+.avatar-bracket.tr { top: 3px; right: 3px; border-left: none; border-bottom: none; }
+.avatar-bracket.bl { bottom: 3px; left: 3px; border-right: none; border-top: none; }
+.avatar-bracket.br { bottom: 3px; right: 3px; border-left: none; border-top: none; }
 
 /* ==========================================================================
    SECTION 2: PROJECTS (MISSION ARCHIVE)
@@ -805,9 +905,6 @@
 .flip-icon-glow.orange {
   filter: drop-shadow(0 0 8px var(--glow-orange));
 }
-.ref-static-card:hover .flip-icon-glow {
-  transform: scale(1.15);
-}
 
 
 
@@ -883,7 +980,6 @@
 
 /* Biểu tượng phát sáng nhảy nhẹ khi hover */
 .flip-card:hover .flip-icon-glow {
-  transform: scale(1.18);
   text-shadow: 0 0 15px rgba(0, 245, 255, 0.6);
 }
 .flip-card:hover .flip-icon-glow.orange {
