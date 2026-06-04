@@ -12,6 +12,7 @@ import pdf3 from '../assets/baitaptuan3.pdf';
 import pdf4 from '../assets/baitaptuan4.pdf';
 import pdf5 from '../assets/BaiTapTuan5.pdf';
 import pdf6 from '../assets/BaiTapTuan6.pdf';
+import avatarImg from '../assets/avatar.jpg';
 
 export const portfolioData = {
   // ==========================================
@@ -22,7 +23,7 @@ export const portfolioData = {
     class: "Class K70I-CS2",
     major: "Computer Science",
     school: "UET - VNU",
-    avatar: "", // Bạn có thể đặt link ảnh phi công của bạn hoặc để trống dùng mặc định
+    avatar: avatarImg, // Bạn có thể đặt link ảnh phi công của bạn hoặc để trống dùng mặc định
 
     // Giới thiệu bản thân (Pilot Profile)
     aboutMe: "Tôi là Nguyễn Kim Lê Long, sinh viên chuyên ngành Khoa học Máy tính tại Trường Đại học Công nghệ - ĐHQGHN. Với ngọn lửa đam mê công nghệ cháy bỏng và khát khao chinh phục các đỉnh cao tri thức mới, tôi luôn nỗ lực nghiên cứu các giải pháp lập trình và hệ thống thông tin thông minh để giải quyết các vấn đề thực tiễn.",
@@ -122,7 +123,7 @@ export const portfolioData = {
   // ==========================================
   reflection: {
     // 1. Tổng quan hành trình 6 bài học
-    overview: "Điểm lại các kiến thức đã qua, mọi thứ được xây dựng theo một lộ trình logic: từ việc nắm vững cách tổ chức dữ liệu cơ bản, sử dụng các công cụ làm việc nhóm trực tuyến hiệu quả, cho đến việc ứng dụng đa dạng các công cụ AI tạo sinh để nghiên cứu học thuật và thiết kế ấn phẩm đồ họa chuyên nghiệp. Đỉnh cao của quá trình này là việc thấu hiểu cách giao tiếp với AI qua các kỹ thuật Prompt chuyên sâu và áp dụng nó vào việc giải quyết những bài toán kỹ thuật phức tạp, định hình các nguyên tắc đạo đức khi sử dụng công nghệ. Tất cả không còn là những mảnh ghép rời rạc mà đã được xâu chuỗi lại, trở thành nền tảng vững chắc để tôi kiến tạo nên dự án portfolio của riêng mình.",
+    overview: "Nhìn lại hành trình 6 bài học, tôi nhận ra một sự trưởng thành vượt bậc trong tư duy và kỹ năng của bản thân: từ việc làm quen với quản lý tệp tin và dữ liệu cơ bản, phát triển tư duy phản biện khi đánh giá học thuật, đến việc thuần thục kỹ năng giao tiếp công nghệ qua Prompt Engineering và sử dụng AI tạo sinh có trách nhiệm. Sự trưởng thành này chuyển đổi tôi từ một người dùng thụ động sang một người làm chủ công nghệ và biết cách điều phối công việc nhóm hiệu quả. Trong tương lai, những kỹ năng này sẽ là nền tảng cốt lõi giúp tôi quản trị các dự án phần mềm chuyên nghiệp, thực hiện các nghiên cứu Khoa học Máy tính chuyên sâu và kiến tạo các giải pháp công nghệ an toàn, minh bạch, mang lại giá trị thực tiễn cao cho xã hội.",
 
     // 2. Trải nghiệm và cảm nhận
     experience: "Quá trình thực hiện dự án portfolio mang lại cho tôi những cảm xúc rất đặc biệt. Nó giống như việc tự tay \"refactoring\" lại chính khối lượng kiến thức khổng lồ mà mình đã tiếp thu. Thay vì chỉ gom nhặt các mảnh ghép một cách máy móc, tôi phải ngồi lại, đánh giá xem đâu là những giá trị cốt lõi nhất để trình bày. Cảm giác nhìn thấy những kỹ năng mình rèn luyện mỗi ngày. Từ tư duy tổ chức mã nguồn rõ ràng, tránh tạo ra các đoạn \"spaghetti code\", đến khả năng tối ưu hóa thuật toán thi đấu, được sắp xếp gọn gàng và có tính kể chuyện trong một bản portfolio thực sự là một trải nghiệm trọn vẹn và đáng tự hào.",

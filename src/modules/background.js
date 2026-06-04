@@ -136,22 +136,11 @@ export function initThreeBackground(canvasId) {
 
   // 4. TẠO 3 LỚP SAO ĐA TẦNG (MULTI-LAYER STARFIELD)
   //    Lớp 1: Sao sáng gần — ít, to, rõ (tiền cảnh)
-  const layer1 = createStarLayer(600, 800, coolColors, textureCool, 5, 1.0);
+  const layer1 = createStarLayer(300, 800, coolColors, textureCool, 5, 1.0);
   //    Lớp 2: Sao trung bình — tông ấm, kích thước vừa
-  const layer2 = createStarLayer(1200, 1000, warmColors, textureWarm, 3.2, 0.85);
+  const layer2 = createStarLayer(600, 1000, warmColors, textureWarm, 3.2, 0.85);
   //    Lớp 3: Sao xa mờ — rất nhiều, rất nhỏ, tạo chiều sâu vũ trụ (hậu cảnh)
-  const layer3 = createStarLayer(2000, 1200, dimColors, textureDim, 1.8, 0.55);
-
-  // 5. TƯƠNG TÁC CHUỘT (MOUSE PARALLAX)
-  let targetMouseX = 0;
-  let targetMouseY = 0;
-  let currentMouseX = 0;
-  let currentMouseY = 0;
-
-  window.addEventListener('mousemove', (event) => {
-    targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-  });
+  const layer3 = createStarLayer(1200, 1200, dimColors, textureDim, 1.8, 0.55);
 
   // 6. XỬ LÝ CO GIÃN CỬA SỔ
   window.addEventListener('resize', () => {
@@ -174,20 +163,6 @@ export function initThreeBackground(canvasId) {
     layer1.points.rotation.y = elapsedTime * 0.015;
     layer2.points.rotation.y = elapsedTime * 0.008;
     layer3.points.rotation.y = elapsedTime * 0.004;
-
-    // Hiệu ứng Parallax di chuyển chuột mềm mại (LERP)
-    currentMouseX += (targetMouseX - currentMouseX) * 0.05;
-    currentMouseY += (targetMouseY - currentMouseY) * 0.05;
-
-    // Nghiêng mỗi lớp với cường độ khác nhau (lớp gần nghiêng nhiều hơn)
-    layer1.points.rotation.x = currentMouseY * 0.15;
-    layer1.points.rotation.z = currentMouseX * 0.08;
-
-    layer2.points.rotation.x = currentMouseY * 0.08;
-    layer2.points.rotation.z = currentMouseX * 0.04;
-
-    layer3.points.rotation.x = currentMouseY * 0.03;
-    layer3.points.rotation.z = currentMouseX * 0.02;
 
     renderer.render(scene, camera);
   }

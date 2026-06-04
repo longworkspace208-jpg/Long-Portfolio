@@ -7,32 +7,30 @@
  */
 
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 import { portfolioData } from './modules/portfolioData.js';
 import { initThreeBackground } from './modules/background.js';
 import { initPreloader, initScrollAnimations, triggerHeroEntranceAnimation, initScrollReveal } from './modules/core-anim.js';
 import { init3dTilt, initPlasmaCursor, initCardExpandCollapse, initClickFlipCards } from './modules/interactions.js';
 import { TextScrambler, initTypewriter } from './modules/text-fx.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
+let lenis; // Đối tượng cuộn mượt Lenis toàn cục
+
 // Khởi chạy hệ thống sau khi DOM đã được nạp đầy đủ
 document.addEventListener('DOMContentLoaded', () => {
-  
-  // Ẩn preloader ngay lập tức (đã gỡ bỏ hiệu ứng loading)
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    preloader.classList.add('hidden');
-    preloader.style.display = 'none';
-  }
-  document.body.classList.remove('loading-lock');
-
-  // Khởi tạo trực tiếp không cần chờ preloader
   initializeCosmicCockpit();
-
 });
 
 /**
  * Khởi tạo buồng lái phi thuyền (Cockpit Initialization)
  */
 function initializeCosmicCockpit() {
+  // 0. KHỞI TẠO BỘ CUỘN MƯỢT LENIS ĐỒNG BỘ GSAP
+  initLenisSmoothScroll();
+
   // A. KÍCH HOẠT HÌNH NỀN ĐỘNG WebGL (THREE.JS 10.000 STARFIELD)
   let destroyWebGL;
   try {
@@ -50,8 +48,8 @@ function initializeCosmicCockpit() {
   // E. NẠP TỔNG KẾT HÀNH TRÌNH (REFLECTION & DISCUSSIONS)
   renderReflectionLogs();
 
-  // F. KÍCH HOẠT HIỆU ỨNG 3D TILT CHO HÀNG LOẠT THẺ HOLOGRAM
-  init3dTilt('.hologram-card, .reflection-journey-block, .flip-card, .closing-cinematic');
+  // F. KÍCH HOẠT HIỆU ỨNG 3D TILT CHO HÀNG LOẠT THẺ HOLOGRAM (ĐÃ GỠ BỎ THEO YÊU CẦU NGƯỜI DÙNG)
+  // init3dTilt('.hologram-card, .reflection-journey-block, .flip-card, .closing-cinematic');
 
   // G. HIỆU ỨNG MỞ THẺ BÀI TẬP ĐÃ ĐƯỢC GỠ BỎ — TẤT CẢ 6 THẺ LUÔN MỞ RỘNG SẴN
 
@@ -66,7 +64,7 @@ function initializeCosmicCockpit() {
   // I2. KÍCH HOẠT HOẠC CẢNH CUỘN TRANG BẰNG NATIVE INTERSECTION OBSERVER (FAIL-SAFE)
   initScrollReveal();
 
-  // KÍCH HOẠT HOẠT CẢNH MỞ MÀN HERO COCKPIT CỦA GSAP VỚI CALLBACK KHỞI CHẠY TYPEWRITER
+  // KÍCH HOẠT HOẠC CẢNH MỞ MÀN HERO COCKPIT CỦA GSAP VỚI CALLBACK KHỞI CHẠY TYPEWRITER
   triggerHeroEntranceAnimation(startHeroTypewriter);
 
   // K. THIẾT LẬP NÚT BẬT TẮT FX QUÉT DÒNG (SCANLINES TOGGLE)
@@ -79,12 +77,35 @@ function initializeCosmicCockpit() {
   initFloatingDecorations();
 
   // M. HỆ THỐNG DỰ PHÒNG AN TOÀN (FAIL-SAFE FALLBACK)
-  // Sau 8 giây, ép hiển thị tất cả các phần tử scroll-reveal còn ẩn (chỉ dành cho edge case cực hiếm)
+  // Sau 25 giây, ép hiển thị tất cả các phần tử scroll-reveal còn ẩn (chỉ dành cho edge case cực hiếm)
   setTimeout(() => {
     document.querySelectorAll('.scroll-reveal:not(.visible)').forEach(el => {
       el.classList.add('visible');
     });
-  }, 8000);
+  }, 25000);
+}
+
+/**
+ * Khởi tạo bộ cuộn mượt Lenis Scroll và đồng bộ hóa với GSAP ScrollTrigger
+ */
+function initLenisSmoothScroll() {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExponential
+    smoothWheel: true,
+    smoothTouch: false, // Giữ cuộn gốc trên màn hình cảm ứng để tăng hiệu năng
+  });
+
+  // Đồng bộ hóa sự kiện cuộn của Lenis sang GSAP ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update);
+
+  // Đồng bộ hóa khung hình requestAnimationFrame của Lenis với GSAP ticker
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+
+  // Tắt tính năng làm trễ lagSmoothing của GSAP để tránh trôi lệch vị trí
+  gsap.ticker.lagSmoothing(0);
 }
 
 /**
@@ -92,6 +113,16 @@ function initializeCosmicCockpit() {
  */
 function renderPilotInfo() {
   const pilotInfo = portfolioData.pilotInfo || portfolioData.personalInfo || {};
+
+  // 0. Nạp ảnh đại diện phi công HUD
+  const avatarImgEl = document.getElementById('pilot-avatar-img');
+  if (avatarImgEl) {
+    if (pilotInfo.avatar) {
+      avatarImgEl.src = pilotInfo.avatar;
+    } else {
+      avatarImgEl.src = '/src/assets/hero.png';
+    }
+  }
 
   // 1. Nạp thẻ thông tin trường lớp dưới dạng các HUD Info Badges
   const subtitleEl = document.getElementById('pilot-subtitle');
@@ -400,8 +431,15 @@ function setupNavigation() {
       const targetId = btn.getAttribute('href');
       const targetSection = document.querySelector(targetId);
       if (targetSection) {
-        // Cuộn trang mượt mà
-        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Cuộn trang mượt mà bằng Lenis nếu khả dụng, nếu không dùng scrollIntoView thô
+        if (lenis) {
+          lenis.scrollTo(targetSection, {
+            offset: -100, // Bù trừ chiều cao thanh Navbar HUD
+            duration: 1.2
+          });
+        } else {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
         
         // Cập nhật lớp active cho nút bấm điều hướng
         navButtons.forEach(b => b.classList.remove('active'));
@@ -522,31 +560,17 @@ function initFloatingDecorations() {
     astro.classList.add('active');
   }, 750);
 
-  // Parallax scroll — mỗi vật thể di chuyển với vận tốc khác nhau (multi-depth parallax)
-  let ticking = false;
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        
-        // Phi thuyền (Phải - nhanh vừa)
-        const shipY = scrollY * -0.12;
-        ship.style.transform = `translateY(${shipY}px)`;
-        
-        // Phi hành gia (Trái - chậm hơn)
-        const astroY = scrollY * -0.08;
-        astro.style.transform = `translateY(${astroY}px)`;
-        
-        // Cổ vật lõi pha lê làm mờ ở nền (di chuyển siêu chậm để tạo chiều sâu tối đa)
-        if (bgCrystal) {
-          const crystalY = scrollY * -0.04;
-          bgCrystal.style.transform = `translateY(${crystalY}px)`;
-        }
-        
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
+  // Parallax scroll sử dụng GSAP ScrollTrigger tạo hiệu ứng trượt êm ái, trễ nhịp (scrub) siêu mượt
+  if (bgCrystal) {
+    gsap.to(bgCrystal, {
+      y: () => -window.innerHeight * 0.15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 2.2
+      }
+    });
+  }
 }

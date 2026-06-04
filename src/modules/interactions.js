@@ -22,6 +22,8 @@ gsap.registerPlugin(ScrollTrigger);
  * giữ nguyên transform chain bên trong .flip-card-inner.
  */
 export function init3dTilt(cardSelector) {
+  // Gỡ bỏ hoàn toàn hiệu ứng nghiêng 3D theo yêu cầu
+  return;
   const cards = document.querySelectorAll(cardSelector);
   if (!cards || cards.length === 0) return;
 

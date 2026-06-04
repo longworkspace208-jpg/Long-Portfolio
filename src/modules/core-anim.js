@@ -192,18 +192,18 @@ export function triggerHeroEntranceAnimation(onCardsReveal) {
     duration: 0.8,
     ease: 'power2.out'
   })
-  .from('#pilot-name', {
+  .from('.pilot-header-identity', {
     scale: 0.8,
     opacity: 0,
     duration: 1.0,
-    ease: 'back.out(1.5)'
+    ease: 'back.out(1.2)'
   }, '-=0.6')
   .from('#hero .hologram-card', {
-    y: 40,
+    y: 20,
     opacity: 0,
-    stagger: 0, // Synchronous fade-in for all cards
-    duration: 1.0,
-    ease: 'power3.out',
+    stagger: 0.15, // Hiệu ứng xuất hiện lần lượt (stagger) nhẹ nhàng
+    duration: 0.8,
+    ease: 'power2.out',
     onStart: () => {
       if (onCardsReveal) onCardsReveal();
     }
@@ -226,26 +226,12 @@ export function initScrollReveal() {
   const revealElements = document.querySelectorAll('.scroll-reveal');
   if (revealElements.length === 0) return;
 
-  // Hỗ trợ dự phòng (fallback) nếu trình duyệt cũ không có Intersection Observer
-  if (!window.IntersectionObserver) {
-    revealElements.forEach(el => el.classList.add('visible'));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target); // Chỉ kích hoạt hoạt cảnh 1 lần duy nhất (tương đương once: true)
-      }
-    });
-  }, {
-    root: null,
-    rootMargin: '0px 0px -5% 0px', // Kích hoạt khi cách đáy màn hình 5%
-    threshold: 0.05
-  });
-
   revealElements.forEach(el => {
-    observer.observe(el);
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%', // Kích hoạt khi cách đáy màn hình ~10%
+      onEnter: () => el.classList.add('visible'),
+      onLeaveBack: () => el.classList.remove('visible'), // Tự động ẩn đi khi cuộn ngược lên trên qua điểm kích hoạt
+    });
   });
 }
