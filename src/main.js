@@ -279,32 +279,41 @@ function renderExercisesGrid() {
       const productLabel = product.label || 'Mở khóa tài liệu';
       const productIcon = getProductIconSvg(productType);
 
+      // Render steps
+      const stepsHtml = (item.steps || []).map((step, idx) => `
+        <li class="project-step-item">
+          <span class="project-step-num">0${idx + 1}</span>
+          <span class="project-step-text">${step}</span>
+        </li>
+      `).join('');
+
       card.innerHTML = `
         <div class="project-card-header">
-          <span class="project-card-num">${item.code || '[BT]'}</span>
-          <span class="badge-status" style="padding: 2px 10px; font-size: 9px; border-color: rgba(0,245,255,0.25);">ENCRYPTED</span>
+          <span class="project-card-num">${item.code || '[CD]'}</span>
+          <span class="badge-status" style="padding: 2px 10px; font-size: 9px; border-color: rgba(0,245,255,0.25);">ACTIVE</span>
         </div>
         <div class="project-card-title">
-          <h3>${item.title || 'Bài tập chưa định danh'}</h3>
+          <h3>${item.title || 'Chuyên đề chưa định danh'}</h3>
         </div>
 
-        
-        <!-- KHU VỰC CHI TIẾT BỊ ẨN (GSAP SẼ BUNG MỞ CHIỀU CAO KHI CLICK THẺ) -->
         <div class="project-detail-expand">
-          <div class="project-detail-grid">
-            <!-- Cột trái: Mục tiêu và tiến trình -->
-            <div class="project-detail-info">
-              <h4>🎯 MỤC TIÊU BÀI HỌC</h4>
-              <p>${goalText || 'Đang cập nhật mục tiêu...'}</p>
-            </div>
-            <!-- Cột phải: Sản phẩm -->
-            <div class="project-detail-product">
-              <div class="product-icon-area" style="color: var(--neon-cyan);">${productIcon}</div>
-              <div class="project-product-label">${productLabel}</div>
-              <a href="${productUrl}" target="_blank" class="project-product-btn">
-                MỞ KHÓA TÀI LIỆU
-              </a>
-            </div>
+          <div class="project-detail-section project-goal-section">
+            <h4>🎯 MỤC TIÊU</h4>
+            <p class="project-goal-desc">${goalText || 'Đang cập nhật mục tiêu...'}</p>
+          </div>
+          
+          <div class="project-detail-section project-steps-section">
+            <h4>📋 CÁC BƯỚC THỰC HIỆN</h4>
+            <ul class="project-steps-list">
+              ${stepsHtml}
+            </ul>
+          </div>
+          
+          <div class="project-action-section">
+            <a href="${productUrl}" target="_blank" class="project-unlock-btn">
+              <span class="unlock-btn-icon">${productIcon}</span>
+              <span class="unlock-btn-text">MỞ KHÓA TÀI LIỆU</span>
+            </a>
           </div>
         </div>
       `;

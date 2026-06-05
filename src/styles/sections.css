@@ -126,9 +126,9 @@
    SECTION 1: HERO (THE COCKPIT)
    ========================================================================== */
 #hero {
-  min-height: 100vh;
-  padding-top: 120px;
-  padding-bottom: 80px;
+  min-height: 90vh; /* Giảm chiều cao tối thiểu */
+  padding-top: 100px; /* Thu gọn padding trên */
+  padding-bottom: 40px; /* Thu gọn padding dưới */
   position: relative;
   display: flex;
   align-items: center;
@@ -142,14 +142,14 @@
 
 .hero-main-title {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 35px; /* Giảm khoảng cách dưới tiêu đề từ 60px xuống 35px */
 }
 
 .hero-main-title h1 {
-  font-size: 58px;
+  font-size: 46px; /* Thu nhỏ font chữ tiêu đề từ 58px xuống 46px để vừa vặn hơn */
   font-weight: 900;
   letter-spacing: 3px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .hero-main-title p {
@@ -217,16 +217,16 @@
 .hero-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-bottom: 80px;
+  gap: 24px; /* Giảm gap từ 32px xuống 24px */
+  margin-bottom: 40px; /* Giảm margin-bottom từ 80px xuống 40px */
 }
 
 .hero-card-inner {
-  padding: 36px 28px;
+  padding: 24px 20px; /* Giảm padding từ 36px 28px xuống 24px 20px */
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px; /* Giảm gap từ 20px xuống 14px */
   transition: transform var(--transition-normal);
 }
 
@@ -344,11 +344,11 @@
 /* Pilot Avatar HUD Frame */
 .pilot-avatar-hud {
   position: relative;
-  width: 240px;
-  height: 240px;
+  width: 160px; /* Thu nhỏ từ 240px xuống 160px */
+  height: 160px;
   border-radius: 50%;
   border: 2px solid var(--neon-cyan);
-  padding: 6px;
+  padding: 5px;
   background: #0a0e1a; /* Bỏ làm mờ nền bằng cách để nền tối đậm đặc */
   overflow: hidden;
   display: flex;
@@ -499,72 +499,160 @@
 .project-detail-expand {
   overflow: hidden;
   transition: all var(--transition-normal);
-  border-top: 1px solid rgba(0, 245, 255, 0.1);
+  border-top: 1px solid rgba(0, 245, 255, 0.15);
   padding-top: 20px;
   margin-top: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-.project-detail-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 24px;
+.project-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-detail-section h4 {
+  font-family: var(--font-sci-fi);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--neon-cyan);
+  margin-bottom: 4px;
+  text-shadow: 0 0 8px rgba(0, 245, 255, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-goal-desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  background: rgba(0, 245, 255, 0.02);
+  border-left: 2px solid var(--neon-cyan);
+  padding: 10px 14px;
+  border-radius: 0 4px 4px 0;
+}
+
+.project-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(0, 245, 255, 0.05);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.project-step-item:hover {
+  background: rgba(0, 245, 255, 0.03);
+  border-color: rgba(0, 245, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.project-step-num {
+  font-family: var(--font-sci-fi);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--plasma-orange);
+  background: rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 107, 53, 0.25);
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  text-shadow: 0 0 5px var(--glow-orange);
+}
+
+.project-step-text {
   flex: 1;
 }
 
-.project-detail-info h4 {
-  font-size: 14px;
-  color: var(--neon-cyan);
-  margin-bottom: 6px;
-}
-
-.project-detail-info p {
-  font-size: 15px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-
-.project-detail-product {
-  background: rgba(0, 245, 255, 0.02);
-  border: 1px dashed rgba(0, 245, 255, 0.15);
-  border-radius: 4px;
-  padding: 16px;
+.project-action-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 12px;
-  text-align: center;
+  margin-top: 12px;
 }
 
-.project-product-label {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.project-product-btn {
+.project-unlock-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: var(--neon-cyan);
-  color: var(--bg-deep-space);
-  padding: 8px 16px;
+  justify-content: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  padding: 12px 30px;
+  font-family: var(--font-sci-fi);
   font-size: 13px;
   font-weight: 700;
+  letter-spacing: 2px;
   border-radius: 4px;
-  box-shadow: 0 0 10px var(--glow-cyan);
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
+  width: 100%;
+  text-shadow: 0 0 8px var(--glow-cyan);
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.1), inset 0 0 10px rgba(0, 245, 255, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-.project-product-btn:hover {
-  background: var(--plasma-orange);
-  box-shadow: 0 0 10px var(--glow-orange);
-  transform: translateY(-1px);
+.project-unlock-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.15), transparent);
+  transition: left 0.6s ease;
 }
+
+.project-unlock-btn:hover::before {
+  left: 100%;
+}
+
+.project-unlock-btn:hover {
+  background: rgba(0, 245, 255, 0.1);
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.3), inset 0 0 15px rgba(0, 245, 255, 0.2);
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px #fff;
+}
+
+.unlock-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unlock-btn-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  transition: stroke 0.3s ease;
+}
+
+.project-unlock-btn:hover .unlock-btn-icon svg {
+  stroke: #fff;
+}
+
 
 /* ==========================================================================
    SECTION 3: SUMMARY — TỔNG KẾT HÀNH TRÌNH (REDESIGNED)
@@ -1501,7 +1589,8 @@
 .hero-card-desc,
 .hero-card-desc li,
 .project-card-excerpt,
-.project-detail-info p,
+.project-goal-desc,
+.project-step-text,
 .flip-card-back p,
 .flip-card-back-orange p,
 #reflection-overview,
@@ -1528,7 +1617,8 @@
 .hologram-card:hover .hero-card-desc,
 .hologram-card:hover .hero-card-desc li,
 .project-card:hover .project-card-excerpt,
-.project-card:hover .project-detail-info p,
+.project-card:hover .project-goal-desc,
+.project-card:hover .project-step-text,
 .reflection-journey-block:hover #reflection-overview,
 .reflection-journey-block:hover #reflection-exp,
 .reflection-journey-block:hover > p,

@@ -162,7 +162,8 @@
 
 /* 5. GÓC CẮT LỤC GIÁC (HEXAGONAL CLIP SHAPES) */
 .hex-clip {
-  clip-path: polygon(8% 0%, 92% 0%, 100% 12%, 100% 88%, 92% 100%, 8% 100%, 0% 88%, 0% 12%);
+  /* Sử dụng pixel cố định thay vì % để tránh cắt quá mức khi chiều dài card tăng */
+  clip-path: polygon(16px 0px, calc(100% - 16px) 0px, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0px calc(100% - 16px), 0px 16px);
 }
 
 .hex-btn-clip {

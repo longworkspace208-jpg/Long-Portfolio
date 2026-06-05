@@ -52,68 +52,104 @@ export const portfolioData = {
   exercises: [
     {
       id: 1,
-      code: "[BT-01]",
-      title: "Thao tác cơ bản với tệp tin và thư mục",
-      goal: "Mục tiêu cốt lõi của bài học là giúp sinh viên rèn luyện và sử dụng thành thạo các kỹ năng quản lý tệp tin và thư mục cơ bản trên hệ điều hành Windows (có thể điều chỉnh cho macOS/Linux). Các thao tác này bao gồm: tạo mới, đổi tên, sao chép, di chuyển và xóa tệp/thư mục.",
+      code: "[CD-01]",
+      title: "Quản trị Không gian số",
+      goal: "Thiết lập hệ thống lưu trữ dữ liệu khoa học, tối ưu hóa hiệu suất tìm kiếm và làm việc, kiểm soát vòng đời dữ liệu một cách kỷ luật để ngăn ngừa mất mát và lộn xộn thông tin.",
+      steps: [
+        "Khảo sát nhu cầu và phân loại dữ liệu cá nhân theo các nhóm chính (Học tập, Công việc, Dự án, Lưu trữ).",
+        "Xây dựng cấu trúc thư mục phân tầng khoa học (ví dụ: áp dụng quy chuẩn P.A.R.A hoặc phân cấp theo năm/học kỳ).",
+        "Thực hành thành thạo các thao tác quản lý dữ liệu cốt lõi bao gồm tạo mới, đặt tên thống nhất (Naming convention), sao chép và di chuyển tệp tin.",
+        "Thiết lập quy trình kiểm soát vòng đời tệp tin: Phân loại dữ liệu để xóa tạm thời (Recycle Bin) và dữ liệu nhạy cảm cần xóa vĩnh viễn (Permanent Delete) để bảo mật thông tin."
+      ],
       product: {
-        type: "pdf", // 'pdf', 'image', 'video', 'link'
+        type: "pdf",
         url: pdf1,
-        label: "Bài tập tuần 1"
+        label: "Quản trị Không gian số"
       }
     },
     {
       id: 2,
-      code: "[BT-02]",
-      title: "Tìm kiếm và đánh giá thông tin học thuật",
-      goal: "Mục tiêu cốt lõi là phát triển kỹ năng tìm kiếm, đánh giá và chắt lọc thông tin học thuật từ các nguồn đáng tin cậy. Qua đó, sinh viên được rèn luyện tư duy phản biện, xây dựng nền tảng lý thuyết vững chắc để tự tin ứng dụng vào các nghiên cứu chuyên sâu hoặc giải quyết những bài toán thực tế trong chuyên ngành.",
+      code: "[CD-02]",
+      title: "Nghiên cứu học thuật chuyên sâu về Federated Learning",
+      goal: "Thu thập, thẩm định chi tiết và tổng hợp các nguồn tài liệu học thuật uy tín về học máy liên kết (Federated Learning), từ đó xây dựng báo cáo phân tích chất lượng cao đạt chuẩn trích dẫn khoa học.",
+      steps: [
+        "Xác định từ khóa cốt lõi và tìm kiếm tài liệu từ các cơ sở dữ liệu học thuật uy tín (Google Scholar, IEEE Xplore, ACM Digital Library).",
+        "Thu thập và lập danh mục gồm 12 nguồn tài liệu học thuật đa dạng như bài báo khoa học Q1/Q2, sách chuyên khảo và báo cáo công nghệ.",
+        "Thẩm định chi tiết độ tin cậy của từng nguồn tài liệu dựa trên chỉ số trích dẫn (h-index, IF), uy tín của tác giả và nhà xuất bản.",
+        "Tổng hợp kết quả nghiên cứu và biên soạn báo cáo phân tích học thuật sử dụng chuẩn trích dẫn Harvard để đảm bảo tính liêm chính khoa học."
+      ],
       product: {
         type: "pdf",
         url: pdf2,
-        label: "Bài tập tuần 2"
+        label: "Nghiên cứu học thuật"
       }
     },
     {
       id: 3,
-      code: "[BT-03]",
-      title: "Viết Prompt hiệu quả cho các tác vụ học tập",
-      goal: "Mục tiêu cốt lõi là phát triển kỹ năng viết prompt (câu lệnh) hiệu quả để tận dụng tối đa khả năng của các mô hình ngôn ngữ lớn. Qua đó, giúp sinh viên làm chủ công nghệ AI, biến nó thành công cụ đắc lực để tối ưu hóa quá trình tổng hợp kiến thức, tự học và giải quyết các tác vụ phức tạp một cách chủ động.",
+      code: "[CD-03]",
+      title: "Kỹ thuật Prompt nâng cao cho tác vụ học tập",
+      goal: "Làm chủ nghệ thuật giao tiếp với mô hình ngôn ngữ lớn (LLM) thông qua các kỹ thuật viết câu lệnh phân tầng và nhập vai, tối ưu hóa chất lượng đầu ra phục vụ học tập.",
+      steps: [
+        "Phân tích yêu cầu của tác vụ học tập cụ thể để định hình cấu trúc câu lệnh cần thiết.",
+        "Thiết kế hệ thống câu lệnh phân tầng theo 3 cấp độ: Cơ bản (nêu yêu cầu thô), Cải tiến (bổ sung ngữ cảnh và định dạng), Nâng cao (áp dụng kỹ thuật nhập vai chuyên gia và Few-shot prompting).",
+        "Chạy thử nghiệm các cấp độ câu lệnh trên mô hình ngôn ngữ lớn và ghi nhận kết quả đầu ra tương ứng.",
+        "Đối chiếu, đánh giá chất lượng phản hồi giữa các cấp độ câu lệnh để đúc kết các nguyên tắc vàng tối ưu hóa Prompt."
+      ],
       product: {
         type: "pdf",
         url: pdf3,
-        label: "Bài tập tuần 3"
+        label: "Kỹ thuật Prompt"
       }
     },
     {
       id: 4,
-      code: "[BT-04]",
-      title: "Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm",
-      goal: "Mục tiêu cốt lõi là rèn luyện và làm chủ các công cụ hợp tác trực tuyến (quản lý dự án, soạn thảo, lưu trữ và giao tiếp) để tối ưu hóa hiệu suất làm việc cá nhân trong môi trường làm việc nhóm. Qua đó, sinh viên hình thành kỹ năng tự quản lý tiến độ nhiệm vụ, tổ chức tài nguyên khoa học và duy trì tương tác chủ động, hiệu quả với các thành viên khác.",
+      code: "[CD-04]",
+      title: "Tích hợp công cụ cộng tác trực tuyến trong dự án nhóm",
+      goal: "Triển khai luồng công việc dự án nhóm mượt mà bằng cách kết hợp đồng bộ các công cụ quản lý, soạn thảo, lưu trữ và giao tiếp trực tuyến để tối ưu hiệu suất đồng đội.",
+      steps: [
+        "Khởi tạo dự án trên ClickUp, phân rã công việc thành các task Backend chi tiết, gán người thực hiện và thiết lập deadline rõ ràng.",
+        "Biên soạn tài liệu kiến trúc kỹ thuật đồng thời trên Google Docs, cho phép cả nhóm thảo luận và đóng góp ý kiến thời gian thực.",
+        "Quy chuẩn hóa cấu trúc thư mục chia sẻ trên Google Drive để lưu trữ và quản lý tập trung toàn bộ tài nguyên dự án.",
+        "Thiết lập kênh Discord chung làm không gian giao tiếp chính, tích hợp thông báo tự động và tổ chức họp định kỳ để giải quyết các vấn đề nhanh chóng."
+      ],
       product: {
         type: "pdf",
         url: pdf4,
-        label: "Bài tập tuần 4"
+        label: "Công cụ cộng tác"
       }
     },
     {
       id: 5,
-      code: "[BT-05]",
-      title: "Sử dụng AI tạo sinh để hỗ trợ tạo nội dung",
-      goal: "Mục tiêu cốt lõi là thành thạo việc sử dụng các công cụ AI tạo sinh để hỗ trợ quá trình sáng tạo nội dung số. Qua đó, sinh viên biết cách kết hợp linh hoạt và hiệu quả nhiều loại công cụ AI khác nhau (tạo văn bản, hình ảnh, thiết kế), hòa quyện giữa đầu ra của AI với dấu ấn sáng tạo cá nhân, đồng thời phát triển tư duy phản biện để phân tích sâu sắc vai trò cũng như các vấn đề đạo đức khi ứng dụng công nghệ này vào thực tiễn.",
+      code: "[CD-05]",
+      title: "Ứng dụng AI tạo sinh thiết kế Infographic thương mại",
+      goal: "Kết hợp sức mạnh sáng tạo của các mô hình AI tạo văn bản và hình ảnh với kỹ năng biên tập, hậu kỳ thủ công để tạo ra một Infographic chuẩn thương mại.",
+      steps: [
+        "Sử dụng mô hình AI tạo văn bản để lên ý tưởng truyền thông và viết kịch bản nội dung chi tiết, phân chia bố cục logic.",
+        "Áp dụng AI tạo ảnh (như Midjourney/DALL-E) để sinh các hình ảnh minh họa độc đáo theo phong cách đồng nhất với kịch bản.",
+        "Thực hiện hậu kỳ thủ công để sửa các lỗi đồ họa cơ bản của AI (lỗi chi tiết thừa, méo góc, phối màu lỗi).",
+        "Đưa toàn bộ tài nguyên vào nền tảng Canva, tái cấu trúc bố cục, chọn hệ màu, font chữ và hoàn thiện sản phẩm Infographic đạt tiêu chuẩn thương mại."
+      ],
       product: {
         type: "pdf",
         url: pdf5,
-        label: "Bài tập tuần 5"
+        label: "AI Tạo sinh"
       }
     },
     {
       id: 6,
-      code: "[BT-06]",
-      title: "Sử dụng AI có trách nhiệm trong học tập và nghiên cứu",
-      goal: "Mục tiêu cốt lõi là trang bị cho sinh viên kiến thức và kỹ năng để ứng dụng AI vào các tác vụ học tập một cách hiệu quả, minh bạch và chuyên nghiệp. Qua đó, sinh viên rèn luyện tư duy phản biện để phân tích các vấn đề đạo đức, nhận diện rõ ranh giới giữa hỗ trợ hợp lý và gian lận học thuật, từ đó thiết lập và tuân thủ các nguyên tắc cốt lõi nhằm sử dụng AI có trách nhiệm trong học thuật.",
+      code: "[CD-06]",
+      title: "Đạo đức AI & Chủ quyền tư duy trong học tập và lập trình",
+      goal: "Phân tích sâu sắc các quy định về tính liêm chính học thuật khi dùng AI, đồng thời khẳng định chủ quyền tư duy thông qua việc tự tay tối ưu mã nguồn và thiết lập các nguyên tắc đạo đức cá nhân.",
+      steps: [
+        "Nghiên cứu các quy định hiện hành về liêm chính học thuật và đạo đức công nghệ trong kỷ nguyên AI tạo sinh.",
+        "Sử dụng công cụ AI để hỗ trợ tổng hợp lý thuyết nền tảng và đề xuất thuật toán sơ bộ.",
+        "Tự tay rà soát, viết lại và tối ưu hóa sâu thuật toán mã nguồn để đảm bảo hiệu năng và kiểm soát tuyệt đối luồng chạy.",
+        "Thiết lập 5 nguyên tắc đạo đức cá nhân cụ thể để dẫn dắt việc ứng dụng công nghệ AI một cách minh bạch, có trách nhiệm và tôn trọng bản quyền."
+      ],
       product: {
         type: "pdf",
         url: pdf6,
-        label: "Bài tập tuần 6"
+        label: "Đạo đức AI"
       }
     }
   ],
