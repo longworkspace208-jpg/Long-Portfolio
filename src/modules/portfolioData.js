@@ -52,9 +52,9 @@ export const portfolioData = {
   exercises: [
     {
       id: 1,
-      code: "[CD-01]",
-      title: "Quản trị Không gian số",
-      goal: "Thiết lập hệ thống lưu trữ dữ liệu khoa học, tối ưu hóa hiệu suất tìm kiếm và làm việc, kiểm soát vòng đời dữ liệu một cách kỷ luật để ngăn ngừa mất mát và lộn xộn thông tin.",
+      code: "[BÀI 01]",
+      title: "Bài 1 - Bài tập 1 của mục 1.4: Thao tác cơ bản với tệp tin và thư mục",
+      goal: "Trình bày cấu trúc thư mục tối ưu và quy tắc đặt tên tệp đã thiết lập, kèm ảnh chụp minh họa.",
       steps: [
         "Khảo sát nhu cầu và phân loại dữ liệu cá nhân theo các nhóm chính (Học tập, Công việc, Dự án, Lưu trữ).",
         "Xây dựng cấu trúc thư mục phân tầng khoa học (ví dụ: áp dụng quy chuẩn P.A.R.A hoặc phân cấp theo năm/học kỳ).",
@@ -69,9 +69,9 @@ export const portfolioData = {
     },
     {
       id: 2,
-      code: "[CD-02]",
-      title: "Nghiên cứu học thuật chuyên sâu về Federated Learning",
-      goal: "Thu thập, thẩm định chi tiết và tổng hợp các nguồn tài liệu học thuật uy tín về học máy liên kết (Federated Learning), từ đó xây dựng báo cáo phân tích chất lượng cao đạt chuẩn trích dẫn khoa học.",
+      code: "[BÀI 02]",
+      title: "Bài 2 - Bài tập 2 của mục 2.4: Tìm kiếm và đánh giá thông tin học thuật",
+      goal: "Trình bày kết quả tìm kiếm học thuật bằng các toán tử nâng cao và bảng đánh giá nguồn tin đã thực hiện.",
       steps: [
         "Xác định từ khóa cốt lõi và tìm kiếm tài liệu từ các cơ sở dữ liệu học thuật uy tín (Google Scholar, IEEE Xplore, ACM Digital Library).",
         "Thu thập và lập danh mục gồm 12 nguồn tài liệu học thuật đa dạng như bài báo khoa học Q1/Q2, sách chuyên khảo và báo cáo công nghệ.",
@@ -86,9 +86,9 @@ export const portfolioData = {
     },
     {
       id: 3,
-      code: "[CD-03]",
-      title: "Kỹ thuật Prompt nâng cao cho tác vụ học tập",
-      goal: "Làm chủ nghệ thuật giao tiếp với mô hình ngôn ngữ lớn (LLM) thông qua các kỹ thuật viết câu lệnh phân tầng và nhập vai, tối ưu hóa chất lượng đầu ra phục vụ học tập.",
+      code: "[BÀI 03]",
+      title: "Bài 3 - Bài tập 2 của mục 3.4: Viết Prompt hiệu quả cho các tác vụ học tập",
+      goal: "Trình bày sự so sánh giữa Prompt ban đầu và Prompt cải tiến cùng kết quả đầu ra từ AI.",
       steps: [
         "Phân tích yêu cầu của tác vụ học tập cụ thể để định hình cấu trúc câu lệnh cần thiết.",
         "Thiết kế hệ thống câu lệnh phân tầng theo 3 cấp độ: Cơ bản (nêu yêu cầu thô), Cải tiến (bổ sung ngữ cảnh và định dạng), Nâng cao (áp dụng kỹ thuật nhập vai chuyên gia và Few-shot prompting).",
@@ -103,9 +103,9 @@ export const portfolioData = {
     },
     {
       id: 4,
-      code: "[CD-04]",
-      title: "Tích hợp công cụ cộng tác trực tuyến trong dự án nhóm",
-      goal: "Triển khai luồng công việc dự án nhóm mượt mà bằng cách kết hợp đồng bộ các công cụ quản lý, soạn thảo, lưu trữ và giao tiếp trực tuyến để tối ưu hiệu suất đồng đội.",
+      code: "[BÀI 04]",
+      title: "Bài 4 - Bài tập 3 của mục 4.4: Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm",
+      goal: "Trình bày minh chứng về việc sử dụng công cụ quản lý dự án nhóm và cách thức phối hợp trực tuyến.",
       steps: [
         "Khởi tạo dự án trên ClickUp, phân rã công việc thành các task Backend chi tiết, gán người thực hiện và thiết lập deadline rõ ràng.",
         "Biên soạn tài liệu kiến trúc kỹ thuật đồng thời trên Google Docs, cho phép cả nhóm thảo luận và đóng góp ý kiến thời gian thực.",
@@ -120,9 +120,9 @@ export const portfolioData = {
     },
     {
       id: 5,
-      code: "[CD-05]",
-      title: "Ứng dụng AI tạo sinh thiết kế Infographic thương mại",
-      goal: "Kết hợp sức mạnh sáng tạo của các mô hình AI tạo văn bản và hình ảnh với kỹ năng biên tập, hậu kỳ thủ công để tạo ra một Infographic chuẩn thương mại.",
+      code: "[BÀI 05]",
+      title: "Bài 5 - Bài tập 2 của mục 5.4: Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung",
+      goal: "Trưng bày sản phẩm nội dung số hoàn thiện (hình ảnh, video hoặc bài viết) được hỗ trợ bởi AI.",
       steps: [
         "Sử dụng mô hình AI tạo văn bản để lên ý tưởng truyền thông và viết kịch bản nội dung chi tiết, phân chia bố cục logic.",
         "Áp dụng AI tạo ảnh (như Midjourney/DALL-E) để sinh các hình ảnh minh họa độc đáo theo phong cách đồng nhất với kịch bản.",
@@ -137,9 +137,9 @@ export const portfolioData = {
     },
     {
       id: 6,
-      code: "[CD-06]",
-      title: "Đạo đức AI & Chủ quyền tư duy trong học tập và lập trình",
-      goal: "Phân tích sâu sắc các quy định về tính liêm chính học thuật khi dùng AI, đồng thời khẳng định chủ quyền tư duy thông qua việc tự tay tối ưu mã nguồn và thiết lập các nguyên tắc đạo đức cá nhân.",
+      code: "[BÀI 06]",
+      title: "Bài 6 - Bài tập 4 của mục 6.4: Sử dụng AI có trách nhiệm trong học tập và nghiên cứu",
+      goal: "Trình bày bộ nguyên tắc cá nhân về sử dụng AI có trách nhiệm dựa trên các nghiên cứu đã thực hiện.",
       steps: [
         "Nghiên cứu các quy định hiện hành về liêm chính học thuật và đạo đức công nghệ trong kỷ nguyên AI tạo sinh.",
         "Sử dụng công cụ AI để hỗ trợ tổng hợp lý thuyết nền tảng và đề xuất thuật toán sơ bộ.",
